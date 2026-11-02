@@ -1,0 +1,188 @@
+/* ==========================================================================
+   PrompterMind — ЛР №6: власні стилі поверх Tailwind CSS
+   Тут лише те, що Tailwind-утилітами не описати компактно або що є
+   фірмовим «характером» бренду:
+   1. Складні багатошарові фони та маски hero
+   2. Бігуча стрічка (власна анімація)
+   3. Анімації появи, «плавання» та підстрибування суми
+   Розмітка, відступи, кольори, типографіка, сітки та стани — у класах Tailwind.
+   ========================================================================== */
+
+/* 0. Змінні медіаблоків (ЛР №7) --------------------------------------------
+   Спільні для iframe відео, карти, календаря і віджета погоди на intensive.html.
+   У розмітці підключені через Tailwind: rounded-[--media-radius], shadow-[--media-shadow],
+   max-w-[--media-max] — одне місце для зміни всіх медіа (принцип DRY). */
+:root {
+  --media-radius: 24px;
+  --media-shadow: 0 4px 24px rgba(107, 47, 255, 0.08);
+  --media-max: 960px;
+}
+
+/* 1. Hero ----------------------------------------------------------------- */
+
+/* Мобільний: кадр з роботом, підрізаний праворуч, і плавний перехід у фон */
+.hero-bg {
+  background:
+    linear-gradient(180deg, rgba(250, 247, 255, 0.1) 0%, rgba(250, 247, 255, 0.65) 27%, rgba(250, 247, 255, 0.96) 48%, #faf7ff 100%),
+    url("assets/images/hero/hero-bg-mobile.png") 78.74% 0 / 420.17% 100% no-repeat,
+    linear-gradient(90deg, #f8f5ff, #ede9fe 60%, #f8f5ff);
+}
+
+/* Планшет: відео над текстом, низ відео розчиняється у фоні */
+@media (min-width: 768px) {
+  .hero-bg {
+    background: #faf7ff;
+  }
+
+  .hero-video {
+    -webkit-mask-image: linear-gradient(180deg, #000 280px, transparent 470px);
+    mask-image: linear-gradient(180deg, #000 280px, transparent 470px);
+  }
+}
+
+/* Десктоп: відео на весь блок, без маски */
+@media (min-width: 1024px) {
+  .hero-video {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* 2. Бігуча стрічка: дві перехресні смуги, що рухаються назустріч ---------- */
+.ticker-band--front {
+  transform: translateY(-50%) rotate(-2.5deg);
+}
+
+.ticker-band--back {
+  transform: translateY(-50%) rotate(2.5deg);
+}
+
+/* 2a. Стрічка відгуків (index.html): краї плавно зникають; без анімації — звичайна горизонтальна прокрутка */
+.marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    padding-inline: 20px;
+  }
+
+  .marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* 3. Анімації (лише якщо користувач не просив зменшити рух) ----------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .ticker-track {
+    animation: ticker-scroll 40s linear infinite;
+  }
+
+  .ticker-band--back .ticker-track {
+    animation-duration: 55s;
+    animation-direction: reverse;
+  }
+
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+
+  /* Відгуки їдуть самі; список продубльовано, тому зсув на -50% замикає коло без стрибка */
+  .marquee-track {
+    animation: ticker-scroll 70s linear infinite;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .hero-enter > * {
+    animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero-enter > :nth-child(2) { animation-delay: 0.12s; }
+  .hero-enter > :nth-child(3) { animation-delay: 0.24s; }
+  .hero-enter > :nth-child(4) { animation-delay: 0.36s; }
+
+  .hero-video {
+    animation: hero-zoom 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  /* Поява під час прокрутки — класи додає js/main.js */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 0.8s ease var(--reveal-delay, 0s),
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s);
+  }
+
+  .reveal--zoom {
+    transform: translateY(24px) scale(0.94);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .float {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .float--delay-1 { animation-delay: -1.6s; }
+  .float--delay-2 { animation-delay: -3.2s; }
+
+  .bump {
+    animation: bump 0.35s ease;
+  }
+
+  .cta-circle--one {
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+
+  .cta-circle--two {
+    animation: drift 11s ease-in-out infinite alternate-reverse;
+  }
+}
+
+@keyframes ticker-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes bump {
+  40% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translate(40px, 30px) scale(1.08);
+  }
+}

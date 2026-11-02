@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth scroll-pt-16 md:scroll-pt-[72px]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PrompterMind — практичний курс зі штучного інтелекту для підлітків 13–17 років. Короткі уроки, багато практики, портфоліо до випуску.">
+  <title>PrompterMind — AI-курс для підлітків 13–17 років</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (Play CDN) + дизайн-токени з ЛР №4 -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#6b2fff',
+              light: '#7b3ff5',
+              50: '#faf7ff',
+              100: '#f8f5ff',
+              200: '#e0d4ff'
+            },
+            accent: '#3b82f6'
+          },
+          fontFamily: {
+            heading: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+            body: ['Roboto', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif']
+          },
+          boxShadow: {
+            card: '0 4px 24px rgba(107, 47, 255, 0.08)',
+            soft: '0 4px 12px rgba(107, 47, 255, 0.08)',
+            featured: '0 8px 32px rgba(107, 47, 255, 0.2)',
+            btn: '0 8px 12px rgba(107, 47, 255, 0.25)',
+            lift: '0 18px 40px rgba(107, 47, 255, 0.16)'
+          },
+          maxWidth: {
+            container: '1280px'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="custom-styles.css">
+</head>
+<body class="bg-white font-body text-gray-900 antialiased">
+  <!-- SVG-спрайт іконок (Tabler Icons, MIT) -->
+  <svg class="absolute h-0 w-0 overflow-hidden" aria-hidden="true" focusable="false">
+    <symbol id="icon-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3"/> <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3"/> <path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></symbol>
+    <symbol id="icon-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"/></symbol>
+    <symbol id="icon-puzzle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1"/></symbol>
+    <symbol id="icon-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21l8 0"/> <path d="M12 17l0 4"/> <path d="M7 4l10 0"/> <path d="M17 4v8a5 5 0 0 1 -10 0v-8"/> <path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/> <path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor"><path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"/></symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/> <path d="M12 7a5 5 0 1 0 5 5"/> <path d="M13 3.055a9 9 0 1 0 7.941 7.945"/> <path d="M15 6v3h3l3 -3h-3v-3z"/> <path d="M15 9l-3 3"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/> <path d="M3 7l9 6l9 -6"/></symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></symbol>
+    <symbol id="icon-telegram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"/></symbol>
+    <symbol id="icon-school" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></symbol>
+    <symbol id="icon-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z"/> <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"/></symbol>
+    <symbol id="icon-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z"/></symbol>
+    <symbol id="icon-facebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"/></symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11v5"/> <path d="M8 8v.01"/> <path d="M12 16v-5"/> <path d="M16 16v-3a2 2 0 1 0 -4 0"/> <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></symbol>
+    <symbol id="icon-x-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/> <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></symbol>
+    <symbol id="icon-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14"/> <path d="M5 12l14 0"/></symbol>
+    <symbol id="icon-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6l-12 12"/> <path d="M6 6l12 12"/></symbol>
+    <symbol id="icon-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l0 2"/> <path d="M15 11l0 2"/> <path d="M15 17l0 2"/> <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2"/></symbol>
+      <symbol id="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l16 0"/> <path d="M4 12l16 0"/> <path d="M4 18l16 0"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/> <path d="M13 18l6 -6"/> <path d="M13 6l6 6"/></symbol>
+  </svg>
+
+  <a class="absolute -top-24 left-4 z-50 inline-flex min-h-[44px] items-center rounded-lg bg-brand px-4 text-white focus:top-4" href="#main">Перейти до основного змісту</a>
+
+  <!-- ========== Header ========== -->
+  <header class="sticky top-0 z-40 border-b border-brand-200 bg-white transition-shadow duration-200 data-[scrolled=true]:bg-white/90 data-[scrolled=true]:shadow-[0_6px_24px_rgba(17,24,39,0.06)] data-[scrolled=true]:backdrop-blur-md" data-header>
+    <div class="flex h-16 items-center justify-between gap-3 px-5 md:h-[72px] md:px-8 lg:px-16">
+      <a class="flex h-11 shrink-0 items-center rounded-lg focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-accent" href="#top" aria-label="PrompterMind — на початок сторінки">
+        <img class="h-9 w-14 object-contain md:h-10 md:w-16" src="assets/logo/logo.png" alt="PrompterMind" width="64" height="40">
+      </a>
+
+      <nav class="hidden md:block" aria-label="Головна навігація">
+        <ul class="flex items-center gap-4 lg:gap-8">
+          <li><a class="rounded font-heading font-medium transition-colors duration-200 hover:text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-accent" href="#program">Програма</a></li>
+          <li><a class="rounded font-heading font-medium transition-colors duration-200 hover:text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-accent" href="#pricing">Вартість</a></li>
+          <li><a class="rounded font-heading font-medium transition-colors duration-200 hover:text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-accent" href="#testimonials">Відгуки</a></li>
+          <li><a class="inline-flex items-center gap-1.5 rounded font-heading font-medium transition-colors duration-200 hover:text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-accent text-brand" href="intensive.html">Інтенсив<span class="hidden rounded-full bg-violet-100 px-2 py-0.5 text-[11px] font-bold lg:inline">22.11</span></a></li>
+          <li class="relative" data-dropdown>
+            <button class="group flex items-center gap-1 rounded font-heading font-medium transition-colors duration-200 hover:text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-accent aria-expanded:text-brand" type="button" aria-expanded="false" aria-controls="more-menu" data-dropdown-toggle>
+              Ще
+              <svg class="h-6 w-6 text-brand transition-transform duration-200 group-aria-expanded:rotate-180" aria-hidden="true"><use href="#icon-chevron"></use></svg>
+            </button>
+            <div class="absolute right-0 top-full mt-3 hidden w-72 rounded-2xl border border-brand-200 bg-white p-2 shadow-lift" id="more-menu" data-dropdown-menu>
+              <p class="px-3 pb-1 pt-2 font-heading text-xs font-bold uppercase tracking-wide text-gray-500">Модулі курсу</p>
+              <ul>
+                <li><a class="flex min-h-[44px] items-center rounded-xl px-3 font-heading text-[15px] font-medium transition-colors duration-200 hover:bg-brand-100 hover:text-brand focus-visible:bg-brand-100 focus-visible:outline-none" href="#program">Старт у ШІ</a></li>
+                <li><a class="flex min-h-[44px] items-center rounded-xl px-3 font-heading text-[15px] font-medium transition-colors duration-200 hover:bg-brand-100 hover:text-brand focus-visible:bg-brand-100 focus-visible:outline-none" href="#program">Створення ботів</a></li>
+                <li><a class="flex min-h-[44px] items-center rounded-xl px-3 font-heading text-[15px] font-medium transition-colors duration-200 hover:bg-brand-100 hover:text-brand focus-visible:bg-brand-100 focus-visible:outline-none" href="#program">Просунутий промптинг</a></li>
+              </ul>
+              <hr class="my-2 border-brand-200">
+              <ul>
+                <li><a class="flex min-h-[44px] items-center rounded-xl px-3 font-heading text-[15px] font-medium transition-colors duration-200 hover:bg-brand-100 hover:text-brand focus-visible:bg-brand-100 focus-visible:outline-none" href="#projects">Що ти створиш</a></li>
+                <li><a class="flex min-h-[44px] items-center rounded-xl px-3 font-heading text-[15px] font-medium transition-colors duration-200 hover:bg-brand-100 hover:text-brand focus-visible:bg-brand-100 focus-visible:outline-none" href="#comparison">Порівняння</a></li>
+                <li><a class="flex min-h-[44px] items-center rounded-xl px-3 font-heading text-[15px] font-medium transition-colors duration-200 hover:bg-brand-100 hover:text-brand focus-visible:bg-brand-100 focus-visible:outline-none" href="#faq">FAQ</a></li>
+                <li><a class="flex min-h-[44px] items-center rounded-xl px-3 font-heading text-[15px] font-medium transition-colors duration-200 hover:bg-brand-100 hover:text-brand focus-visible:bg-brand-100 focus-visible:outline-none" href="#contact">Контакти</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="ml-auto flex items-center gap-2 md:ml-0 md:gap-3">
+        <a class="hidden min-h-[44px] items-center justify-center rounded-xl border-[1.5px] border-brand px-4 font-heading text-[13px] font-semibold text-brand transition duration-200 hover:bg-brand-100 active:scale-95 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent min-[360px]:inline-flex md:min-h-[40px] md:px-5 md:text-sm" href="#contact">Увійти</a>
+        <a class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-gradient-to-br from-brand from-25% to-accent to-75% px-4 font-heading text-[13px] font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:shadow-btn active:translate-y-0 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:min-h-[40px] md:px-5 md:text-sm" href="#cta">Спробувати</a>
+        <button class="group inline-flex h-11 w-11 items-center justify-center rounded-xl text-gray-900 transition-colors duration-200 hover:bg-brand-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-accent md:hidden" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Відкрити меню" data-burger>
+          <svg class="h-6 w-6 group-aria-expanded:hidden" aria-hidden="true"><use href="#icon-menu"></use></svg>
+          <svg class="hidden h-6 w-6 group-aria-expanded:block" aria-hidden="true"><use href="#icon-close"></use></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Мобільне меню -->
+    <nav class="hidden border-t border-brand-100 bg-white px-5 pb-6 shadow-card md:hidden" id="mobile-menu" aria-label="Мобільна навігація" data-mobile-menu>
+      <ul class="divide-y divide-brand-100">
+        <li><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium text-brand" href="intensive.html">Безкоштовний інтенсив 22.11</a></li>
+        <li><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium transition-colors hover:text-brand" href="#program">Програма</a></li>
+        <li><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium transition-colors hover:text-brand" href="#pricing">Вартість</a></li>
+        <li><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium transition-colors hover:text-brand" href="#testimonials">Відгуки</a></li>
+        <li><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium transition-colors hover:text-brand" href="#projects">Що ти створиш</a></li>
+        <li><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium transition-colors hover:text-brand" href="#faq">FAQ</a></li>
+        <li><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium transition-colors hover:text-brand" href="#contact">Контакти</a></li>
+        <li class="min-[360px]:hidden"><a class="flex min-h-[48px] items-center font-heading text-[17px] font-medium text-brand" href="#contact">Увійти</a></li>
+      </ul>
+    </nav>
+
+    <div class="absolute -bottom-px left-0 h-[3px] w-full origin-left scale-x-0 bg-gradient-to-r from-brand to-accent" aria-hidden="true" data-progress></div>
+  </header>
+
+  <main id="main">
+    <!-- ========== Hero ========== -->
+    <section class="hero-bg relative overflow-hidden px-5 pb-10 pt-[260px] md:px-8 md:pb-16 md:pt-[400px] lg:flex lg:min-h-[max(calc(100svh-72px),560px)] lg:items-center lg:px-16 lg:py-8" id="top" aria-labelledby="hero-title">
+      <video class="hero-video absolute inset-x-0 top-0 hidden h-[480px] w-full object-cover object-top md:block lg:h-full" autoplay muted loop playsinline preload="metadata" poster="assets/images/hero/hero-poster.webp" aria-hidden="true">
+        <source src="assets/video/video_hero.webm" type="video/webm">
+        <source src="assets/video/video_hero.mp4" type="video/mp4">
+      </video>
+      <span class="absolute -left-[60px] -top-[60px] h-[200px] w-[200px] rounded-full bg-brand/5 md:hidden" aria-hidden="true"></span>
+      <span class="absolute left-[250px] top-[100px] h-[120px] w-[120px] rounded-full bg-accent/5 md:hidden" aria-hidden="true"></span>
+
+      <div class="relative z-10 mx-auto w-full max-w-container">
+        <div class="hero-enter flex flex-col items-start gap-6 md:max-w-[640px] lg:w-[min(600px,54%)] lg:max-w-none lg:gap-7 xl:w-[680px]">
+          <p class="inline-flex items-center gap-2 rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-semibold text-brand md:px-4 md:text-[13px]">
+            <span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
+            AI-курс для підлітків 13–17 років
+          </p>
+
+          <div class="flex flex-col gap-4 lg:gap-5">
+            <h1 class="font-heading text-[32px] font-extrabold leading-[1.15] min-[360px]:text-4xl md:text-5xl lg:text-[42px] lg:leading-[1.1] xl:text-[48px]" id="hero-title">
+              Перетвори захоплення гаджетами на
+              <span class="bg-gradient-to-br from-brand from-25% to-accent to-75% bg-clip-text text-transparent">затребувану IT-професію</span> з PrompterMind
+            </h1>
+            <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed lg:max-w-[600px]">Практичний курс зі штучного інтелекту без нудних шкільних лекцій. Безпечно, під контролем, з результатом у портфоліо.</p>
+          </div>
+
+          <div class="flex w-full flex-col gap-3 md:w-auto md:flex-row md:flex-wrap md:gap-4">
+            <a class="group inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-br from-brand from-25% to-brand-light to-75% px-6 py-4 font-heading text-[15px] font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:shadow-lift active:translate-y-0 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-accent md:w-auto md:px-8 md:text-base" href="#cta">
+              <svg class="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6" aria-hidden="true"><use href="#icon-rocket"></use></svg>
+              Запустити пробний урок
+            </a>
+            <a class="inline-flex min-h-[44px] w-full items-center justify-center rounded-2xl border-2 border-brand bg-white px-6 py-3.5 font-heading text-[15px] font-semibold text-brand transition duration-200 hover:-translate-y-0.5 hover:bg-brand-100 active:translate-y-0 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-accent md:w-auto md:px-8 md:py-4 md:text-base" href="#pricing">Розрахувати вартість</a>
+          </div>
+
+          <ul class="flex w-full items-center md:w-auto md:gap-8 [&>li+li]:border-l [&>li+li]:border-brand-200 md:[&>li+li]:pl-8" aria-label="Курс у цифрах">
+            <li class="flex flex-1 flex-col items-center gap-0.5 text-center md:flex-none md:items-start md:text-left">
+              <span class="font-heading text-[22px] font-extrabold tabular-nums text-brand md:text-2xl" data-counter>500+</span>
+              <span class="whitespace-nowrap text-[11px] text-gray-500 md:font-heading md:text-[13px]">учнів вже навчаються</span>
+            </li>
+            <li class="flex flex-1 flex-col items-center gap-0.5 text-center md:flex-none md:items-start md:text-left">
+              <span class="font-heading text-[22px] font-extrabold tabular-nums text-brand md:text-2xl" data-counter>6 хв</span>
+              <span class="whitespace-nowrap text-[11px] text-gray-500 md:font-heading md:text-[13px]">тривалість уроку</span>
+            </li>
+            <li class="flex flex-1 flex-col items-center gap-0.5 text-center md:flex-none md:items-start md:text-left">
+              <span class="font-heading text-[22px] font-extrabold tabular-nums text-brand md:text-2xl" data-counter>70%</span>
+              <span class="whitespace-nowrap text-[11px] text-gray-500 md:font-heading md:text-[13px]">практики в курсі</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Бігуча стрічка ========== -->
+    <section class="ticker relative h-[132px] overflow-hidden bg-white md:h-40" aria-label="Чого ти навчишся">
+      <div class="ticker-band--back absolute -left-[5%] top-[66%] w-[110%] overflow-hidden bg-violet-100 py-3 text-brand md:top-1/2 md:py-4" aria-hidden="true">
+        <div class="ticker-track flex w-max">
+          <ul class="flex shrink-0">
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Навчайся<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Створюй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Зростай<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Експериментуй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Ділися проєктами<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Навчайся<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Створюй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Зростай<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Експериментуй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Ділися проєктами<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+          </ul>
+          <ul class="flex shrink-0">
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Навчайся<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Створюй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Зростай<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Експериментуй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Ділися проєктами<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Навчайся<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Створюй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Зростай<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Експериментуй<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Ділися проєктами<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ticker-band--front absolute -left-[5%] top-[36%] z-10 w-[110%] overflow-hidden bg-gradient-to-r from-brand to-accent py-3 text-white shadow-featured md:top-1/2 md:py-4">
+        <div class="ticker-track flex w-max">
+          <ul class="flex shrink-0">
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Промпт-інжиніринг<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Власні ШІ-боти<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Генерація зображень<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Нейромережі без коду<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Мікроуроки по 6 хвилин<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Портфоліо до випуску<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Безпечно для підлітків<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">70% практики<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+          </ul>
+          <ul class="flex shrink-0" aria-hidden="true">
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Промпт-інжиніринг<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Власні ШІ-боти<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Генерація зображень<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Нейромережі без коду<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Мікроуроки по 6 хвилин<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Портфоліо до випуску<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">Безпечно для підлітків<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+            <li class="flex items-center gap-[18px] whitespace-nowrap pr-[18px] font-heading text-base font-extrabold uppercase tracking-wide md:gap-7 md:pr-7 md:text-[22px]">70% практики<svg class="h-4 w-4 md:h-[22px] md:w-[22px]" aria-hidden="true"><use href="#icon-sparkles"></use></svg></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Переваги ========== -->
+    <section class="bg-white px-5 py-14 md:px-8 lg:px-16 lg:py-16" id="benefits" aria-labelledby="benefits-title">
+      <div class="mx-auto flex max-w-container flex-col gap-10">
+        <header class="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center md:gap-6" data-reveal>
+          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Переваги</p>
+          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="benefits-title">Чому обирають PrompterMind</h2>
+          <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">Короткі уроки, багато практики та реальні проєкти. Без нудних лекцій і домашки до ночі.</p>
+        </header>
+
+        <div class="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
+          <article class="group relative flex flex-col items-start gap-3.5 overflow-hidden rounded-[20px] border-2 border-brand-200 bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift md:rounded-3xl md:pr-36 lg:min-h-[300px] lg:pr-6" data-reveal>
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-violet-100 to-violet-300 text-brand transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105 lg:h-12 lg:w-12" aria-hidden="true"><svg class="h-7 w-7 lg:h-6 lg:w-6"><use href="#icon-bolt"></use></svg></span>
+            <p class="rounded-lg bg-violet-100 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand lg:px-3 lg:text-[13px]">Швидко</p>
+            <h3 class="font-heading text-2xl font-extrabold leading-tight lg:text-[28px]">Мікроспринти по 6 хвилин</h3>
+            <p class="text-sm leading-[1.65] text-gray-500">Короткі уроки у смартфоні. Навчайся між справами, без довгих лекцій і домашки до ночі.</p>
+            <img class="float absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/robot.webp" alt="" width="100" height="100" loading="lazy">
+          </article>
+
+          <article class="group relative flex flex-col items-start gap-3.5 overflow-hidden rounded-[20px] border-2 border-brand-200 bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift md:rounded-3xl md:pr-36 lg:min-h-[300px] lg:pr-6" data-reveal>
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-violet-100 to-violet-300 text-brand transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105 lg:h-12 lg:w-12" aria-hidden="true"><svg class="h-7 w-7 lg:h-6 lg:w-6"><use href="#icon-puzzle"></use></svg></span>
+            <p class="rounded-lg bg-violet-100 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand lg:px-3 lg:text-[13px]">Дієво</p>
+            <h3 class="font-heading text-2xl font-extrabold leading-tight lg:text-[28px]">70% практики</h3>
+            <p class="text-sm leading-[1.65] text-gray-500">Менше теорії, більше справи. Уже на першому тижні ти створиш власного ШІ-бота.</p>
+            <img class="float float--delay-1 absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/puzzle.webp" alt="" width="100" height="100" loading="lazy">
+          </article>
+
+          <article class="group relative flex flex-col items-start gap-3.5 overflow-hidden rounded-[20px] border-2 border-brand-200 bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift md:rounded-3xl md:pr-36 lg:min-h-[300px] lg:pr-6" data-reveal>
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-violet-100 to-violet-300 text-brand transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105 lg:h-12 lg:w-12" aria-hidden="true"><svg class="h-7 w-7 lg:h-6 lg:w-6"><use href="#icon-trophy"></use></svg></span>
+            <p class="rounded-lg bg-violet-100 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand lg:px-3 lg:text-[13px]">Результат</p>
+            <h3 class="font-heading text-2xl font-extrabold leading-tight lg:text-[28px]">Портфоліо до випуску</h3>
+            <p class="text-sm leading-[1.65] text-gray-500">Реальні проєкти, які не соромно показати друзям, батькам і майбутнім роботодавцям.</p>
+            <img class="float float--delay-2 absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/folder.webp" alt="" width="100" height="100" loading="lazy">
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Що ти створиш: сітка з 6 карток (ЛР №6, етапи 8–9) ========== -->
+    <section class="bg-brand-100 px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="projects" aria-labelledby="projects-title">
+      <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-16">
+        <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5" data-reveal>
+          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Проєкти</p>
+          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="projects-title">Що ти створиш</h2>
+          <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">Шість реальних проєктів, які увійдуть до твого портфоліо. Кожен — окремий спринт з наставником.</p>
+        </header>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
+            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/telegram-bot.webp" alt="3D-робот із телефоном, у якому відкрито чат Telegram-бота" width="1200" height="900" loading="lazy">
+              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 1</p>
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+              <h3 class="font-heading text-xl font-extrabold leading-snug">ШІ-бот для Telegram</h3>
+              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Бот, який відповідає на питання однокласників про розклад і домашні завдання.</p>
+              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Створення ботів</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Середній</dd></div>
+              </dl>
+              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#program">Хочу такий проєкт<span class="sr-only">: ШІ-бот для Telegram</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+            </div>
+          </article>
+
+          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
+            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/ai-assistant.webp" alt="3D-ноутбук, над ним мозок і вікна чату та коду" width="1200" height="900" loading="lazy">
+              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 2</p>
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+              <h3 class="font-heading text-xl font-extrabold leading-snug">Особистий ШІ-асистент</h3>
+              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Налаштований чат-помічник, який пояснює складні теми простими словами.</p>
+              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Старт у ШІ</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>1 тиждень</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Початковий</dd></div>
+              </dl>
+              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#program">Хочу такий проєкт<span class="sr-only">: Особистий ШІ-асистент</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+            </div>
+          </article>
+
+          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
+            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/quest-game.webp" alt="3D-скриня зі скарбом, мапа квесту та геймпад" width="1200" height="900" loading="lazy">
+              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 3</p>
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+              <h3 class="font-heading text-xl font-extrabold leading-snug">Квест-гра з нейромережею</h3>
+              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Текстова пригода, де сюжет і загадки генерує ШІ залежно від твоїх рішень.</p>
+              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Просунутий промптинг</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>3 тижні</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Високий</dd></div>
+              </dl>
+              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#program">Хочу такий проєкт<span class="sr-only">: Квест-гра з нейромережею</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+            </div>
+          </article>
+
+          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
+            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/logo-brand.webp" alt="3D-полотно з логотипом ProMi, палітра кольорів і перо" width="1200" height="900" loading="lazy">
+              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 4</p>
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+              <h3 class="font-heading text-xl font-extrabold leading-snug">Логотип і фірмовий стиль</h3>
+              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Власний логотип, палітра та іконки для проєкту — від промпту до готових файлів.</p>
+              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Старт у ШІ</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>1 тиждень</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Початковий</dd></div>
+              </dl>
+              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#program">Хочу такий проєкт<span class="sr-only">: Логотип і фірмовий стиль</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+            </div>
+          </article>
+
+          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
+            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/animation.webp" alt="3D-ноутбук із кодом і лампочка-ідея" width="1200" height="900" loading="lazy">
+              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 5</p>
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+              <h3 class="font-heading text-xl font-extrabold leading-snug">Анімація з однієї картинки</h3>
+              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Короткий ролик для соцмереж: оживляєш власну ілюстрацію за допомогою ШІ.</p>
+              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Просунутий промптинг</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Високий</dd></div>
+              </dl>
+              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#program">Хочу такий проєкт<span class="sr-only">: Анімація з однієї картинки</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+            </div>
+          </article>
+
+          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
+            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/portfolio-site.webp" alt="3D-вікно сайту-портфоліо з фотоапаратом і нагородою" width="1200" height="900" loading="lazy">
+              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 6</p>
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+              <h3 class="font-heading text-xl font-extrabold leading-snug">Сайт-портфоліо</h3>
+              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Односторінковий сайт, де зібрано всі твої проєкти з курсу та відгуки наставника.</p>
+              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Створення ботів</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
+                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Середній</dd></div>
+              </dl>
+              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#program">Хочу такий проєкт<span class="sr-only">: Сайт-портфоліо</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Програма + конвертер ========== -->
+    <section class="bg-white px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="program" aria-labelledby="program-title">
+      <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-16">
+        <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5" data-reveal>
+          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Програма</p>
+          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="program-title">Спробуй вже зараз</h2>
+          <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">Обирай модулі, які цікаві саме тобі. Вартість і тривалість рахуються одразу.</p>
+        </header>
+
+        <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+          <div class="flex flex-col gap-6">
+            <article class="group overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="true" data-title="Старт у ШІ" data-price="1490" data-weeks="4" data-reveal>
+              <div class="flex flex-col items-start gap-6 p-6 md:p-8">
+                <!-- Заголовок ліворуч, робот праворуч навпроти нього -->
+                <div class="flex w-full items-center justify-between gap-4">
+                  <div class="flex min-w-0 flex-col items-start gap-2">
+                    <p class="rounded-lg bg-violet-100 px-3 py-1 font-heading text-xs font-bold uppercase text-brand">Програма</p>
+                    <h3 class="font-heading text-[22px] font-extrabold leading-snug">Старт у ШІ</h3>
+                    <p class="text-[15px] leading-normal text-gray-500">Початковий рівень. Базові поняття та перші промпти.</p>
+                  </div>
+                  <img class="float h-auto w-[104px] shrink-0 mix-blend-multiply transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.08] sm:w-[124px]" src="assets/images/illustrations/robot-trim.webp" alt="" width="448" height="362" loading="lazy">
+                </div>
+                <dl class="flex w-full flex-col gap-3 font-heading font-bold">
+                  <div class="flex flex-col gap-1 rounded-2xl bg-brand-100 p-4"><dt class="text-xs uppercase text-gray-500">Тривалість</dt><dd class="text-[15px]">4 тижні · 12 уроків</dd></div>
+                  <div class="flex flex-col gap-1 rounded-2xl bg-brand-100 p-4"><dt class="text-xs uppercase text-gray-500">Вартість</dt><dd class="text-[15px]">1 490 ₴</dd></div>
+                </dl>
+                <button class="group/btn inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-full border-[1.5px] border-brand bg-white py-2 pl-3 pr-4 font-heading text-sm font-semibold text-brand transition duration-200 hover:bg-violet-100 active:scale-95 aria-pressed:border-transparent aria-pressed:bg-gradient-to-br aria-pressed:from-brand aria-pressed:from-25% aria-pressed:to-accent aria-pressed:to-75% aria-pressed:text-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" type="button" aria-pressed="true" data-module-toggle>
+                  <svg class="h-4 w-4 group-aria-pressed/btn:hidden" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                  <svg class="hidden h-4 w-4 group-aria-pressed/btn:block" aria-hidden="true"><use href="#icon-tick"></use></svg>
+                  <span data-toggle-text>Обрано</span><span class="sr-only"> модуль «Старт у ШІ»</span>
+                </button>
+              </div>
+            </article>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-title="Створення ботів" data-price="2290" data-weeks="6" data-reveal>
+                <div class="flex flex-col items-start gap-5 p-6 md:p-7">
+                  <div class="flex w-full flex-col items-start gap-2">
+                    <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/puzzle.webp" alt="" width="56" height="56" loading="lazy">
+                    <h3 class="font-heading text-xl font-extrabold leading-snug">Створення ботів</h3>
+                    <p class="text-sm leading-normal text-gray-500">Середній рівень. Збери власного ШІ-бота.</p>
+                  </div>
+                  <dl class="flex w-full flex-col gap-2 font-heading font-bold">
+                  <div class="flex flex-col gap-1 rounded-2xl bg-brand-100 px-4 py-2.5"><dt class="text-xs uppercase text-gray-500">Тривалість</dt><dd class="text-[15px]">6 тижнів · 18 уроків</dd></div>
+                  <div class="flex flex-col gap-1 rounded-2xl bg-brand-100 px-4 py-2.5"><dt class="text-xs uppercase text-gray-500">Вартість</dt><dd class="text-[15px]">2 290 ₴</dd></div>
+                </dl>
+                  <button class="group/btn inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-full border-[1.5px] border-brand bg-white py-2 pl-3 pr-4 font-heading text-sm font-semibold text-brand transition duration-200 hover:bg-violet-100 active:scale-95 aria-pressed:border-transparent aria-pressed:bg-gradient-to-br aria-pressed:from-brand aria-pressed:from-25% aria-pressed:to-accent aria-pressed:to-75% aria-pressed:text-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" type="button" aria-pressed="false" data-module-toggle>
+                  <svg class="h-4 w-4 group-aria-pressed/btn:hidden" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                  <svg class="hidden h-4 w-4 group-aria-pressed/btn:block" aria-hidden="true"><use href="#icon-tick"></use></svg>
+                  <span data-toggle-text>Обрати</span><span class="sr-only"> модуль «Створення ботів»</span>
+                </button>
+                </div>
+              </article>
+              <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-title="Просунутий промптинг" data-price="2990" data-weeks="8" data-reveal>
+                <div class="flex flex-col items-start gap-5 p-6 md:p-7">
+                  <div class="flex w-full flex-col items-start gap-2">
+                    <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/folder.webp" alt="" width="56" height="56" loading="lazy">
+                    <h3 class="font-heading text-xl font-extrabold leading-snug">Просунутий промптинг</h3>
+                    <p class="text-sm leading-normal text-gray-500">Високий рівень. Опануй складні інструменти.</p>
+                  </div>
+                  <dl class="flex w-full flex-col gap-2 font-heading font-bold">
+                  <div class="flex flex-col gap-1 rounded-2xl bg-brand-100 px-4 py-2.5"><dt class="text-xs uppercase text-gray-500">Тривалість</dt><dd class="text-[15px]">8 тижнів · 24 уроки</dd></div>
+                  <div class="flex flex-col gap-1 rounded-2xl bg-brand-100 px-4 py-2.5"><dt class="text-xs uppercase text-gray-500">Вартість</dt><dd class="text-[15px]">2 990 ₴</dd></div>
+                </dl>
+                  <button class="group/btn inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-full border-[1.5px] border-brand bg-white py-2 pl-3 pr-4 font-heading text-sm font-semibold text-brand transition duration-200 hover:bg-violet-100 active:scale-95 aria-pressed:border-transparent aria-pressed:bg-gradient-to-br aria-pressed:from-brand aria-pressed:from-25% aria-pressed:to-accent aria-pressed:to-75% aria-pressed:text-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" type="button" aria-pressed="false" data-module-toggle>
+                  <svg class="h-4 w-4 group-aria-pressed/btn:hidden" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                  <svg class="hidden h-4 w-4 group-aria-pressed/btn:block" aria-hidden="true"><use href="#icon-tick"></use></svg>
+                  <span data-toggle-text>Обрати</span><span class="sr-only"> модуль «Просунутий промптинг»</span>
+                </button>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <aside class="flex flex-col overflow-hidden rounded-3xl bg-gradient-to-b from-brand via-brand-light to-accent text-white shadow-featured" id="pricing" aria-labelledby="summary-title" data-reveal="zoom">
+            <div class="flex flex-col gap-8 px-6 py-8 md:p-12">
+              <div class="flex flex-col items-start gap-4">
+                <p class="rounded-lg bg-white/15 px-3 py-1 font-heading text-xs font-bold uppercase">Підсумок</p>
+                <h3 class="font-heading text-[28px] font-extrabold leading-tight md:text-[34px]" id="summary-title">Твій курс</h3>
+                <p class="leading-relaxed text-brand-200">Обирай модулі, які цікаві саме тобі. Вартість і тривалість рахуються одразу.</p>
+              </div>
+
+              <div class="flex flex-col gap-6" data-calc>
+                <ul class="flex flex-col gap-2 [&[hidden]]:hidden" data-calc-list aria-label="Обрані модулі">
+                  <li class="flex items-baseline justify-between gap-4 rounded-xl bg-white/[0.12] px-4 py-3 font-heading text-[15px] font-semibold"><span>Старт у ШІ</span><span class="whitespace-nowrap">1 490 ₴</span></li>
+                </ul>
+                <p class="rounded-xl border-[1.5px] border-dashed border-white/40 px-4 py-3 text-[15px] text-brand-200" data-calc-empty hidden>Обери хоча б один модуль.</p>
+
+                <dl class="flex flex-col gap-2.5 border-t border-white/25 pt-4 text-[15px] text-brand-200">
+                  <div class="flex items-baseline justify-between gap-4">
+                    <dt>Тривалість</dt>
+                    <dd class="whitespace-nowrap text-right font-heading font-bold text-white" data-calc-duration>4 тижні</dd>
+                  </div>
+                  <div class="flex items-baseline justify-between gap-4">
+                    <dt>Вартість</dt>
+                    <dd class="whitespace-nowrap text-right font-heading font-bold text-white" data-calc-subtotal>1 490 ₴</dd>
+                  </div>
+                  <div class="flex items-baseline justify-between gap-4 [&[hidden]]:hidden" data-calc-discount-row hidden>
+                    <dt>Знижка <span class="ml-1 rounded-lg bg-white/20 px-2 py-0.5 font-heading text-xs font-bold text-white" data-calc-code></span></dt>
+                    <dd class="whitespace-nowrap text-right font-heading font-bold text-green-300" data-calc-discount></dd>
+                  </div>
+                  <div class="mt-1 flex items-center justify-between gap-4 font-heading text-base font-semibold text-white">
+                    <dt>До сплати</dt>
+                    <dd class="whitespace-nowrap text-right font-heading text-[26px] font-extrabold leading-tight md:text-3xl" data-calc-total-wrap><s class="mr-1.5 text-base font-semibold text-brand-200 [&[hidden]]:hidden" data-calc-old-price hidden></s> <span data-calc-total>1 490 ₴</span></dd>
+                  </div>
+                </dl>
+
+                <form class="group/promo flex flex-col gap-2" data-promo-form novalidate>
+                  <label class="inline-flex items-center gap-1.5 font-heading text-[13px] font-bold uppercase tracking-wide text-brand-200" for="promo-code">
+                    <svg class="h-4 w-4" aria-hidden="true"><use href="#icon-ticket"></use></svg>
+                    Промокод
+                  </label>
+                  <div class="flex gap-2 rounded-2xl border-[1.5px] border-white/30 bg-white/[0.14] p-1.5 transition-colors duration-200 focus-within:border-white focus-within:bg-white/20 group-data-[state=success]/promo:border-green-300 group-data-[state=error]/promo:border-red-300">
+                    <input class="min-w-0 flex-1 bg-transparent px-2.5 py-2 font-heading text-[15px] font-semibold uppercase tracking-wide text-white placeholder:normal-case placeholder:font-medium placeholder:tracking-normal placeholder:text-white/60 focus:outline-none" id="promo-code" name="promo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" placeholder="Введи промокод" aria-describedby="promo-message">
+                    <button class="min-h-[44px] shrink-0 rounded-xl bg-white px-4 font-heading text-sm font-bold text-brand transition-colors duration-200 hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white [&[hidden]]:hidden" type="submit" data-promo-apply>Застосувати</button>
+                    <button class="inline-flex min-h-[44px] w-11 shrink-0 items-center justify-center rounded-xl bg-white/20 transition-colors duration-200 hover:bg-white/30 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white [&[hidden]]:hidden" type="button" data-promo-remove hidden>
+                      <svg class="h-5 w-5" aria-hidden="true"><use href="#icon-close"></use></svg>
+                      <span class="sr-only">Прибрати промокод</span>
+                    </button>
+                  </div>
+                  <p class="min-h-[1.5em] text-sm leading-normal text-brand-200 group-data-[state=success]/promo:text-green-200 group-data-[state=error]/promo:text-red-200" id="promo-message" role="status" data-promo-message></p>
+                </form>
+
+                <p class="sr-only" aria-live="polite" data-calc-announce></p>
+              </div>
+
+              <div class="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+                <a class="inline-flex min-h-[48px] w-full items-center justify-center rounded-[14px] bg-white px-7 font-heading text-[15px] font-bold text-brand transition duration-200 hover:-translate-y-0.5 hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white aria-disabled:pointer-events-none aria-disabled:opacity-55 sm:w-auto" href="#contact" data-calc-submit>Залишити заявку</a>
+                <a class="group inline-flex min-h-[48px] items-center justify-center gap-2 px-4 font-heading text-[15px] font-semibold text-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-white" href="#comparison">Докладніше <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+              </div>
+            </div>
+            <!-- Галявина з роботами (власна SVG-ілюстрація в кольорах блоку замість повторюваної теки) -->
+            <img class="mt-auto w-full" src="assets/images/illustrations/robots-meadow.svg" alt="" width="640" height="240" loading="lazy">
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Відгуки: безперервна стрічка ==========
+         Список продубльовано (копія — aria-hidden + inert), CSS-анімація зсуває його на -50% по колу.
+         Пауза при наведенні/фокусі; при prefers-reduced-motion — звичайна горизонтальна прокрутка (custom-styles.css). -->
+    <section class="overflow-hidden bg-brand-100 py-14 md:py-20 lg:py-28" id="testimonials" aria-labelledby="testimonials-title">
+      <div class="flex flex-col gap-10 md:gap-14">
+        <header class="mx-auto flex w-full max-w-container flex-col items-start gap-3 px-5 md:gap-4 md:px-8 lg:px-16 xl:px-0" data-reveal>
+          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Відгуки</p>
+          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="testimonials-title">Живі відгуки</h2>
+          <p class="text-[15px] leading-[1.65] text-gray-600 md:text-lg md:leading-relaxed">Що кажуть учні та батьки про навчання у PrompterMind</p>
+        </header>
+
+        <div class="marquee" data-reveal>
+          <ul class="marquee-track flex w-max py-3" aria-label="Відгуки учнів і батьків">
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Олександр, учень, 15 років</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">ШІ-бот</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Я думав, що ШІ — це складно. Виявилося, що за кілька тижнів можна зробити власного бота, який реально відповідає на повідомлення»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent font-heading text-base font-bold text-white" aria-hidden="true">О</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Олександр</span><span class="text-[13px] text-gray-600">Учень, 15 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Ірина, мати учня</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Портфоліо</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Син нарешті проводить час у телефоні з користю. Він сам обирає модулі й показує мені готові проєкти. Я бачу результат»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 font-heading text-base font-bold text-white" aria-hidden="true">І</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Ірина</span><span class="text-[13px] text-gray-600">Мати учня</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Марта, учениця, 14 років</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">ШІ-асистент</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Найбільше сподобалось, що можна одразу пробувати. Наставник допоміг розібратися з промптами, і мій бот тепер підказує рецепти»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent to-cyan-500 font-heading text-base font-bold text-white" aria-hidden="true">М</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Марта</span><span class="text-[13px] text-gray-600">Учениця, 14 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Андрій, батько учениці</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Логотип</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Донька сама записалася на наступний модуль. Для мене це найкращий показник, що курс справді цікавий»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-violet-400 font-heading text-base font-bold text-white" aria-hidden="true">А</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Андрій</span><span class="text-[13px] text-gray-600">Батько учениці</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Софія, учениця, 16 років</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Сайт-портфоліо</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Зробила проєкт для портфоліо і показала його на уроці інформатики. Тепер однокласники просять навчити і їх»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent font-heading text-base font-bold text-white" aria-hidden="true">С</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Софія</span><span class="text-[13px] text-gray-600">Учениця, 16 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Максим, учень, 13 років</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Квест-гра</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Я був наймолодшим у групі, але ніхто не залишив мене позаду. Пояснюють просто і на прикладах»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 font-heading text-base font-bold text-white" aria-hidden="true">М</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Максим</span><span class="text-[13px] text-gray-600">Учень, 13 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Вікторія, мати учениці</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Анімація</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Подобається, що уроки короткі: донька займається дорогою до школи, а ввечері показує, що вже зробила»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent to-cyan-500 font-heading text-base font-bold text-white" aria-hidden="true">В</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Вікторія</span><span class="text-[13px] text-gray-600">Мати учениці</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6">
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <h3 class="sr-only">Відгук: Тимур, учень, 17 років</h3>
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Квест-гра</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Зробив квест-гру з нейромережею, і друзі грають у неї досі. Тепер точно знаю, що хочу в IT»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-violet-400 font-heading text-base font-bold text-white" aria-hidden="true">Т</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Тимур</span><span class="text-[13px] text-gray-600">Учень, 17 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">ШІ-бот</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Я думав, що ШІ — це складно. Виявилося, що за кілька тижнів можна зробити власного бота, який реально відповідає на повідомлення»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent font-heading text-base font-bold text-white" aria-hidden="true">О</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Олександр</span><span class="text-[13px] text-gray-600">Учень, 15 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Портфоліо</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Син нарешті проводить час у телефоні з користю. Він сам обирає модулі й показує мені готові проєкти. Я бачу результат»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 font-heading text-base font-bold text-white" aria-hidden="true">І</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Ірина</span><span class="text-[13px] text-gray-600">Мати учня</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">ШІ-асистент</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Найбільше сподобалось, що можна одразу пробувати. Наставник допоміг розібратися з промптами, і мій бот тепер підказує рецепти»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent to-cyan-500 font-heading text-base font-bold text-white" aria-hidden="true">М</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Марта</span><span class="text-[13px] text-gray-600">Учениця, 14 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Логотип</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Донька сама записалася на наступний модуль. Для мене це найкращий показник, що курс справді цікавий»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-violet-400 font-heading text-base font-bold text-white" aria-hidden="true">А</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Андрій</span><span class="text-[13px] text-gray-600">Батько учениці</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Сайт-портфоліо</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Зробила проєкт для портфоліо і показала його на уроці інформатики. Тепер однокласники просять навчити і їх»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent font-heading text-base font-bold text-white" aria-hidden="true">С</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Софія</span><span class="text-[13px] text-gray-600">Учениця, 16 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Квест-гра</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Я був наймолодшим у групі, але ніхто не залишив мене позаду. Пояснюють просто і на прикладах»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 font-heading text-base font-bold text-white" aria-hidden="true">М</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Максим</span><span class="text-[13px] text-gray-600">Учень, 13 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Анімація</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Подобається, що уроки короткі: донька займається дорогою до школи, а ввечері показує, що вже зробила»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent to-cyan-500 font-heading text-base font-bold text-white" aria-hidden="true">В</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Вікторія</span><span class="text-[13px] text-gray-600">Мати учениці</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+            <li class="shrink-0 pr-5 md:pr-6" aria-hidden="true" inert>
+              <article class="flex h-full w-[290px] flex-col gap-5 rounded-3xl border-2 border-brand-200 bg-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lift sm:w-[360px]">
+                <div class="flex items-center justify-between gap-3">
+                  <p class="flex gap-0.5 text-amber-500" role="img" aria-label="Оцінка 5 з 5"><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-star"></use></svg></p>
+                  <p class="rounded-full bg-violet-100 px-2.5 py-1 font-heading text-xs font-semibold text-brand">Квест-гра</p>
+                </div>
+                <figure class="flex flex-1 flex-col justify-between gap-5">
+                  <blockquote class="text-[15px] leading-relaxed text-gray-700 md:text-base"><p>«Зробив квест-гру з нейромережею, і друзі грають у неї досі. Тепер точно знаю, що хочу в IT»</p></blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-violet-400 font-heading text-base font-bold text-white" aria-hidden="true">Т</span>
+                    <span class="flex flex-col"><span class="font-heading text-[15px] font-bold">Тимур</span><span class="text-[13px] text-gray-600">Учень, 17 років</span></span>
+                  </figcaption>
+                </figure>
+              </article>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FAQ: питання праворуч, «залишились питання?» ліворуч ========== -->
+    <section class="bg-white px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="faq" aria-labelledby="faq-title">
+      <div class="mx-auto grid max-w-container grid-cols-1 gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+        <div class="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
+          <header class="flex flex-col items-start gap-3 md:gap-4" data-reveal>
+            <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">FAQ</p>
+            <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="faq-title">Часті запитання</h2>
+            <p class="text-[15px] leading-[1.65] text-gray-600 md:text-lg md:leading-relaxed">Прості відповіді на важливі питання про навчання, безпеку та оплату.</p>
+          </header>
+
+          <aside class="relative flex flex-col items-start gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-brand to-indigo-600 p-6 text-white shadow-featured md:p-8" aria-labelledby="faq-help-title" data-reveal>
+            <span class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" aria-hidden="true"></span>
+            <img class="float relative h-16 w-16 rounded-2xl bg-white/15 object-contain p-1.5" src="assets/images/illustrations/avatar-robot.png" alt="" width="64" height="64" loading="lazy">
+            <h3 class="relative font-heading text-2xl font-extrabold leading-tight" id="faq-help-title">Залишилися питання?</h3>
+            <p class="relative leading-relaxed text-violet-100">Напиши нам — наставник відповість і допоможе обрати модуль.</p>
+            <div class="relative flex w-full flex-col gap-3 sm:flex-row">
+              <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-6 font-heading font-bold text-brand transition duration-200 hover:-translate-y-0.5 hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white" href="#contact">Консультація</a>
+              <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border-2 border-white/40 px-6 font-heading font-semibold text-white transition duration-200 hover:bg-white/10 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white" href="https://t.me/promptermind"><svg class="h-5 w-5" aria-hidden="true"><use href="#icon-telegram"></use></svg>Telegram</a>
+            </div>
+          </aside>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <details class="group rounded-2xl border-2 border-brand-200 bg-white transition duration-200 hover:border-violet-300 open:border-brand open:bg-brand-50 open:shadow-card" data-reveal>
+            <summary class="flex min-h-11 cursor-pointer list-none items-center gap-4 rounded-2xl px-4 py-4 font-heading text-base font-bold md:px-6 md:py-5 md:text-[17px] [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 font-heading text-sm font-extrabold text-brand transition-colors duration-200 group-open:bg-gradient-to-br group-open:from-brand group-open:to-accent group-open:text-white" aria-hidden="true">01</span>
+              <span class="flex-1">Скільки коштує навчання?</span>
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-brand transition-transform duration-200 group-open:rotate-45" aria-hidden="true"><svg class="h-4 w-4"><use href="#icon-plus"></use></svg></span>
+            </summary>
+            <p class="pb-5 pl-[72px] pr-5 text-[15px] leading-relaxed text-gray-600 md:pb-6 md:pl-[80px] md:pr-6">Вартість залежить від обраних модулів. Ти бачиш ціну одразу, ще до заявки. Жодних прихованих платежів.</p>
+          </details>
+          <details class="group rounded-2xl border-2 border-brand-200 bg-white transition duration-200 hover:border-violet-300 open:border-brand open:bg-brand-50 open:shadow-card" data-reveal>
+            <summary class="flex min-h-11 cursor-pointer list-none items-center gap-4 rounded-2xl px-4 py-4 font-heading text-base font-bold md:px-6 md:py-5 md:text-[17px] [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 font-heading text-sm font-extrabold text-brand transition-colors duration-200 group-open:bg-gradient-to-br group-open:from-brand group-open:to-accent group-open:text-white" aria-hidden="true">02</span>
+              <span class="flex-1">Чи безпечно це?</span>
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-brand transition-transform duration-200 group-open:rotate-45" aria-hidden="true"><svg class="h-4 w-4"><use href="#icon-plus"></use></svg></span>
+            </summary>
+            <p class="pb-5 pl-[72px] pr-5 text-[15px] leading-relaxed text-gray-600 md:pb-6 md:pl-[80px] md:pr-6">Навчання проходить у контрольованому середовищі. Батьки можуть бачити прогрес. Ми не збираємо зайвих даних.</p>
+          </details>
+          <details class="group rounded-2xl border-2 border-brand-200 bg-white transition duration-200 hover:border-violet-300 open:border-brand open:bg-brand-50 open:shadow-card" data-reveal>
+            <summary class="flex min-h-11 cursor-pointer list-none items-center gap-4 rounded-2xl px-4 py-4 font-heading text-base font-bold md:px-6 md:py-5 md:text-[17px] [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 font-heading text-sm font-extrabold text-brand transition-colors duration-200 group-open:bg-gradient-to-br group-open:from-brand group-open:to-accent group-open:text-white" aria-hidden="true">03</span>
+              <span class="flex-1">Чи можна повернути кошти?</span>
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-brand transition-transform duration-200 group-open:rotate-45" aria-hidden="true"><svg class="h-4 w-4"><use href="#icon-plus"></use></svg></span>
+            </summary>
+            <p class="pb-5 pl-[72px] pr-5 text-[15px] leading-relaxed text-gray-600 md:pb-6 md:pl-[80px] md:pr-6">Так, ми повертаємо кошти за невикористані модулі. Умови описані в оферті. Зв'яжись з нами для деталей.</p>
+          </details>
+          <details class="group rounded-2xl border-2 border-brand-200 bg-white transition duration-200 hover:border-violet-300 open:border-brand open:bg-brand-50 open:shadow-card" data-reveal>
+            <summary class="flex min-h-11 cursor-pointer list-none items-center gap-4 rounded-2xl px-4 py-4 font-heading text-base font-bold md:px-6 md:py-5 md:text-[17px] [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 font-heading text-sm font-extrabold text-brand transition-colors duration-200 group-open:bg-gradient-to-br group-open:from-brand group-open:to-accent group-open:text-white" aria-hidden="true">04</span>
+              <span class="flex-1">Як проходить навчання?</span>
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-brand transition-transform duration-200 group-open:rotate-45" aria-hidden="true"><svg class="h-4 w-4"><use href="#icon-plus"></use></svg></span>
+            </summary>
+            <p class="pb-5 pl-[72px] pr-5 text-[15px] leading-relaxed text-gray-600 md:pb-6 md:pl-[80px] md:pr-6">Короткі уроки по шість хвилин у смартфоні. Більшість часу — практика. Ти створюєш реальні проєкти.</p>
+          </details>
+          <details class="group rounded-2xl border-2 border-brand-200 bg-white transition duration-200 hover:border-violet-300 open:border-brand open:bg-brand-50 open:shadow-card" data-reveal>
+            <summary class="flex min-h-11 cursor-pointer list-none items-center gap-4 rounded-2xl px-4 py-4 font-heading text-base font-bold md:px-6 md:py-5 md:text-[17px] [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 font-heading text-sm font-extrabold text-brand transition-colors duration-200 group-open:bg-gradient-to-br group-open:from-brand group-open:to-accent group-open:text-white" aria-hidden="true">05</span>
+              <span class="flex-1">Чи потрібне програмування?</span>
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-brand transition-transform duration-200 group-open:rotate-45" aria-hidden="true"><svg class="h-4 w-4"><use href="#icon-plus"></use></svg></span>
+            </summary>
+            <p class="pb-5 pl-[72px] pr-5 text-[15px] leading-relaxed text-gray-600 md:pb-6 md:pl-[80px] md:pr-6">Ні, програмування не потрібне. Ми вчимо працювати з готовими інструментами. Тобі знадобиться лише бажання.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="relative overflow-hidden bg-gradient-to-r from-brand to-accent px-5 py-16 text-white md:px-8 md:py-20 lg:px-16 lg:py-28" id="cta" aria-labelledby="cta-title">
+      <span class="cta-circle--one absolute -left-[100px] -top-[100px] h-[260px] w-[260px] rounded-full bg-white/5 md:h-[400px] md:w-[400px]" aria-hidden="true"></span>
+      <span class="cta-circle--two absolute -right-[150px] top-[150px] h-[180px] w-[180px] rounded-full bg-white/5 md:top-[200px] md:h-[300px] md:w-[300px] xl:left-[calc(50%+480px)] xl:right-auto" aria-hidden="true"></span>
+
+      <div class="relative mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+        <p class="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 font-heading text-[13px] font-bold" data-reveal><svg class="h-4 w-4" aria-hidden="true"><use href="#icon-target"></use></svg> Безкоштовний старт</p>
+        <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-5xl lg:text-[56px] lg:leading-[1.1]" id="cta-title" data-reveal>Готовий спробувати?</h2>
+        <p class="-mt-2 text-[15px] leading-[1.65] text-brand-200 md:text-lg" data-reveal>Почни з пробного уроку. Це безкоштовно і ні до чого не зобов'язує.</p>
+        <div class="flex w-full flex-col gap-4 md:w-auto md:flex-row" data-reveal>
+          <a class="group inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-2xl bg-white px-8 py-4 font-heading font-bold text-brand shadow-[0_8px_12px_rgba(0,0,0,0.15)] transition duration-200 hover:-translate-y-0.5 hover:bg-violet-100 active:translate-y-0 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-white md:w-auto" href="#contact"><svg class="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:rotate-6" aria-hidden="true"><use href="#icon-rocket"></use></svg> Пробний урок</a>
+          <a class="inline-flex min-h-[44px] w-full items-center justify-center rounded-2xl border-2 border-white bg-white/10 px-8 py-4 font-heading font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-white/20 active:translate-y-0 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-white md:w-auto" href="#pricing">Розрахувати вартість</a>
+        </div>
+        <a class="group inline-flex min-h-[44px] items-center gap-2 rounded font-heading font-semibold text-white underline underline-offset-4 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white" href="intensive.html" data-reveal>Або приходь на безкоштовний ШІ-інтенсив у Львові 22 листопада<svg class="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+      </div>
+    </section>
+
+    <!-- ========== Контакти: заявка в 3 кроки + способи зв'язку ========== -->
+    <section class="bg-white px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="contact" aria-labelledby="contact-title">
+      <div class="mx-auto grid max-w-container grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-8">
+        <div class="relative flex flex-col gap-8 overflow-hidden rounded-[32px] bg-gradient-to-br from-brand via-brand-light to-accent p-6 text-white shadow-featured md:p-10" data-reveal>
+          <span class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10" aria-hidden="true"></span>
+          <span class="absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-white/5" aria-hidden="true"></span>
+          <header class="relative flex flex-col items-start gap-3 md:gap-4">
+            <p class="rounded-full bg-white/15 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide md:px-4 md:text-[13px]">Контакти</p>
+            <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="contact-title">Залиш заявку</h2>
+            <p class="text-[15px] leading-[1.65] text-violet-100 md:text-lg md:leading-relaxed">Розкажи про себе. Ми відповімо швидко і без зайвих питань.</p>
+          </header>
+          <ol class="relative grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <li class="flex items-start gap-3 rounded-2xl bg-white/[0.12] p-4 ring-1 ring-white/20 sm:flex-col">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white font-heading font-extrabold text-brand" aria-hidden="true">1</span>
+              <span class="flex flex-col gap-0.5"><span class="font-heading font-bold">Залишаєш заявку</span><span class="text-sm text-violet-100">у Telegram, на пошту чи телефоном</span></span>
+            </li>
+            <li class="flex items-start gap-3 rounded-2xl bg-white/[0.12] p-4 ring-1 ring-white/20 sm:flex-col">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white font-heading font-extrabold text-brand" aria-hidden="true">2</span>
+              <span class="flex flex-col gap-0.5"><span class="font-heading font-bold">Наставник пише тобі</span><span class="text-sm text-violet-100">і допомагає обрати модуль</span></span>
+            </li>
+            <li class="flex items-start gap-3 rounded-2xl bg-white/[0.12] p-4 ring-1 ring-white/20 sm:flex-col">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white font-heading font-extrabold text-brand" aria-hidden="true">3</span>
+              <span class="flex flex-col gap-0.5"><span class="font-heading font-bold">Пробний урок</span><span class="text-sm text-violet-100">безкоштовно, у зручний час</span></span>
+            </li>
+          </ol>
+          <div class="relative flex flex-col gap-3 sm:flex-row">
+            <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-7 font-heading font-bold text-brand shadow-[0_8px_12px_rgba(0,0,0,0.15)] transition duration-200 hover:-translate-y-0.5 hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white" href="https://t.me/promptermind"><svg class="h-5 w-5" aria-hidden="true"><use href="#icon-telegram"></use></svg>Написати в Telegram</a>
+            <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border-2 border-white/50 px-7 font-heading font-semibold text-white transition duration-200 hover:bg-white/10 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-white" href="mailto:hello@promptermind.ua"><svg class="h-5 w-5" aria-hidden="true"><use href="#icon-mail"></use></svg>Написати на пошту</a>
+          </div>
+        </div>
+
+        <ul class="flex flex-col gap-4" aria-label="Способи зв'язку">
+          <li data-reveal>
+            <a class="group flex items-center gap-4 rounded-3xl border-2 border-brand-200 bg-brand-50 p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:bg-white hover:shadow-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:p-6" href="https://t.me/promptermind">
+              <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-brand text-white transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-telegram"></use></svg></span>
+              <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span class="font-heading text-lg font-extrabold">Telegram</span>
+                <span class="text-sm text-gray-600">Найшвидша відповідь</span>
+                <span class="break-all font-heading text-[15px] font-semibold text-brand">@promptermind</span>
+              </span>
+              <svg class="h-5 w-5 shrink-0 text-brand transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg>
+            </a>
+          </li>
+          <li data-reveal>
+            <a class="group flex items-center gap-4 rounded-3xl border-2 border-brand-200 bg-brand-50 p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:bg-white hover:shadow-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:p-6" href="mailto:hello@promptermind.ua">
+              <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-light text-white transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-mail"></use></svg></span>
+              <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span class="font-heading text-lg font-extrabold">Email</span>
+                <span class="text-sm text-gray-600">Відповідаємо протягом робочого дня</span>
+                <span class="break-all font-heading text-[15px] font-semibold text-brand">hello@promptermind.ua</span>
+              </span>
+              <svg class="h-5 w-5 shrink-0 text-brand transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg>
+            </a>
+          </li>
+          <li data-reveal>
+            <a class="group flex items-center gap-4 rounded-3xl border-2 border-brand-200 bg-brand-50 p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:bg-white hover:shadow-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:p-6" href="tel:+380000000000">
+              <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-accent text-white transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-phone"></use></svg></span>
+              <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+                <span class="font-heading text-lg font-extrabold">Телефон</span>
+                <span class="text-sm text-gray-600">На зв'язку в робочі години</span>
+                <span class="break-all font-heading text-[15px] font-semibold text-brand">+380 00 000 0000</span>
+              </span>
+              <svg class="h-5 w-5 shrink-0 text-brand transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg>
+            </a>
+          </li>
+          <li class="flex items-center gap-3 rounded-2xl px-2 text-sm text-gray-600" data-reveal>
+            <span class="relative flex h-2.5 w-2.5" aria-hidden="true"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-60 motion-reduce:animate-none"></span><span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span></span>
+            Відповідаємо в робочі години
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== Порівняння ========== -->
+    <section class="bg-brand-100 px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="comparison" aria-labelledby="comparison-title">
+      <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-16">
+        <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5" data-reveal>
+          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">PrompterMind</p>
+          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="comparison-title">Навчайся. Створюй. Зростай.</h2>
+          <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">Курс зі штучного інтелекту для підлітків 13–17 років</p>
+        </header>
+
+        <div class="overflow-x-auto rounded-[20px] border-2 border-brand-200 bg-white md:rounded-3xl" data-reveal="zoom">
+          <table class="w-full min-w-[331px] table-fixed border-separate border-spacing-0">
+            <caption class="sr-only">Порівняння PrompterMind зі шкільними гуртками та відеокурсами</caption>
+            <thead class="bg-brand-100">
+              <tr>
+                <th class="w-[108px] border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left align-middle font-heading text-xs font-bold min-[360px]:w-[120px] md:w-[200px] md:px-6 md:text-lg md:font-extrabold lg:w-[260px] xl:w-[360px]" scope="col">Порівняння програм</th>
+                <th class="border-b border-r border-brand-200 px-2 py-3.5 text-center align-middle md:p-6 bg-gradient-to-r from-brand to-brand-light text-white" scope="col">
+                  <img class="mx-auto mb-1.5 h-7 w-7 rounded-md object-contain md:mb-2 md:h-8 md:w-8 md:rounded-lg" src="assets/logo/logo.png" alt="" width="32" height="32">
+                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">PrompterMind</span>
+                  <span class="hidden text-brand-200 md:block">Практика, портфоліо, підтримка</span>
+                </th>
+                <th class="border-b border-r border-brand-200 px-2 py-3.5 text-center align-middle md:p-6" scope="col">
+                  <span class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-violet-100 text-brand md:mb-2 md:h-8 md:w-8 md:rounded-lg" aria-hidden="true"><svg class="h-4 w-4 md:h-[18px] md:w-[18px]"><use href="#icon-school"></use></svg></span>
+                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">Шкільні гуртки</span>
+                  <span class="hidden text-gray-500 md:block">Теорія без реальних проєктів</span>
+                </th>
+                <th class="border-b border-brand-200 px-2 py-3.5 text-center align-middle md:p-6" scope="col">
+                  <span class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-violet-100 text-brand md:mb-2 md:h-8 md:w-8 md:rounded-lg" aria-hidden="true"><svg class="h-4 w-4 md:h-[18px] md:w-[18px]"><use href="#icon-video"></use></svg></span>
+                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">Відеокурси</span>
+                  <span class="hidden text-gray-500 md:block">Без зворотного зв'язку</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Мікроспринти по 6 хвилин</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center font-heading text-[11px] font-semibold text-gray-500 md:px-6 md:py-4 md:text-[15px]">Частково</td>
+              </tr>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">70% практики</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+              </tr>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Портфоліо до випуску</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+              </tr>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Контроль для батьків</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+              </tr>
+              <tr>
+                <th class="border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Ігрова логіка навчання</th>
+                <td class="border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+                <td class="border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-4" data-reveal>
+          <a class="inline-flex min-h-[48px] items-center justify-center rounded-[14px] bg-gradient-to-br from-brand from-25% to-brand-light to-75% px-8 font-heading font-bold text-white shadow-btn transition duration-200 hover:-translate-y-0.5 hover:shadow-lift active:translate-y-0 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-accent" href="#contact">Обрати</a>
+          <a class="group inline-flex min-h-[48px] items-center gap-2 px-4 font-heading font-semibold text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-accent" href="#program">Докладніше <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== Footer: компактний — бренд ліворуч, 3 колонки посилань праворуч, тонкий нижній рядок ==========
+       Посилання на мобільному мають висоту 40 px (зручно пальцем), на десктопі — 32 px, щоб футер не розтягувався. -->
+  <footer class="relative overflow-hidden bg-gray-950 px-5 pt-12 text-gray-400 md:px-8 lg:px-16 lg:pt-14">
+    <span class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand to-transparent" aria-hidden="true"></span>
+    <span class="pointer-events-none absolute -top-48 left-1/2 h-80 w-[640px] -translate-x-1/2 rounded-full bg-brand/20 blur-3xl" aria-hidden="true"></span>
+
+    <div class="relative mx-auto max-w-container">
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <section class="flex flex-col items-start gap-5" aria-labelledby="footer-brand">
+          <h2 class="sr-only" id="footer-brand">Про PrompterMind</h2>
+          <a class="flex items-center gap-3 rounded-lg focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-accent" href="#top" aria-label="PrompterMind — на початок сторінки">
+            <img class="h-10 w-10 rounded-xl bg-white object-contain p-1" src="assets/logo/logo.png" alt="" width="40" height="40" loading="lazy">
+            <span class="font-heading text-lg font-extrabold tracking-tight text-white" aria-hidden="true">Prompter<span class="bg-gradient-to-r from-violet-300 to-blue-300 bg-clip-text text-transparent">Mind</span></span>
+          </a>
+          <p class="max-w-sm text-sm leading-relaxed">AI-освіта для підлітків 13–17 років: короткі уроки, 70% практики та портфоліо до випуску.</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <ul class="flex gap-2" aria-label="Соціальні мережі">
+              <li><a class="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-gray-300 ring-1 ring-white/10 transition duration-200 hover:-translate-y-0.5 hover:bg-brand hover:text-white hover:ring-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="https://facebook.com" aria-label="Facebook"><svg class="h-[18px] w-[18px]" aria-hidden="true"><use href="#icon-facebook"></use></svg></a></li>
+              <li><a class="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-gray-300 ring-1 ring-white/10 transition duration-200 hover:-translate-y-0.5 hover:bg-brand hover:text-white hover:ring-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="https://linkedin.com" aria-label="LinkedIn"><svg class="h-[18px] w-[18px]" aria-hidden="true"><use href="#icon-linkedin"></use></svg></a></li>
+              <li><a class="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-gray-300 ring-1 ring-white/10 transition duration-200 hover:-translate-y-0.5 hover:bg-brand hover:text-white hover:ring-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="https://x.com" aria-label="X"><svg class="h-[18px] w-[18px]" aria-hidden="true"><use href="#icon-x-brand"></use></svg></a></li>
+            </ul>
+            <a class="group inline-flex min-h-10 items-center gap-2 rounded-full bg-brand/15 px-4 font-heading text-sm font-semibold text-violet-200 ring-1 ring-brand/40 transition duration-200 hover:bg-brand hover:text-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="intensive.html"><span class="h-2 w-2 rounded-full bg-violet-300 group-hover:bg-white" aria-hidden="true"></span>ШІ-інтенсив 22.11</a>
+          </div>
+        </section>
+
+        <div class="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
+          <nav class="flex flex-col gap-3" aria-labelledby="footer-nav">
+            <h2 class="font-heading text-xs font-bold uppercase tracking-wider text-white" id="footer-nav">Навігація</h2>
+            <ul class="flex flex-col">
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#program">Програма</a></li>
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#projects">Що ти створиш</a></li>
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#pricing">Вартість</a></li>
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#testimonials">Відгуки</a></li>
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#faq">FAQ</a></li>
+            </ul>
+          </nav>
+
+          <nav class="flex flex-col gap-3" aria-labelledby="footer-courses">
+            <h2 class="font-heading text-xs font-bold uppercase tracking-wider text-white" id="footer-courses">Модулі курсу</h2>
+            <ul class="flex flex-col">
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#program">Старт у ШІ</a></li>
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#program">Створення ботів</a></li>
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#program">Просунутий промптинг</a></li>
+              <li><a class="inline-flex min-h-10 items-center text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="#comparison">Порівняння програм</a></li>
+            </ul>
+          </nav>
+
+          <section class="col-span-2 flex flex-col gap-3 sm:col-span-1" aria-labelledby="footer-contacts">
+            <h2 class="font-heading text-xs font-bold uppercase tracking-wider text-white" id="footer-contacts">Контакти</h2>
+            <address class="flex flex-col not-italic">
+              <a class="inline-flex min-h-10 items-center gap-2.5 break-all text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="mailto:hello@promptermind.ua"><svg class="h-4 w-4 shrink-0 text-violet-300" aria-hidden="true"><use href="#icon-mail"></use></svg>hello@promptermind.ua</a>
+              <a class="inline-flex min-h-10 items-center gap-2.5 text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="tel:+380000000000"><svg class="h-4 w-4 shrink-0 text-violet-300" aria-hidden="true"><use href="#icon-phone"></use></svg>+380 00 000 0000</a>
+              <a class="inline-flex min-h-10 items-center gap-2.5 text-sm transition-colors duration-200 hover:text-white focus-visible:text-white focus-visible:underline focus-visible:underline-offset-4 focus-visible:outline-none lg:min-h-8" href="https://t.me/promptermind"><svg class="h-4 w-4 shrink-0 text-violet-300" aria-hidden="true"><use href="#icon-telegram"></use></svg>@promptermind</a>
+            </address>
+          </section>
+        </div>
+      </div>
+
+      <div class="mt-10 flex flex-col-reverse items-center gap-3 border-t border-white/10 py-5 text-center text-xs md:flex-row md:justify-between md:text-left lg:mt-12">
+        <p>© 2026 PrompterMind. Всі права захищено.</p>
+        <ul class="flex flex-wrap items-center justify-center gap-x-5">
+          <li><a class="inline-flex min-h-10 items-center transition-colors duration-200 hover:text-white hover:underline hover:underline-offset-4 focus-visible:text-white focus-visible:underline" href="#top">Політика конфіденційності</a></li>
+          <li><a class="inline-flex min-h-10 items-center transition-colors duration-200 hover:text-white hover:underline hover:underline-offset-4 focus-visible:text-white focus-visible:underline" href="#top">Умови надання послуг</a></li>
+          <li><a class="inline-flex min-h-10 items-center transition-colors duration-200 hover:text-white hover:underline hover:underline-offset-4 focus-visible:text-white focus-visible:underline" href="#top">Налаштування cookies</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
