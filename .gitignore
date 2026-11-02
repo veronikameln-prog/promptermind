@@ -1,0 +1,11 @@
+# Системні файли macOS та Windows
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Налаштування редактора
+.vscode/
+
+# Залежності та логи (на майбутнє)
+node_modules/
+*.log
