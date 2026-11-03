@@ -559,3 +559,143 @@
 
   render();
 })();
+
+/* ---------- Модальне вікно заявки ----------
+   Кнопки з data-lead відкривають <dialog> замість переходу до #contact.
+   data-lead-module / data-lead-project підставляють вибір у форму, data-lead="order" — модулі й суму з калькулятора.
+   На статичному сайті заявка нікуди не надсилається — у продакшені тут буде fetch на сервер або Google Form. */
+(function () {
+  const modal = document.querySelector('[data-lead-modal]');
+  if (!modal || typeof modal.showModal !== 'function') return;
+
+  const form = modal.querySelector('[data-lead-form]');
+  const el = {
+    badge: modal.querySelector('[data-lead-badge]'),
+    title: modal.querySelector('[data-lead-title]'),
+    text: modal.querySelector('[data-lead-text]'),
+    summary: modal.querySelector('[data-lead-summary]'),
+    fields: modal.querySelector('[data-lead-fields]'),
+    success: modal.querySelector('[data-lead-success]'),
+    error: modal.querySelector('[data-lead-error]'),
+    name: form.elements.name,
+    contact: form.elements.contact,
+    module: form.elements.module,
+    consent: form.elements.consent
+  };
+
+  const COPY = {
+    trial: { badge: 'Безкоштовно', title: 'Запис на пробний урок', text: 'Наставник напише протягом робочого дня й підбере зручний час.' },
+    consult: { badge: 'Консультація', title: 'Поставити питання наставнику', text: 'Розкажи, що цікавить, — наставник відповість і допоможе обрати модуль.' },
+    project: { badge: 'Проєкт', title: 'Хочу такий проєкт', text: 'Почнемо з безкоштовного пробного уроку в модулі, де створюють цей проєкт.' },
+    order: { badge: 'Заявка на курс', title: 'Оформлення курсу', text: 'Перевір свій вибір — наставник підтвердить розклад і надішле реквізити.' }
+  };
+
+  let opener = null;
+
+  function setSummary(rows) {
+    el.summary.innerHTML = '';
+    rows.forEach(function (row) {
+      const line = document.createElement('p');
+      line.className = 'flex items-baseline justify-between gap-4';
+      const label = document.createElement('span');
+      label.className = 'text-gray-600';
+      label.textContent = row[0];
+      const value = document.createElement('span');
+      value.className = 'text-right font-bold';
+      value.textContent = row[1];
+      line.append(label, value);
+      el.summary.append(line);
+    });
+    el.summary.hidden = rows.length === 0;
+  }
+
+  function selectModule(title) {
+    const option = Array.prototype.find.call(el.module.options, function (o) { return o.text === title; });
+    el.module.selectedIndex = option ? option.index : 0;
+  }
+
+  function open(trigger) {
+    const type = COPY[trigger.dataset.lead] ? trigger.dataset.lead : 'trial';
+    const copy = COPY[type];
+    el.badge.textContent = copy.badge;
+    el.title.textContent = copy.title;
+    el.text.textContent = copy.text;
+
+    const rows = [];
+    if (type === 'project') {
+      rows.push(['Проєкт', trigger.dataset.leadProject], ['Модуль', trigger.dataset.leadModule]);
+      selectModule(trigger.dataset.leadModule);
+    } else if (type === 'order') {
+      const picked = Array.from(document.querySelectorAll('[data-calc-list] li > span:first-child')).map(function (s) { return s.textContent; });
+      rows.push(['Модулі', picked.join(', ')]);
+      rows.push(['Тривалість', document.querySelector('[data-calc-duration]').textContent]);
+      rows.push(['До сплати', document.querySelector('[data-calc-total]').textContent]);
+      selectModule(picked.length === 1 ? picked[0] : '');
+    } else {
+      selectModule('');
+    }
+    setSummary(rows);
+    el.module.parentElement.classList.toggle('hidden', type === 'order');
+
+    el.fields.hidden = false;
+    el.success.hidden = true;
+    el.error.textContent = '';
+    opener = trigger;
+    modal.showModal();
+    el.name.focus();
+  }
+
+  function close() {
+    modal.close();
+  }
+
+  function fail(field, message) {
+    el.error.textContent = message;
+    if (field.setAttribute) field.setAttribute('aria-invalid', 'true');
+    field.focus();
+  }
+
+  document.addEventListener('click', function (event) {
+    const trigger = event.target.closest('[data-lead]');
+    if (!trigger || trigger.getAttribute('aria-disabled') === 'true') return;
+    event.preventDefault();
+    open(trigger);
+  });
+
+  modal.querySelectorAll('[data-lead-close]').forEach(function (btn) {
+    btn.addEventListener('click', close);
+  });
+
+  // Клік по затемненню поза вікном теж закриває
+  modal.addEventListener('click', function (event) {
+    if (event.target === modal) close();
+  });
+
+  modal.addEventListener('close', function () {
+    if (opener) opener.focus();
+  });
+
+  [el.name, el.contact].forEach(function (input) {
+    input.addEventListener('input', function () {
+      input.removeAttribute('aria-invalid');
+      el.error.textContent = '';
+    });
+  });
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const contact = el.contact.value.trim();
+
+    if (!el.name.value.trim()) return fail(el.name, 'Вкажи, як до тебе звертатися.');
+    if (!/^@[\w]{4,}$/.test(contact) && contact.replace(/[^\d]/g, '').length < 10) {
+      return fail(el.contact, 'Вкажи нікнейм у Telegram (@nickname) або номер телефону.');
+    }
+    if (!el.consent.checked) return fail(el.consent, 'Потрібна згода на обробку контактних даних.');
+
+    el.fields.hidden = true;
+    el.summary.hidden = true;
+    el.success.hidden = false;
+    form.reset();
+    el.success.querySelector('[data-lead-close]').focus();
+  });
+})();
