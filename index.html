@@ -17,13 +17,10 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap"></noscript>
 
   <!-- Tailwind CSS: зібраний CLI-файл замість Play CDN (ЛР №12, швидкодія). Збирання: npm run build:css -->
+  <!-- Стилі Swiper і Fancybox (ЛР №10) вбудовано в цей файл: один запит без пізніх перерахунків стилів (ЛР №12) -->
   <link rel="stylesheet" href="css/tailwind.css">
-  <!-- ЛР №10: стилі Swiper через CDN (jsDelivr). Слайдер нижче першого екрана, тому стилі вантажаться без блокування рендерингу (ЛР №12) -->
+  <!-- JS плагінів вантажиться з jsDelivr (кінець body, defer) — з'єднання встановлюється заздалегідь -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
-  <!-- Fancybox потрібен лише після кліку по зображенню — його стилі не блокують перший рендер -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="custom-styles.css">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
@@ -276,7 +273,7 @@
         </header>
 
         <!-- ЛР №10: Swiper.js (слайдер) + Fancybox v5 (галерея). Підключення — CDN у head і в кінці body, ініціалізація — js/main.js -->
-        <div class="swiper works-swiper w-full !pb-14 !pt-2" style="--swiper-theme-color:#6b2fff" aria-label="Галерея робіт учнів" data-reveal>
+        <div class="swiper works-swiper w-full !pb-14 !pt-2" style="--swiper-theme-color:#6b2fff" role="region" aria-label="Галерея робіт учнів" data-reveal>
           <div class="swiper-wrapper">
           <div class="swiper-slide !h-auto">
             <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
@@ -405,8 +402,8 @@
           </div>
           </div>
           <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev" aria-label="Попередній проєкт"></div>
-          <div class="swiper-button-next" aria-label="Наступний проєкт"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
       </div>
     </section>
