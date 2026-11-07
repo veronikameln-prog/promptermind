@@ -684,12 +684,15 @@
 
   form.addEventListener('submit', function (event) {
     event.preventDefault();
-    const contact = el.contact.value.trim();
-
-    if (!el.name.value.trim()) return fail(el.name, 'Вкажи, як до тебе звертатися.');
-    if (!/^@[\w]{4,}$/.test(contact) && contact.replace(/[^\d]/g, '').length < 10) {
-      return fail(el.contact, 'Вкажи нікнейм у Telegram (@nickname) або номер телефону.');
-    }
+    // Ті самі правила, що й у формі зворотного зв'язку (js/validation.js)
+    const V = window.PMValidation;
+    const nameError = V.rules.name(el.name.value);
+    if (nameError) return fail(el.name, nameError);
+    const contactError = V.rules.contact(el.contact.value);
+    if (contactError) return fail(el.contact, contactError);
+    if (!el.contact.value.trim().startsWith('@')) el.contact.value = V.normalizePhone(el.contact.value);
+    el.name.removeAttribute('aria-invalid');
+    el.contact.removeAttribute('aria-invalid');
     if (!el.consent.checked) return fail(el.consent, 'Потрібна згода на обробку контактних даних.');
 
     el.fields.hidden = true;
