@@ -656,6 +656,93 @@
       </div>
     </section>
 
+    <!-- ========== ЛР №11. Інтерактивний віджет «Планувальник навчання» ==========
+         Параметри: модуль (select), уроків на тиждень і кількість учнів (number + кнопки −/+), наставник і сертифікат (checkbox).
+         Результат: тривалість у тижнях і вартість. Логіка — js/widget.js; без JS видно лише форму. -->
+    <section class="bg-gray-50 px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="planner" aria-labelledby="planner-title">
+      <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-14">
+        <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5">
+          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Планувальник</p>
+          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="planner-title">Склади свій план навчання</h2>
+          <p class="text-[15px] leading-[1.65] text-gray-600 md:text-lg md:leading-relaxed">Обери модуль і темп — одразу побачиш, скільки триватиме навчання і скільки воно коштуватиме.</p>
+        </header>
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-8" data-planner>
+          <!-- Параметри -->
+          <form class="flex flex-col gap-6 rounded-3xl border-2 border-brand-200 bg-white p-5 shadow-card sm:p-6 md:p-8" id="planner-form" novalidate aria-label="Параметри плану навчання">
+            <div class="flex flex-col gap-2">
+              <label class="font-heading text-sm font-semibold" for="study-module">Модуль курсу</label>
+              <select class="min-h-12 w-full rounded-xl border-2 border-brand-200 bg-white px-3.5 text-base transition duration-200 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="study-module" name="module">
+                <option value="start" selected>Старт у ШІ — 12 уроків, 1 490 ₴</option>
+                <option value="bots">Створення ботів — 18 уроків, 2 290 ₴</option>
+                <option value="prompting">Просунутий промптинг — 24 уроки, 2 990 ₴</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div class="flex flex-col gap-2">
+                <label class="font-heading text-sm font-semibold" for="lessons-per-week">Уроків на тиждень</label>
+                <div class="flex items-stretch gap-2">
+                  <button class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 bg-brand-50 font-heading text-xl font-bold text-brand transition hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40" type="button" aria-label="Менше уроків на тиждень" data-step="-1" data-target="lessons-per-week">−</button>
+                  <input class="min-h-12 w-full min-w-0 rounded-xl border-2 border-brand-200 bg-white px-3 text-center font-heading text-lg font-bold tabular-nums transition duration-200 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="lessons-per-week" name="lessons" type="number" inputmode="numeric" min="1" max="7" step="1" value="3" required aria-describedby="lessons-hint error-lessons" aria-invalid="false">
+                  <button class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 bg-brand-50 font-heading text-xl font-bold text-brand transition hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40" type="button" aria-label="Більше уроків на тиждень" data-step="1" data-target="lessons-per-week">+</button>
+                </div>
+                <p class="text-[13px] text-gray-600" id="lessons-hint">Від 1 до 7</p>
+                <p class="hidden text-sm font-medium text-red-600" id="error-lessons" aria-live="polite"></p>
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <label class="font-heading text-sm font-semibold" for="students-count">Кількість учнів</label>
+                <div class="flex items-stretch gap-2">
+                  <button class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 bg-brand-50 font-heading text-xl font-bold text-brand transition hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40" type="button" aria-label="Менше учнів" data-step="-1" data-target="students-count">−</button>
+                  <input class="min-h-12 w-full min-w-0 rounded-xl border-2 border-brand-200 bg-white px-3 text-center font-heading text-lg font-bold tabular-nums transition duration-200 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="students-count" name="students" type="number" inputmode="numeric" min="1" max="5" step="1" value="1" required aria-describedby="students-hint error-students" aria-invalid="false">
+                  <button class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 border-brand-200 bg-brand-50 font-heading text-xl font-bold text-brand transition hover:bg-violet-100 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40" type="button" aria-label="Більше учнів" data-step="1" data-target="students-count">+</button>
+                </div>
+                <p class="text-[13px] text-gray-600" id="students-hint">Від 1 до 5 · брати й сестри, від 2 учнів −10 %</p>
+                <p class="hidden text-sm font-medium text-red-600" id="error-students" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <fieldset class="flex flex-col gap-3">
+              <legend class="mb-3 font-heading text-sm font-semibold">Додаткові опції (на кожного учня)</legend>
+              <label class="flex cursor-pointer items-start gap-3 rounded-2xl border-2 border-brand-200 p-4 transition hover:border-violet-300 has-[:checked]:border-brand has-[:checked]:bg-brand-50" for="mentor-opt">
+                <input class="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" id="mentor-opt" name="mentor" type="checkbox">
+                <span class="flex flex-1 flex-col gap-0.5"><span class="font-heading font-bold">Особистий наставник</span><span class="text-sm text-gray-600">Щотижнева консультація 1:1</span></span>
+                <span class="font-heading font-bold text-brand">+500 ₴</span>
+              </label>
+              <label class="flex cursor-pointer items-start gap-3 rounded-2xl border-2 border-brand-200 p-4 transition hover:border-violet-300 has-[:checked]:border-brand has-[:checked]:bg-brand-50" for="certificate-opt">
+                <input class="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" id="certificate-opt" name="certificate" type="checkbox">
+                <span class="flex flex-1 flex-col gap-0.5"><span class="font-heading font-bold">Сертифікат</span><span class="text-sm text-gray-600">Іменний сертифікат про завершення модуля</span></span>
+                <span class="font-heading font-bold text-brand">+300 ₴</span>
+              </label>
+            </fieldset>
+          </form>
+
+          <!-- Результат -->
+          <aside class="flex flex-col gap-5 rounded-3xl bg-gradient-to-b from-brand to-indigo-600 p-6 text-white shadow-featured md:p-8 lg:sticky lg:top-24 lg:self-start" aria-labelledby="planner-result-title">
+            <h3 class="font-heading text-xl font-extrabold" id="planner-result-title">Твій план</h3>
+            <div class="flex flex-col gap-4" aria-live="polite" id="planner-result">
+              <div class="flex items-end justify-between gap-4 border-b border-white/20 pb-4">
+                <span class="text-violet-100">Тривалість</span>
+                <span class="font-heading text-3xl font-extrabold tabular-nums" id="total-weeks">—</span>
+              </div>
+              <dl class="flex flex-col gap-2 text-sm" id="price-breakdown">
+                <div class="flex justify-between gap-4"><dt class="text-violet-100">Модуль</dt><dd class="font-semibold" id="summary-module">—</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-violet-100">Опції на учня</dt><dd class="font-semibold tabular-nums" id="summary-options">—</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-violet-100">Учнів</dt><dd class="font-semibold tabular-nums" id="summary-students">—</dd></div>
+                <div class="hidden justify-between gap-4" id="discount-row"><dt class="text-violet-100">Знижка 10 %</dt><dd class="font-semibold tabular-nums text-cta" id="summary-discount">—</dd></div>
+              </dl>
+              <div class="flex items-end justify-between gap-4 border-t border-white/20 pt-4">
+                <span class="font-heading font-bold">До сплати</span>
+                <span class="break-all font-heading text-3xl font-extrabold tabular-nums" id="total-price">—</span>
+              </div>
+            </div>
+            <p class="hidden rounded-xl bg-white/15 px-4 py-3 text-sm" id="planner-error" role="status"></p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <!-- ========== Відгуки: безперервна стрічка ==========
          Список продубльовано (копія — aria-hidden + inert), CSS-анімація зсуває його на -50% по колу.
          Пауза при наведенні/фокусі; при prefers-reduced-motion — звичайна горизонтальна прокрутка (custom-styles.css). -->
@@ -1328,5 +1415,6 @@
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
   <script src="js/validation.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/widget.js" defer></script>
 </body>
 </html>
