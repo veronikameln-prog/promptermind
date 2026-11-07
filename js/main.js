@@ -702,3 +702,53 @@
     el.success.querySelector('[data-lead-close]').focus();
   });
 })();
+
+/* ---------- ЛР №10: плагіни Vanilla JS через CDN (Swiper.js, Fancybox v5, Typed.js) ----------
+   Бібліотеки підключено в index.html перед </body> з defer, тож тут вони вже доступні.
+   Ініціалізація — у DOMContentLoaded; кожен плагін запускається лише якщо є його розмітка
+   (main.js підключено й на intensive.html, де цих секцій немає). */
+document.addEventListener('DOMContentLoaded', function () {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Слайдер робіт учнів: 1 / 2 / 3 слайди залежно від ширини екрана
+  if (window.Swiper && document.querySelector('.works-swiper')) {
+    new Swiper('.works-swiper', {
+      loop: true,
+      spaceBetween: 24,
+      speed: 600,
+      grabCursor: true,
+      autoplay: reduceMotion ? false : { delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true },
+      pagination: { el: '.works-swiper .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.works-swiper .swiper-button-next', prevEl: '.works-swiper .swiper-button-prev' },
+      keyboard: { enabled: true, onlyInViewport: true },
+      a11y: { prevSlideMessage: 'Попередній проєкт', nextSlideMessage: 'Наступний проєкт', paginationBulletMessage: 'Перейти до проєкту {{index}}' },
+      breakpoints: {
+        320: { slidesPerView: 1 },
+        640: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      }
+    });
+  }
+
+  // Галерея: усі зображення з data-fancybox="student-works" — один альбом, перехід fade, зум до 3×
+  if (window.Fancybox) {
+    Fancybox.bind('[data-fancybox="student-works"]', {
+      Carousel: { transition: 'fade' },
+      Images: { Panzoom: { maxScale: 3 } },
+      l10n: { CLOSE: 'Закрити', NEXT: 'Далі', PREV: 'Назад', TOGGLE_ZOOM: 'Збільшити', TOGGLE_SLIDESHOW: 'Слайд-шоу', TOGGLE_FULLSCREEN: 'На весь екран', TOGGLE_THUMBS: 'Мініатюри' }
+    });
+  }
+
+  // Ефект друку в Hero; при зменшеному русі лишається статична перша фраза
+  const typedTarget = document.getElementById('typed-text');
+  if (window.Typed && typedTarget && !reduceMotion) {
+    typedTarget.textContent = '';
+    new Typed('#typed-text', {
+      strings: ['Створи свого Telegram-бота.', 'Навчись промптингу за 6 тижнів.', 'Збери портфоліо до 17 років.'],
+      typeSpeed: 50,
+      backSpeed: 30,
+      backDelay: 1500,
+      loop: true
+    });
+  }
+});

@@ -55,6 +55,9 @@
       }
     };
   </script>
+  <!-- ЛР №10: стилі плагінів через CDN (jsDelivr) — у head, щоб слайдер і галерея не «стрибали» під час завантаження -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
   <link rel="stylesheet" href="custom-styles.css">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
@@ -173,6 +176,8 @@
               <span class="bg-gradient-to-br from-brand from-25% to-accent to-75% bg-clip-text text-transparent">затребувану IT-професію</span> з PrompterMind
             </h1>
             <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed lg:max-w-[600px]">Практичний курс зі штучного інтелекту без нудних шкільних лекцій. Безпечно, під контролем, з результатом у портфоліо.</p>
+            <!-- ЛР №10: Typed.js — ефект друку. Рядок декоративний (aria-hidden), min-h не дає тексту нижче «стрибати» -->
+            <p class="min-h-[1.6em] font-heading text-lg font-bold text-brand md:text-xl" aria-hidden="true"><span id="typed-text">Створи свого Telegram-бота.</span></p>
           </div>
 
           <div class="flex w-full flex-col gap-3 md:w-auto md:flex-row md:flex-wrap md:gap-4">
@@ -304,108 +309,138 @@
           <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">Шість реальних проєктів, які увійдуть до твого портфоліо. Кожен — окремий спринт з наставником.</p>
         </header>
 
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
-            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
-              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/telegram-bot.webp" alt="3D-робот із телефоном, у якому відкрито чат Telegram-бота" width="1200" height="900" loading="lazy">
-              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 1</p>
-            </div>
-            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
-              <h3 class="font-heading text-xl font-extrabold leading-snug">ШІ-бот для Telegram</h3>
-              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Бот, який відповідає на питання однокласників про розклад і домашні завдання.</p>
-              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Створення ботів</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Середній</dd></div>
-              </dl>
-              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="ШІ-бот для Telegram" data-lead-module="Створення ботів">Хочу такий проєкт<span class="sr-only">: ШІ-бот для Telegram</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
-            </div>
-          </article>
+        <!-- ЛР №10: Swiper.js (слайдер) + Fancybox v5 (галерея). Підключення — CDN у head і в кінці body, ініціалізація — js/main.js -->
+        <div class="swiper works-swiper w-full !pb-14 !pt-2" style="--swiper-theme-color:#6b2fff" aria-label="Галерея робіт учнів" data-reveal>
+          <div class="swiper-wrapper">
+          <div class="swiper-slide !h-auto">
+            <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
+              <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+                <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/telegram-bot.webp" data-fancybox="student-works" data-caption="ШІ-бот для Telegram">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/telegram-bot.webp" alt="3D-робот із телефоном, у якому відкрито чат Telegram-бота" width="1200" height="900" loading="lazy">
+                </a>
+                <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 1</p>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+                <h3 class="font-heading text-xl font-extrabold leading-snug">ШІ-бот для Telegram</h3>
+                <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Бот, який відповідає на питання однокласників про розклад і домашні завдання.</p>
+                <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Створення ботів</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Середній</dd></div>
+                </dl>
+                <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="ШІ-бот для Telegram" data-lead-module="Створення ботів">Хочу такий проєкт<span class="sr-only">: ШІ-бот для Telegram</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+              </div>
+            </article>
+          </div>
 
-          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
-            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
-              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/ai-assistant.webp" alt="3D-ноутбук, над ним мозок і вікна чату та коду" width="1200" height="900" loading="lazy">
-              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 2</p>
-            </div>
-            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
-              <h3 class="font-heading text-xl font-extrabold leading-snug">Особистий ШІ-асистент</h3>
-              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Налаштований чат-помічник, який пояснює складні теми простими словами.</p>
-              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Старт у ШІ</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>1 тиждень</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Початковий</dd></div>
-              </dl>
-              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Особистий ШІ-асистент" data-lead-module="Старт у ШІ">Хочу такий проєкт<span class="sr-only">: Особистий ШІ-асистент</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
-            </div>
-          </article>
+          <div class="swiper-slide !h-auto">
+            <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
+              <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+                <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/ai-assistant.webp" data-fancybox="student-works" data-caption="Особистий ШІ-асистент">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/ai-assistant.webp" alt="3D-ноутбук, над ним мозок і вікна чату та коду" width="1200" height="900" loading="lazy">
+                </a>
+                <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 2</p>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+                <h3 class="font-heading text-xl font-extrabold leading-snug">Особистий ШІ-асистент</h3>
+                <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Налаштований чат-помічник, який пояснює складні теми простими словами.</p>
+                <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Старт у ШІ</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>1 тиждень</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Початковий</dd></div>
+                </dl>
+                <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Особистий ШІ-асистент" data-lead-module="Старт у ШІ">Хочу такий проєкт<span class="sr-only">: Особистий ШІ-асистент</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+              </div>
+            </article>
+          </div>
 
-          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
-            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
-              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/quest-game.webp" alt="3D-скриня зі скарбом, мапа квесту та геймпад" width="1200" height="900" loading="lazy">
-              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 3</p>
-            </div>
-            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
-              <h3 class="font-heading text-xl font-extrabold leading-snug">Квест-гра з нейромережею</h3>
-              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Текстова пригода, де сюжет і загадки генерує ШІ залежно від твоїх рішень.</p>
-              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Просунутий промптинг</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>3 тижні</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Високий</dd></div>
-              </dl>
-              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Квест-гра з нейромережею" data-lead-module="Просунутий промптинг">Хочу такий проєкт<span class="sr-only">: Квест-гра з нейромережею</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
-            </div>
-          </article>
+          <div class="swiper-slide !h-auto">
+            <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
+              <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+                <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/quest-game.webp" data-fancybox="student-works" data-caption="Квест-гра з нейромережею">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/quest-game.webp" alt="3D-скриня зі скарбом, мапа квесту та геймпад" width="1200" height="900" loading="lazy">
+                </a>
+                <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 3</p>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+                <h3 class="font-heading text-xl font-extrabold leading-snug">Квест-гра з нейромережею</h3>
+                <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Текстова пригода, де сюжет і загадки генерує ШІ залежно від твоїх рішень.</p>
+                <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Просунутий промптинг</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>3 тижні</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Високий</dd></div>
+                </dl>
+                <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Квест-гра з нейромережею" data-lead-module="Просунутий промптинг">Хочу такий проєкт<span class="sr-only">: Квест-гра з нейромережею</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+              </div>
+            </article>
+          </div>
 
-          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
-            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
-              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/logo-brand.webp" alt="3D-полотно з логотипом ProMi, палітра кольорів і перо" width="1200" height="900" loading="lazy">
-              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 4</p>
-            </div>
-            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
-              <h3 class="font-heading text-xl font-extrabold leading-snug">Логотип і фірмовий стиль</h3>
-              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Власний логотип, палітра та іконки для проєкту — від промпту до готових файлів.</p>
-              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Старт у ШІ</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>1 тиждень</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Початковий</dd></div>
-              </dl>
-              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Логотип і фірмовий стиль" data-lead-module="Старт у ШІ">Хочу такий проєкт<span class="sr-only">: Логотип і фірмовий стиль</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
-            </div>
-          </article>
+          <div class="swiper-slide !h-auto">
+            <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
+              <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+                <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/logo-brand.webp" data-fancybox="student-works" data-caption="Логотип і фірмовий стиль">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/logo-brand.webp" alt="3D-полотно з логотипом ProMi, палітра кольорів і перо" width="1200" height="900" loading="lazy">
+                </a>
+                <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 4</p>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+                <h3 class="font-heading text-xl font-extrabold leading-snug">Логотип і фірмовий стиль</h3>
+                <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Власний логотип, палітра та іконки для проєкту — від промпту до готових файлів.</p>
+                <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Старт у ШІ</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>1 тиждень</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Початковий</dd></div>
+                </dl>
+                <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Логотип і фірмовий стиль" data-lead-module="Старт у ШІ">Хочу такий проєкт<span class="sr-only">: Логотип і фірмовий стиль</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+              </div>
+            </article>
+          </div>
 
-          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
-            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
-              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/animation.webp" alt="3D-ноутбук із кодом і лампочка-ідея" width="1200" height="900" loading="lazy">
-              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 5</p>
-            </div>
-            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
-              <h3 class="font-heading text-xl font-extrabold leading-snug">Анімація з однієї картинки</h3>
-              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Короткий ролик для соцмереж: оживляєш власну ілюстрацію за допомогою ШІ.</p>
-              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Просунутий промптинг</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Високий</dd></div>
-              </dl>
-              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Анімація з однієї картинки" data-lead-module="Просунутий промптинг">Хочу такий проєкт<span class="sr-only">: Анімація з однієї картинки</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
-            </div>
-          </article>
+          <div class="swiper-slide !h-auto">
+            <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
+              <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+                <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/animation.webp" data-fancybox="student-works" data-caption="Анімація з однієї картинки">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/animation.webp" alt="3D-ноутбук із кодом і лампочка-ідея" width="1200" height="900" loading="lazy">
+                </a>
+                <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 5</p>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+                <h3 class="font-heading text-xl font-extrabold leading-snug">Анімація з однієї картинки</h3>
+                <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Короткий ролик для соцмереж: оживляєш власну ілюстрацію за допомогою ШІ.</p>
+                <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Просунутий промптинг</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Високий</dd></div>
+                </dl>
+                <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Анімація з однієї картинки" data-lead-module="Просунутий промптинг">Хочу такий проєкт<span class="sr-only">: Анімація з однієї картинки</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+              </div>
+            </article>
+          </div>
 
-          <article class="group flex flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand" data-reveal>
-            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
-              <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/portfolio-site.webp" alt="3D-вікно сайту-портфоліо з фотоапаратом і нагородою" width="1200" height="900" loading="lazy">
-              <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 6</p>
-            </div>
-            <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
-              <h3 class="font-heading text-xl font-extrabold leading-snug">Сайт-портфоліо</h3>
-              <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Односторінковий сайт, де зібрано всі твої проєкти з курсу та відгуки наставника.</p>
-              <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Створення ботів</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
-                <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Середній</dd></div>
-              </dl>
-              <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Сайт-портфоліо" data-lead-module="Створення ботів">Хочу такий проєкт<span class="sr-only">: Сайт-портфоліо</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
-            </div>
-          </article>
+          <div class="swiper-slide !h-auto">
+            <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
+              <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
+                <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/portfolio-site.webp" data-fancybox="student-works" data-caption="Сайт-портфоліо">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/portfolio-site.webp" alt="3D-вікно сайту-портфоліо з фотоапаратом і нагородою" width="1200" height="900" loading="lazy">
+                </a>
+                <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 6</p>
+              </div>
+              <div class="flex flex-1 flex-col gap-3 p-5 md:p-6">
+                <h3 class="font-heading text-xl font-extrabold leading-snug">Сайт-портфоліо</h3>
+                <p class="text-sm leading-relaxed text-gray-500 md:text-[15px]">Односторінковий сайт, де зібрано всі твої проєкти з курсу та відгуки наставника.</p>
+                <dl class="mt-auto flex flex-wrap gap-2 pt-2 font-heading text-xs font-semibold">
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Модуль</dt><dd class="text-brand">Створення ботів</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Тривалість</dt><dd>2 тижні</dd></div>
+                  <div class="rounded-lg bg-brand-100 px-2.5 py-1.5"><dt class="sr-only">Рівень</dt><dd>Середній</dd></div>
+                </dl>
+                <a class="group/link mt-1 inline-flex min-h-[44px] items-center gap-2 self-start rounded font-heading text-sm font-semibold text-brand transition-colors duration-200 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#contact" data-lead="project" data-lead-project="Сайт-портфоліо" data-lead-module="Створення ботів">Хочу такий проєкт<span class="sr-only">: Сайт-портфоліо</span><svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+              </div>
+            </article>
+          </div>
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev" aria-label="Попередній проєкт"></div>
+          <div class="swiper-button-next" aria-label="Наступний проєкт"></div>
         </div>
       </div>
     </section>
@@ -1287,6 +1322,10 @@
     </div>
   </dialog>
 
+  <!-- ЛР №10: скрипти плагінів через CDN — у кінці body; defer зберігає порядок: спершу бібліотеки, потім main.js з ініціалізацією -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
   <script src="js/validation.js" defer></script>
   <script src="js/main.js" defer></script>
 </body>
