@@ -1,0 +1,46 @@
+# ЛР №12. CI/CD: при кожному push у гілку main GitHub Actions збирає CSS і деплоїть сайт на Vercel.
+name: CI/CD Production Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # ручний запуск із вкладки Actions
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Tailwind CSS
+        run: npm run build:css
+
+      - name: Check required files
+        run: |
+          for f in index.html intensive.html css/tailwind.css custom-styles.css js/main.js js/validation.js js/widget.js; do
+            test -s "$f" || { echo "Відсутній або порожній файл: $f"; exit 1; }
+          done
+          ! grep -q "cdn.tailwindcss.com" index.html intensive.html || { echo "Знайдено Tailwind Play CDN"; exit 1; }
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}

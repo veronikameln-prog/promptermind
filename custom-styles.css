@@ -30,7 +30,7 @@ body {
 .hero-bg {
   background:
     linear-gradient(180deg, rgba(250, 247, 255, 0.1) 0%, rgba(250, 247, 255, 0.65) 27%, rgba(250, 247, 255, 0.96) 48%, #faf7ff 100%),
-    url("assets/images/hero/hero-bg-mobile.png") 78.74% 0 / 420.17% 100% no-repeat,
+    url("assets/images/hero/hero-bg-mobile.webp") 78.74% 0 / 420.17% 100% no-repeat,
     linear-gradient(90deg, #f8f5ff, #ede9fe 60%, #f8f5ff);
 }
 

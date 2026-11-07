@@ -1,0 +1,11 @@
+{
+  "name": "promptermind",
+  "private": true,
+  "description": "Лендинг EdTech-курсу «ШІ для підлітків» PrompterMind",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

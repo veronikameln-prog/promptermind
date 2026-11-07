@@ -12,40 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS (Play CDN) + дизайн-токени з ЛР №4 (як в index.html) -->
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              DEFAULT: '#6b2fff',
-              light: '#7b3ff5',
-              50: '#faf7ff',
-              100: '#f8f5ff',
-              200: '#e0d4ff'
-            },
-            accent: '#3b82f6'
-          },
-          fontFamily: {
-            heading: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-            body: ['Roboto', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif']
-          },
-          boxShadow: {
-            card: '0 4px 24px rgba(107, 47, 255, 0.08)',
-            soft: '0 4px 12px rgba(107, 47, 255, 0.08)',
-            featured: '0 8px 32px rgba(107, 47, 255, 0.2)',
-            btn: '0 8px 12px rgba(107, 47, 255, 0.25)',
-            lift: '0 18px 40px rgba(107, 47, 255, 0.16)'
-          },
-          maxWidth: {
-            container: '1280px'
-          }
-        }
-      }
-    };
-  </script>
+  <!-- Tailwind CSS: зібраний CLI-файл замість Play CDN (ЛР №12, швидкодія). Збирання: npm run build:css -->
+  <link rel="stylesheet" href="css/tailwind.css">
   <link rel="stylesheet" href="custom-styles.css">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">

@@ -8,56 +8,22 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
+  <!-- ЛР №12: LCP-елемент мобільного першого екрана — фон hero; завантажується першочергово -->
+  <link rel="preload" as="image" href="assets/images/hero/hero-bg-mobile.webp" type="image/webp" media="(max-width: 767px)" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Шрифти не блокують рендеринг: спершу системний шрифт, потім Inter/Roboto (display=swap) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap"></noscript>
 
-  <!-- Tailwind CSS (Play CDN) + дизайн-токени з ЛР №4 -->
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              DEFAULT: '#6b2fff',
-              light: '#7b3ff5',
-              50: '#faf7ff',
-              100: '#f8f5ff',
-              200: '#e0d4ff'
-            },
-            accent: '#3b82f6',
-            // Соковитий лайм лише для головних дій (заявка, пробний урок). Текст на ньому — тільки темний ink (контраст 9.7:1)
-            cta: {
-              DEFAULT: '#a3e635',
-              hover: '#8fd424',
-              100: '#ecfccb',
-              ink: '#1a2e05',
-              deep: '#3f6212'
-            }
-          },
-          fontFamily: {
-            heading: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-            body: ['Roboto', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif']
-          },
-          boxShadow: {
-            card: '0 4px 24px rgba(107, 47, 255, 0.08)',
-            soft: '0 4px 12px rgba(107, 47, 255, 0.08)',
-            featured: '0 8px 32px rgba(107, 47, 255, 0.2)',
-            btn: '0 8px 12px rgba(107, 47, 255, 0.25)',
-            lift: '0 18px 40px rgba(107, 47, 255, 0.16)',
-            'cta-btn': '0 8px 16px rgba(101, 163, 13, 0.3)'
-          },
-          maxWidth: {
-            container: '1280px'
-          }
-        }
-      }
-    };
-  </script>
-  <!-- ЛР №10: стилі плагінів через CDN (jsDelivr) — у head, щоб слайдер і галерея не «стрибали» під час завантаження -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+  <!-- Tailwind CSS: зібраний CLI-файл замість Play CDN (ЛР №12, швидкодія). Збирання: npm run build:css -->
+  <link rel="stylesheet" href="css/tailwind.css">
+  <!-- ЛР №10: стилі Swiper через CDN (jsDelivr). Слайдер нижче першого екрана, тому стилі вантажаться без блокування рендерингу (ЛР №12) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+  <!-- Fancybox потрібен лише після кліку по зображенню — його стилі не блокують перший рендер -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="custom-styles.css">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
@@ -278,7 +244,7 @@
             <p class="rounded-lg bg-violet-100 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand lg:px-3 lg:text-[13px]">Швидко</p>
             <h3 class="font-heading text-2xl font-extrabold leading-tight lg:text-[28px]">Мікроспринти по 6 хвилин</h3>
             <p class="text-sm leading-[1.65] text-gray-500">Короткі уроки у смартфоні. Навчайся між справами, без довгих лекцій і домашки до ночі.</p>
-            <img class="float absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/robot.webp" alt="" width="100" height="100" loading="lazy">
+            <img class="float absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/robot-200.webp" alt="" width="100" height="100" loading="lazy">
           </article>
 
           <article class="group relative flex flex-col items-start gap-3.5 overflow-hidden rounded-[20px] border-2 border-brand-200 bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift md:rounded-3xl md:pr-36 lg:min-h-[300px] lg:pr-6" data-reveal>
@@ -286,7 +252,7 @@
             <p class="rounded-lg bg-violet-100 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand lg:px-3 lg:text-[13px]">Дієво</p>
             <h3 class="font-heading text-2xl font-extrabold leading-tight lg:text-[28px]">70% практики</h3>
             <p class="text-sm leading-[1.65] text-gray-500">Менше теорії, більше справи. Уже на першому тижні ти створиш власного ШІ-бота.</p>
-            <img class="float float--delay-1 absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/puzzle.webp" alt="" width="100" height="100" loading="lazy">
+            <img class="float float--delay-1 absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/puzzle-200.webp" alt="" width="100" height="100" loading="lazy">
           </article>
 
           <article class="group relative flex flex-col items-start gap-3.5 overflow-hidden rounded-[20px] border-2 border-brand-200 bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift md:rounded-3xl md:pr-36 lg:min-h-[300px] lg:pr-6" data-reveal>
@@ -294,7 +260,7 @@
             <p class="rounded-lg bg-violet-100 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand lg:px-3 lg:text-[13px]">Результат</p>
             <h3 class="font-heading text-2xl font-extrabold leading-tight lg:text-[28px]">Портфоліо до випуску</h3>
             <p class="text-sm leading-[1.65] text-gray-500">Реальні проєкти, які не соромно показати друзям, батькам і майбутнім роботодавцям.</p>
-            <img class="float float--delay-2 absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/folder.webp" alt="" width="100" height="100" loading="lazy">
+            <img class="float float--delay-2 absolute right-6 top-[22px] h-[72px] w-[72px] object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1] lg:h-[100px] lg:w-[100px]" src="assets/images/illustrations/folder-200.webp" alt="" width="100" height="100" loading="lazy">
           </article>
         </div>
       </div>
@@ -316,7 +282,7 @@
             <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
               <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
                 <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/telegram-bot.webp" data-fancybox="student-works" data-caption="ШІ-бот для Telegram">
-                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/telegram-bot.webp" alt="3D-робот із телефоном, у якому відкрито чат Telegram-бота" width="1200" height="900" loading="lazy">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/telegram-bot-640.webp" srcset="assets/images/projects/telegram-bot-640.webp 640w, assets/images/projects/telegram-bot.webp 1200w" sizes="(min-width: 1024px) 380px, (min-width: 640px) 48vw, 92vw" alt="3D-робот із телефоном, у якому відкрито чат Telegram-бота" width="1200" height="900" loading="lazy">
                 </a>
                 <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 1</p>
               </div>
@@ -337,7 +303,7 @@
             <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
               <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
                 <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/ai-assistant.webp" data-fancybox="student-works" data-caption="Особистий ШІ-асистент">
-                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/ai-assistant.webp" alt="3D-ноутбук, над ним мозок і вікна чату та коду" width="1200" height="900" loading="lazy">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/ai-assistant-640.webp" srcset="assets/images/projects/ai-assistant-640.webp 640w, assets/images/projects/ai-assistant.webp 1200w" sizes="(min-width: 1024px) 380px, (min-width: 640px) 48vw, 92vw" alt="3D-ноутбук, над ним мозок і вікна чату та коду" width="1200" height="900" loading="lazy">
                 </a>
                 <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 2</p>
               </div>
@@ -358,7 +324,7 @@
             <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
               <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
                 <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/quest-game.webp" data-fancybox="student-works" data-caption="Квест-гра з нейромережею">
-                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/quest-game.webp" alt="3D-скриня зі скарбом, мапа квесту та геймпад" width="1200" height="900" loading="lazy">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/quest-game-640.webp" srcset="assets/images/projects/quest-game-640.webp 640w, assets/images/projects/quest-game.webp 1200w" sizes="(min-width: 1024px) 380px, (min-width: 640px) 48vw, 92vw" alt="3D-скриня зі скарбом, мапа квесту та геймпад" width="1200" height="900" loading="lazy">
                 </a>
                 <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 3</p>
               </div>
@@ -379,7 +345,7 @@
             <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
               <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
                 <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/logo-brand.webp" data-fancybox="student-works" data-caption="Логотип і фірмовий стиль">
-                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/logo-brand.webp" alt="3D-полотно з логотипом ProMi, палітра кольорів і перо" width="1200" height="900" loading="lazy">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/logo-brand-640.webp" srcset="assets/images/projects/logo-brand-640.webp 640w, assets/images/projects/logo-brand.webp 1200w" sizes="(min-width: 1024px) 380px, (min-width: 640px) 48vw, 92vw" alt="3D-полотно з логотипом ProMi, палітра кольорів і перо" width="1200" height="900" loading="lazy">
                 </a>
                 <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 4</p>
               </div>
@@ -400,7 +366,7 @@
             <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
               <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
                 <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/animation.webp" data-fancybox="student-works" data-caption="Анімація з однієї картинки">
-                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/animation.webp" alt="3D-ноутбук із кодом і лампочка-ідея" width="1200" height="900" loading="lazy">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/animation-640.webp" srcset="assets/images/projects/animation-640.webp 640w, assets/images/projects/animation.webp 1200w" sizes="(min-width: 1024px) 380px, (min-width: 640px) 48vw, 92vw" alt="3D-ноутбук із кодом і лампочка-ідея" width="1200" height="900" loading="lazy">
                 </a>
                 <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 5</p>
               </div>
@@ -421,7 +387,7 @@
             <article class="group flex h-full flex-col overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-lift focus-within:border-brand">
               <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-100 to-violet-100">
                 <a class="block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-4 focus-visible:outline-accent" href="assets/images/projects/portfolio-site.webp" data-fancybox="student-works" data-caption="Сайт-портфоліо">
-                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/portfolio-site.webp" alt="3D-вікно сайту-портфоліо з фотоапаратом і нагородою" width="1200" height="900" loading="lazy">
+                  <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="assets/images/projects/portfolio-site-640.webp" srcset="assets/images/projects/portfolio-site-640.webp 640w, assets/images/projects/portfolio-site.webp 1200w" sizes="(min-width: 1024px) 380px, (min-width: 640px) 48vw, 92vw" alt="3D-вікно сайту-портфоліо з фотоапаратом і нагородою" width="1200" height="900" loading="lazy">
                 </a>
                 <p class="absolute left-4 top-4 rounded-lg bg-white/90 px-2.5 py-1 font-heading text-xs font-bold uppercase text-brand shadow-soft">Проєкт 6</p>
               </div>
@@ -556,7 +522,7 @@
               <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-title="Створення ботів" data-price="2290" data-weeks="6" data-reveal>
                 <div class="flex flex-col items-start gap-5 p-6 md:p-7">
                   <div class="flex w-full flex-col items-start gap-2">
-                    <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/puzzle.webp" alt="" width="56" height="56" loading="lazy">
+                    <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/puzzle-200.webp" alt="" width="56" height="56" loading="lazy">
                     <h3 class="font-heading text-xl font-extrabold leading-snug">Створення ботів</h3>
                     <p class="text-sm leading-normal text-gray-500">Середній рівень. Збери власного ШІ-бота.</p>
                   </div>
@@ -574,7 +540,7 @@
               <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-title="Просунутий промптинг" data-price="2990" data-weeks="8" data-reveal>
                 <div class="flex flex-col items-start gap-5 p-6 md:p-7">
                   <div class="flex w-full flex-col items-start gap-2">
-                    <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/folder.webp" alt="" width="56" height="56" loading="lazy">
+                    <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/folder-200.webp" alt="" width="56" height="56" loading="lazy">
                     <h3 class="font-heading text-xl font-extrabold leading-snug">Просунутий промптинг</h3>
                     <p class="text-sm leading-normal text-gray-500">Високий рівень. Опануй складні інструменти.</p>
                   </div>
