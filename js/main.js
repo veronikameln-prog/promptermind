@@ -710,9 +710,12 @@
 document.addEventListener('DOMContentLoaded', function () {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Слайдер робіт учнів: 1 / 2 / 3 слайди залежно від ширини екрана
-  if (window.Swiper && document.querySelector('.works-swiper')) {
-    new Swiper('.works-swiper', {
+  // Слайдер робіт учнів: 1 / 2 / 3 слайди залежно від ширини екрана.
+  // ЛР №12: ініціалізація відкладена, доки слайдер не наблизиться до екрана (менше роботи під час завантаження)
+  const worksEl = document.querySelector('.works-swiper');
+  function initWorksSwiper() {
+    if (!window.Swiper || !worksEl || worksEl.swiper) return;
+    new Swiper(worksEl, {
       loop: true,
       spaceBetween: 24,
       speed: 600,
@@ -729,6 +732,17 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+  if (worksEl && 'IntersectionObserver' in window) {
+    const swiperObserver = new IntersectionObserver(function (entries) {
+      if (entries.some(function (entry) { return entry.isIntersecting; })) {
+        swiperObserver.disconnect();
+        initWorksSwiper();
+      }
+    }, { rootMargin: '400px 0px' });
+    swiperObserver.observe(worksEl);
+  } else {
+    initWorksSwiper();
+  }
 
   // Галерея: усі зображення з data-fancybox="student-works" — один альбом, перехід fade, зум до 3×
   if (window.Fancybox) {
@@ -742,13 +756,48 @@ document.addEventListener('DOMContentLoaded', function () {
   // Ефект друку в Hero; при зменшеному русі лишається статична перша фраза
   const typedTarget = document.getElementById('typed-text');
   if (window.Typed && typedTarget && !reduceMotion) {
-    typedTarget.textContent = '';
-    new Typed('#typed-text', {
-      strings: ['Створи свого Telegram-бота.', 'Навчись промптингу за 6 тижнів.', 'Збери портфоліо до 17 років.'],
-      typeSpeed: 50,
-      backSpeed: 30,
-      backDelay: 1500,
-      loop: true
-    });
+    // ЛР №12: анімація стартує після повного завантаження — спершу видно статичну першу фразу
+    const startTyped = function () {
+      window.setTimeout(function () {
+        new Typed('#typed-text', {
+          strings: ['Створи свого Telegram-бота.', 'Навчись промптингу за 6 тижнів.', 'Збери портфоліо до 17 років.'],
+          typeSpeed: 50,
+          backSpeed: 30,
+          backDelay: 1500,
+          startDelay: 0,
+          loop: true
+        });
+      }, 1500);
+    };
+    if (document.readyState === 'complete') startTyped();
+    else window.addEventListener('load', startTyped, { once: true });
   }
 });
+
+/* ---------- ЛР №12: відео hero лише на широких екранах ----------
+   На мобільному відео приховане (hidden md:block), тому джерела не підставляються й файл не завантажується.
+   Від 768 px — постер і відео; при prefers-reduced-motion — лише постер без відтворення. */
+(function () {
+  const video = document.querySelector('[data-hero-video]');
+  if (!video) return;
+  const wide = window.matchMedia('(min-width: 768px)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let loaded = false;
+
+  function loadVideo() {
+    if (loaded || !wide.matches) return;
+    loaded = true;
+    video.poster = video.dataset.poster;
+    if (reduceMotion) return;
+    video.querySelectorAll('source[data-src]').forEach(function (source) {
+      source.src = source.dataset.src;
+    });
+    video.preload = 'auto';
+    video.load();
+    const playing = video.play();
+    if (playing && playing.catch) playing.catch(function () {}); // автозапуск може бути заблоковано — лишається постер
+  }
+
+  loadVideo();
+  wide.addEventListener('change', loadVideo);
+})();

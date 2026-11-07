@@ -119,9 +119,10 @@
   <main id="main">
     <!-- ========== Hero ========== -->
     <section class="hero-bg relative overflow-hidden px-5 pb-10 pt-[260px] md:px-8 md:pb-16 md:pt-[400px] lg:flex lg:min-h-[max(calc(100svh-72px),560px)] lg:items-center lg:px-16 lg:py-8" id="top" aria-labelledby="hero-title">
-      <video class="hero-video absolute inset-x-0 top-0 hidden h-[480px] w-full object-cover object-top md:block lg:h-full" autoplay muted loop playsinline preload="metadata" poster="assets/images/hero/hero-poster.webp" aria-hidden="true">
-        <source src="assets/video/video_hero.webm" type="video/webm">
-        <source src="assets/video/video_hero.mp4" type="video/mp4">
+      <!-- ЛР №12: на мобільному відео приховане, тому не завантажується взагалі; джерела й постер підставляє js/main.js від 768 px -->
+      <video class="hero-video absolute inset-x-0 top-0 hidden h-[480px] w-full object-cover object-top md:block lg:h-full" muted loop playsinline preload="none" data-poster="assets/images/hero/hero-poster.webp" aria-hidden="true" data-hero-video>
+        <source data-src="assets/video/video_hero.webm" type="video/webm">
+        <source data-src="assets/video/video_hero.mp4" type="video/mp4">
       </video>
       <span class="absolute -left-[60px] -top-[60px] h-[200px] w-[200px] rounded-full bg-brand/5 md:hidden" aria-hidden="true"></span>
       <span class="absolute left-[250px] top-[100px] h-[120px] w-[120px] rounded-full bg-accent/5 md:hidden" aria-hidden="true"></span>

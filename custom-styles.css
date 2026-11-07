@@ -192,3 +192,20 @@ body {
     transform: translate(40px, 30px) scale(1.08);
   }
 }
+
+/* 4. Продуктивність (ЛР №12) ------------------------------------------------
+   Секції нижче першого екрана браузер не розмічає й не малює, доки вони не наблизяться до екрана:
+   перерахунок стилів під час завантаження (шрифти, анімації) охоплює менше елементів → менший TBT.
+   contain-intrinsic-size auto — орієнтовна висота до першого показу, далі браузер пам'ятає реальну. */
+@supports (content-visibility: auto) {
+  #comparison,
+  #program,
+  #planner,
+  #testimonials,
+  #faq,
+  #contact,
+  body > footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1000px;
+  }
+}
