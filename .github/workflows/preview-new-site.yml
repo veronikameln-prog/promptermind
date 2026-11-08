@@ -1,7 +1,7 @@
-# Новий сайт (гілка new-site): при кожному push GitHub Actions збирає CSS і деплоїть PREVIEW-версію на Vercel.
-# Без --prod, тож основний сайт (гілка main → promptermind.vercel.app) не змінюється.
-# Посилання на preview з'являється у Summary запуску (вкладка Actions).
-name: Preview Deploy (new-site)
+# Новий сайт (гілка new-site): при кожному push GitHub Actions збирає CSS і деплоїть сайт
+# в ОКРЕМИЙ проєкт Vercel «promptermind-new» як production — постійна публічна адреса,
+# яку можна давати іншим людям. Основний сайт (гілка main → promptermind.vercel.app) не змінюється.
+name: Deploy New Site (new-site)
 
 on:
   push:
@@ -10,10 +10,10 @@ on:
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  NEW_PROJECT: promptermind-new
 
 jobs:
-  preview:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -40,11 +40,17 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy Preview to Vercel
+      - name: Create / link Vercel project
         run: |
-          url=$(vercel deploy --yes --token=${{ secrets.VERCEL_TOKEN }})
-          echo "Preview: $url"
-          echo "### Новий сайт (preview): $url" >> "$GITHUB_STEP_SUMMARY"
+          vercel project add "$NEW_PROJECT" --token=${{ secrets.VERCEL_TOKEN }} || echo "Проєкт уже існує"
+          vercel link --yes --project "$NEW_PROJECT" --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel (production of promptermind-new)
+        run: |
+          url=$(vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }})
+          echo "Deployment: $url"
+          echo "### Новий сайт: https://$NEW_PROJECT.vercel.app" >> "$GITHUB_STEP_SUMMARY"
+          echo "Деплой: $url" >> "$GITHUB_STEP_SUMMARY"
