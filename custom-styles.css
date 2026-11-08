@@ -26,31 +26,106 @@ body {
 
 /* 1. Hero ----------------------------------------------------------------- */
 
-/* Мобільний: кадр з роботом, підрізаний праворуч, і плавний перехід у фон */
 .hero-bg {
-  background:
-    linear-gradient(180deg, rgba(250, 247, 255, 0.1) 0%, rgba(250, 247, 255, 0.65) 27%, rgba(250, 247, 255, 0.96) 48%, #faf7ff 100%),
-    url("assets/images/hero/hero-bg-mobile.webp") 78.74% 0 / 420.17% 100% no-repeat,
-    linear-gradient(90deg, #f8f5ff, #ede9fe 60%, #f8f5ff);
+  background: #faf7ff;
 }
 
-/* Планшет: відео над текстом, низ відео розчиняється у фоні */
-@media (min-width: 768px) {
-  .hero-bg {
-    background: #faf7ff;
-  }
+/* Сцена: ілюстрація заповнює блок як object-fit: cover, але разом із SVG-шарами.
+   Розмір рахується в одиницях контейнера (cq*), тож ефекти не «з'їжджають» з картинки.
+   --fx / --fy — яку частину кадру тримати у видимій зоні (0 — лівий/верхній край, 1 — правий/нижній). */
+.hero-scene {
+  --fx: 1;
+  --fy: 0;
+  position: absolute;
+  inset: 0 0 auto;
+  height: 320px;
+  overflow: hidden;
+  container-type: size;
+  pointer-events: none;
+  background: url("assets/images/hero/layers/bg.webp") center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, #000 190px, transparent 310px);
+  mask-image: linear-gradient(180deg, #000 190px, transparent 310px);
+}
 
-  .hero-video {
+.hero-art {
+  --w: max(100cqw, 100cqh * 16 / 9);
+  --h: max(100cqh, 100cqw * 9 / 16);
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  left: calc((100cqw - var(--w)) * var(--fx));
+  top: calc((100cqh - var(--h)) * var(--fy));
+  scale: 1.03; /* запас по краях, щоб під час паралаксу не відкривався край фону */
+}
+
+.hero-fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Анімовані SVG-елементи обертаються/масштабуються навколо власних меж */
+.hero-fx .ring,
+.hero-fx .robot,
+.hero-fx .antenna,
+.hero-fx .bob,
+.hero-fx .particles circle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.hero-fx .glow,
+.hero-fx .logo-glow,
+.hero-fx .ring__spark,
+.hero-fx .particles {
+  mix-blend-mode: screen;
+}
+
+/* Без анімації (prefers-reduced-motion) підсвітки сховані — лишається чиста ілюстрація */
+.glow__ear,
+.logo-glow,
+.ring__spark,
+.particles circle {
+  opacity: 0;
+}
+
+/* Паралакс: кожен план зсувається на свою частку від --px/--py (задає js/main.js) */
+.lyr {
+  translate: calc(var(--px, 0px) * var(--depth)) calc(var(--py, 0px) * var(--depth));
+  transition: translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.lyr--ring  { --depth: 0.6; }
+.lyr--main  { --depth: 0.8; }
+.lyr--front { --depth: 1.25; }
+.lyr--near  { --depth: 1.6; }
+
+/* Планшет: сцена над текстом, низ розчиняється у фоні */
+@media (min-width: 768px) {
+  .hero-scene {
+    height: 480px;
     -webkit-mask-image: linear-gradient(180deg, #000 280px, transparent 470px);
     mask-image: linear-gradient(180deg, #000 280px, transparent 470px);
   }
 }
 
-/* Десктоп: відео на весь блок, без маски */
+/* Десктоп: сцена на весь блок, без маски; текст ліворуч, робот праворуч.
+   Сцена вписується по висоті (не розтягується на всю ширину), притиснута до правого нижнього кута —
+   на широких моніторах робот не стає велетенським, а вільне місце заповнює фон. */
 @media (min-width: 1024px) {
-  .hero-video {
+  .hero-scene {
+    --fx: 1;
+    --fy: 1;
+    inset: 0;
+    height: auto;
     -webkit-mask-image: none;
     mask-image: none;
+  }
+
+  .hero-art {
+    --h: min(100cqh, 100cqw * 9 / 16);
+    --w: calc(var(--h) * 16 / 9);
   }
 }
 
@@ -113,9 +188,70 @@ body {
   .hero-enter > :nth-child(3) { animation-delay: 0.24s; }
   .hero-enter > :nth-child(4) { animation-delay: 0.36s; }
 
-  .hero-video {
+  .hero-art {
     animation: hero-zoom 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
+
+  /* Hero-сцена: усі рухи повільні, з різними періодами, щоб не було «механічної» синхронності */
+
+  /* Робот ледь погойдується й «дихає» (опора — низ фігури) */
+  .hero-fx .robot {
+    transform-origin: 50% 100%;
+    animation: robot-sway 7s ease-in-out infinite;
+  }
+
+  /* Антени-«вушка» хитаються навколо місця кріплення до голови */
+  .hero-fx .antenna--l {
+    transform-origin: 22% 99%;
+    animation: antenna-l 3.6s ease-in-out infinite;
+  }
+
+  .hero-fx .antenna--r {
+    transform-origin: 26% 99%;
+    animation: antenna-r 4.2s ease-in-out -1.3s infinite;
+  }
+
+  .glow__ear { animation: glow-breathe 3.2s ease-in-out -1s infinite; }
+
+  /* Емблема на ноутбуці сяє (світяться лише лінії мозку) */
+  .logo-glow { animation: logo-glow 3.8s ease-in-out infinite; }
+
+  /* Кільце: ледь погойдується й пульсує світлом, по ньому біжить іскра */
+  .hero-fx .ring {
+    animation: ring-tilt 9s ease-in-out infinite;
+  }
+
+  .ring__img {
+    animation: ring-glow 4s ease-in-out infinite;
+  }
+
+  .ring__spark {
+    stroke-dasharray: 14 86;
+    animation:
+      ring-run 5s linear infinite,
+      ring-spark 5s ease-in-out infinite;
+  }
+
+  /* Картки й кубики плавають */
+  .bob--code  { animation: bob-a 6.5s ease-in-out infinite; }
+  .bob--ai    { animation: bob-b 7.5s ease-in-out -2.5s infinite; }
+  .bob--chart { animation: bob-a 7s ease-in-out -4.5s infinite; }
+  .bob--cube1 { animation: bob-cube 5.5s ease-in-out -1s infinite; }
+  .bob--cube2 { animation: bob-cube 6.2s ease-in-out -3.5s infinite reverse; }
+
+  /* Частинки світла піднімаються й тануть */
+  .particles circle { animation: rise 9s ease-in-out infinite; }
+  .particles circle:nth-child(2)  { animation-duration: 11s;   animation-delay: -2s; }
+  .particles circle:nth-child(3)  { animation-duration: 8s;    animation-delay: -5s; }
+  .particles circle:nth-child(4)  { animation-duration: 12s;   animation-delay: -7s; }
+  .particles circle:nth-child(5)  { animation-duration: 10s;   animation-delay: -1s; }
+  .particles circle:nth-child(6)  { animation-duration: 9.5s;  animation-delay: -4s; }
+  .particles circle:nth-child(7)  { animation-duration: 11.5s; animation-delay: -8s; }
+  .particles circle:nth-child(8)  { animation-duration: 8.5s;  animation-delay: -3s; }
+  .particles circle:nth-child(9)  { animation-duration: 13s;   animation-delay: -6s; }
+  .particles circle:nth-child(10) { animation-duration: 10.5s; animation-delay: -9s; }
+  .particles circle:nth-child(11) { animation-duration: 12.5s; animation-delay: -10s; }
+  .particles circle:nth-child(12) { animation-duration: 9s;    animation-delay: -6.5s; }
 
   /* Поява під час прокрутки — класи додає js/main.js */
   .reveal {
@@ -173,6 +309,75 @@ body {
     opacity: 0;
     transform: scale(1.08);
   }
+}
+
+@keyframes robot-sway {
+  0%, 100% { transform: rotate(0deg) scale(1, 1); }
+  25% { transform: rotate(-1deg) scale(1, 1.008); }
+  50% { transform: rotate(0deg) scale(1, 1); }
+  75% { transform: rotate(1deg) scale(1, 1.008); }
+}
+
+@keyframes antenna-l {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(6deg); }
+}
+
+@keyframes antenna-r {
+  0%, 100% { transform: rotate(5deg); }
+  50% { transform: rotate(-6deg); }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes logo-glow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes ring-tilt {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+@keyframes ring-glow {
+  0%, 100% { filter: brightness(0.95) saturate(1); }
+  50% { filter: brightness(1.2) saturate(1.25); }
+}
+
+@keyframes ring-run {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes ring-spark {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes bob-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(3px, -14px) rotate(1.2deg); }
+}
+
+@keyframes bob-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-4px, -12px) rotate(-2deg); }
+}
+
+@keyframes bob-cube {
+  0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+  50% { transform: translate(0, -16px) rotate(8deg); }
+}
+
+@keyframes rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  25% { opacity: 0.9; }
+  75% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-110px) scale(1); }
 }
 
 @keyframes float {

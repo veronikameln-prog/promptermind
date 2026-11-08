@@ -774,30 +774,29 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-/* ---------- ЛР №12: відео hero лише на широких екранах ----------
-   На мобільному відео приховане (hidden md:block), тому джерела не підставляються й файл не завантажується.
-   Від 768 px — постер і відео; при prefers-reduced-motion — лише постер без відтворення. */
+/* ---------- Hero: легкий паралакс ілюстрації за курсором ----------
+   Лише для миші (pointer: fine) і якщо користувач не просив зменшити рух.
+   Зсув до 10 px; запис у CSS-змінні раз на кадр (requestAnimationFrame). */
 (function () {
-  const video = document.querySelector('[data-hero-video]');
-  if (!video) return;
-  const wide = window.matchMedia('(min-width: 768px)');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let loaded = false;
+  const art = document.querySelector('[data-hero-art]');
+  const hero = art && art.closest('section');
+  if (!hero) return;
+  if (!window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)').matches) return;
 
-  function loadVideo() {
-    if (loaded || !wide.matches) return;
-    loaded = true;
-    video.poster = video.dataset.poster;
-    if (reduceMotion) return;
-    video.querySelectorAll('source[data-src]').forEach(function (source) {
-      source.src = source.dataset.src;
+  let frame = 0;
+  hero.addEventListener('pointermove', function (event) {
+    if (frame) return;
+    frame = requestAnimationFrame(function () {
+      frame = 0;
+      const rect = hero.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      art.style.setProperty('--px', (x * -20).toFixed(1) + 'px');
+      art.style.setProperty('--py', (y * -12).toFixed(1) + 'px');
     });
-    video.preload = 'auto';
-    video.load();
-    const playing = video.play();
-    if (playing && playing.catch) playing.catch(function () {}); // автозапуск може бути заблоковано — лишається постер
-  }
-
-  loadVideo();
-  wide.addEventListener('change', loadVideo);
+  });
+  hero.addEventListener('pointerleave', function () {
+    art.style.setProperty('--px', '0px');
+    art.style.setProperty('--py', '0px');
+  });
 })();
