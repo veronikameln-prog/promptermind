@@ -136,9 +136,9 @@
           <div class="lyr lyr--ring">
             <div class="hero-ring pos" style="--x:725;--y:228.5;--w:915.4;--h:424.8">
               <div class="ring__tilt">
-                <img src="assets/images/hero/layers/ring.webp" width="1030" height="478" alt="" decoding="async">
+                <img src="assets/images/hero/layers/ring.webp" width="1030" height="478" alt="" decoding="sync">
                 <!-- Освітлена копія кільця: плавно проявляється — кільце «пульсує» світлом (лише opacity, без фільтрів у реальному часі) -->
-                <img class="ring__glow" src="assets/images/hero/layers/ring.webp" width="1030" height="478" alt="" decoding="async">
+                <img class="ring__glow" src="assets/images/hero/layers/ring.webp" width="1030" height="478" alt="" decoding="sync">
                 <!-- Відблиск: розмита світла смужка, видима лише в межах кільця (маска — прозорість картинки кільця) -->
                 <svg class="ring__spark" viewBox="0 0 1030 478" preserveAspectRatio="none" focusable="false">
                   <defs>
@@ -184,29 +184,29 @@
             <!-- Робот: координати всередині — у системі вирізки 711×888 -->
             <div class="robot pos" style="--x:981.5;--y:181.9;--w:469.3;--h:586.1">
               <!-- Хитаються лише стрижні антен з кульками; низ стрижня ховається в конусі на голові -->
-              <img class="antenna antenna--l rpos" src="assets/images/hero/layers/antenna-l.webp" style="--x:234;--y:0;--w:106;--h:150" width="106" height="150" alt="" decoding="async">
-              <img class="antenna antenna--r rpos" src="assets/images/hero/layers/antenna-r.webp" style="--x:610;--y:95;--w:102;--h:167" width="102" height="167" alt="" decoding="async">
-              <img class="robot__body" src="assets/images/hero/layers/robot-body.webp" width="711" height="888" alt="" fetchpriority="high" decoding="async">
+              <img class="antenna antenna--l rpos" src="assets/images/hero/layers/antenna-l.webp" style="--x:234;--y:0;--w:106;--h:150" width="106" height="150" alt="" decoding="sync">
+              <img class="antenna antenna--r rpos" src="assets/images/hero/layers/antenna-r.webp" style="--x:610;--y:95;--w:102;--h:167" width="102" height="167" alt="" decoding="sync">
+              <img class="robot__body" src="assets/images/hero/layers/robot-body.webp" width="711" height="888" alt="" fetchpriority="high" decoding="sync">
             </div>
 
             <!-- Ноутбук: сяйво емблеми — заздалегідь відмальована картинка, браузер лише змінює її прозорість -->
             <div class="laptop pos" style="--x:816.5;--y:589.4;--w:440.8;--h:219.4">
-              <img src="assets/images/hero/layers/laptop.webp" width="645" height="321" alt="" decoding="async">
-              <img class="logo-glow lpos" src="assets/images/hero/layers/logo-glow.webp" style="--x:162;--y:56;--w:172;--h:164" width="172" height="164" alt="" decoding="async">
+              <img src="assets/images/hero/layers/laptop.webp" width="645" height="321" alt="" decoding="sync">
+              <img class="logo-glow lpos" src="assets/images/hero/layers/logo-glow.webp" style="--x:162;--y:56;--w:172;--h:164" width="172" height="164" alt="" decoding="sync">
             </div>
           </div>
 
           <!-- Картки (ближче до глядача) -->
           <div class="lyr lyr--front">
-            <img class="bob bob--code pos" src="assets/images/hero/layers/card-code.webp" style="--x:785.1;--y:78.4;--w:303.9;--h:217.3" width="442" height="316" alt="" decoding="async">
-            <img class="bob bob--ai pos" src="assets/images/hero/layers/card-ai.webp" style="--x:1361.9;--y:70.6;--w:241.9;--h:205.2" width="369" height="313" alt="" decoding="async">
-            <img class="bob bob--chart pos" src="assets/images/hero/layers/card-chart.webp" style="--x:1461.1;--y:401.7;--w:184;--h:173.8" width="286" height="270" alt="" decoding="async">
+            <img class="bob bob--code pos" src="assets/images/hero/layers/card-code.webp" style="--x:785.1;--y:78.4;--w:303.9;--h:217.3" width="442" height="316" alt="" decoding="sync">
+            <img class="bob bob--ai pos" src="assets/images/hero/layers/card-ai.webp" style="--x:1361.9;--y:70.6;--w:241.9;--h:205.2" width="369" height="313" alt="" decoding="sync">
+            <img class="bob bob--chart pos" src="assets/images/hero/layers/card-chart.webp" style="--x:1461.1;--y:401.7;--w:184;--h:173.8" width="286" height="270" alt="" decoding="sync">
           </div>
 
           <!-- Кубики й частинки світла (найближчий план) -->
           <div class="lyr lyr--near">
-            <img class="bob bob--cube1 pos" src="assets/images/hero/layers/cube.webp" style="--x:861.6;--y:356.5;--w:72;--h:77.5" width="131" height="141" alt="" decoding="async">
-            <img class="bob bob--cube2 pos" src="assets/images/hero/layers/cube.webp" style="--x:1519.6;--y:617.5;--w:78.1;--h:84.1" width="131" height="141" alt="" decoding="async">
+            <img class="bob bob--cube1 pos" src="assets/images/hero/layers/cube.webp" style="--x:861.6;--y:356.5;--w:72;--h:77.5" width="131" height="141" alt="" decoding="sync">
+            <img class="bob bob--cube2 pos" src="assets/images/hero/layers/cube.webp" style="--x:1519.6;--y:617.5;--w:78.1;--h:84.1" width="131" height="141" alt="" decoding="sync">
             <span class="spark-dot" style="--x:760;--y:700;--d:9s;--t:0s"></span>
             <span class="spark-dot" style="--x:880;--y:600;--d:11s;--t:-2s"></span>
             <span class="spark-dot" style="--x:1000;--y:720;--d:8s;--t:-5s"></span>
@@ -223,7 +223,8 @@
         </div>
       </div>
       <script>
-        /* Сцена показується цілою: чекаємо, поки всі шари завантажаться (запасний варіант — 4 с) */
+        /* Сцена показується цілою: чекаємо, поки всі шари завантажаться І декодуються
+           (Safari інакше малює великі картинки по одній уже після завантаження). Запасний варіант — 4 с */
         (function () {
           var scene = document.currentScript.previousElementSibling;
           scene.classList.add('is-loading');
@@ -235,13 +236,18 @@
             scene.classList.add('is-ready');
           }
           var imgs = Array.prototype.slice.call(scene.querySelectorAll('img'));
-          Promise.all(imgs.map(function (img) {
-            if (img.complete) return Promise.resolve();
-            return new Promise(function (resolve) {
+          function ready(img) {
+            var loaded = img.complete ? Promise.resolve() : new Promise(function (resolve) {
               img.addEventListener('load', resolve, { once: true });
               img.addEventListener('error', resolve, { once: true });
             });
-          })).then(show);
+            return loaded.then(function () {
+              return img.decode ? img.decode().catch(function () {}) : null;
+            });
+          }
+          Promise.all(imgs.map(ready)).then(function () {
+            requestAnimationFrame(function () { requestAnimationFrame(show); });
+          });
           setTimeout(show, 4000);
         })();
       </script>
