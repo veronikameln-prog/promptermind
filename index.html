@@ -11,6 +11,11 @@
   <!-- ЛР №12: шари hero-сцени першого екрана завантажуються першочергово -->
   <link rel="preload" as="image" href="assets/images/hero/layers/bg.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="assets/images/hero/layers/robot-body.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/hero/layers/ring.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/hero/layers/laptop.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/hero/layers/card-code.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/hero/layers/card-ai.webp" type="image/webp">
+  <link rel="preload" as="image" href="assets/images/hero/layers/card-chart.webp" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Шрифти не блокують рендеринг: спершу системний шрифт, потім Inter/Roboto (display=swap) -->
@@ -120,113 +125,126 @@
   <main id="main">
     <!-- ========== Hero ========== -->
     <section class="hero-bg relative overflow-hidden px-5 pb-10 pt-[260px] md:px-8 md:pb-16 md:pt-[400px] lg:flex lg:min-h-[max(calc(100svh-72px),560px)] lg:items-center lg:px-16 lg:py-8" id="top" aria-labelledby="hero-title">
-      <!-- Hero-сцена зібрана з окремих шарів (фон, кільце, стіл, робот, антени, ноутбук, картки, кубики).
-           Кожен шар — окреме зображення з прозорістю, тож рухомі елементи не лишають «дірок».
-           Координати — у системі 1672×941 (розмір оригінальної ілюстрації). Усі анімації — CSS, js/main.js лише додає паралакс. -->
+      <!-- Hero-сцена з окремих шарів (кільце, стіл, робот, антени, ноутбук, картки, кубики) поверх CSS-фону.
+           Шари — звичайні <img>, анімації — лише transform/opacity: браузер передає їх відеокарті, тож рух плавний
+           навіть на телефонах і в Safari. Координати шарів — у системі 1672×941 (оригінальна ілюстрація),
+           переводяться у відсотки через CSS-змінні --x/--y/--w/--h. Сцена з'являється цілою, коли всі шари завантажені (js/main.js). -->
       <div class="hero-scene" aria-hidden="true">
         <div class="hero-art" data-hero-art>
-          <svg class="hero-fx" viewBox="0 0 1672 941" preserveAspectRatio="none" focusable="false">
-            <defs>
-              <filter id="fx-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10"/></filter>
-              <filter id="fx-glow-sm" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4"/></filter>
-              <filter id="fx-soft" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="8"/></filter>
-              <linearGradient id="desk-top" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#f3efff"/>
-                <stop offset="0.12" stop-color="#e3dbff"/>
-                <stop offset="1" stop-color="#c9bcf8"/>
-              </linearGradient>
-              <linearGradient id="desk-fade" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#000"/>
-                <stop offset="0.12" stop-color="#fff"/>
-              </linearGradient>
-              <mask id="desk-mask" maskUnits="userSpaceOnUse" x="520" y="740" width="2600" height="201">
-                <rect x="520" y="740" width="2600" height="201" fill="url(#desk-fade)"/>
-              </mask>
-              <filter id="logo-lines" x="-20%" y="-20%" width="140%" height="140%">
-                <!-- колір — неоновий блакитний; прозорість = яскравість зеленого каналу (лінії світлі, корпус ноутбука — ні) -->
-                <feColorMatrix type="matrix" values="0 0 0 0 0.5  0 0 0 0 0.92  0 0 0 0 1  0 4 0 0 -2.3"/>
-                <feGaussianBlur stdDeviation="4" result="glow"/>
-                <feMerge><feMergeNode in="glow"/><feMergeNode in="glow"/></feMerge>
-              </filter>
-              <mask id="ring-shape" mask-type="alpha" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1672" height="941">
-                <image href="assets/images/hero/layers/ring.webp" x="725" y="228.5" width="915.4" height="424.8"/>
-              </mask>
-              <clipPath id="logo-clip"><ellipse cx="248" cy="138" rx="72" ry="68"/></clipPath>
-            </defs>
-
-            <!-- 1. Фон — CSS-фон .hero-scene (заповнює весь блок, навіть коли сцена менша за нього) -->
-
-            <!-- 2. Лайм-кільце: сяє, ледь погойдується, по ньому біжить іскра (кільце позаду робота — іскра ховається за ним сама) -->
-            <g class="lyr lyr--ring">
-              <g transform="rotate(-3 1180 411)">
-                <g class="ring">
-                  <image class="ring__img" href="assets/images/hero/layers/ring.webp" x="725" y="228.5" width="915.4" height="424.8"/>
-                  <!-- Іскра видима лише в межах самого кільця (маска — прозорість зображення кільця) -->
+          <!-- Кільце: ледь погойдується, по ньому біжить відблиск — світла смужка по центральній лінії кільця
+               (еліпс підігнано по пікселях ring.webp 1030×478, похибка ~1 px; координати SVG = пікселі картинки) -->
+          <div class="lyr lyr--ring">
+            <div class="hero-ring pos" style="--x:725;--y:228.5;--w:915.4;--h:424.8">
+              <div class="ring__tilt">
+                <img src="assets/images/hero/layers/ring.webp" width="1030" height="478" alt="" decoding="async">
+                <!-- Освітлена копія кільця: плавно проявляється — кільце «пульсує» світлом (лише opacity, без фільтрів у реальному часі) -->
+                <img class="ring__glow" src="assets/images/hero/layers/ring.webp" width="1030" height="478" alt="" decoding="async">
+                <!-- Відблиск: розмита світла смужка, видима лише в межах кільця (маска — прозорість картинки кільця) -->
+                <svg class="ring__spark" viewBox="0 0 1030 478" preserveAspectRatio="none" focusable="false">
+                  <defs>
+                    <filter id="ring-blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4.5"/></filter>
+                    <mask id="ring-shape" mask-type="alpha" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1030" height="478">
+                      <image href="assets/images/hero/layers/ring.webp" width="1030" height="478"/>
+                    </mask>
+                  </defs>
                   <g mask="url(#ring-shape)">
-                    <ellipse class="ring__spark" cx="1217" cy="454" rx="456" ry="86" transform="rotate(-18.9 1217 454)" pathLength="100" fill="none" stroke="#f7fee7" stroke-width="7" stroke-linecap="round" filter="url(#fx-glow-sm)"/>
+                    <ellipse class="ring__streak" cx="553.6" cy="253.7" rx="513.1" ry="96.8" transform="rotate(-18.9 553.6 253.7)" pathLength="100" fill="none" stroke="#f7fee7" stroke-width="7.9" stroke-linecap="round" filter="url(#ring-blur)"/>
                   </g>
-                </g>
-              </g>
-            </g>
+                </svg>
+              </div>
+            </div>
+          </div>
 
-            <!-- 3. Стіл, робот і ноутбук — один план -->
-            <g class="lyr lyr--main">
+          <!-- Стіл, робот і ноутбук — один план -->
+          <div class="lyr lyr--main">
+            <svg class="desk" viewBox="0 0 1672 941" preserveAspectRatio="none" focusable="false">
+              <defs>
+                <linearGradient id="desk-top" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#f3efff"/>
+                  <stop offset="0.12" stop-color="#e3dbff"/>
+                  <stop offset="1" stop-color="#c9bcf8"/>
+                </linearGradient>
+                <linearGradient id="desk-fade" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#000"/>
+                  <stop offset="0.12" stop-color="#fff"/>
+                </linearGradient>
+                <mask id="desk-mask" maskUnits="userSpaceOnUse" x="520" y="740" width="2600" height="201">
+                  <rect x="520" y="740" width="2600" height="201" fill="url(#desk-fade)"/>
+                </mask>
+                <filter id="desk-soft" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="8"/></filter>
+              </defs>
               <g mask="url(#desk-mask)">
                 <path d="M640 752C588 752 562 770 556 800L540 941H3100V752Z" fill="url(#desk-top)"/>
                 <path d="M640 752H3100" stroke="#fff" stroke-opacity="0.7" stroke-width="2"/>
               </g>
-              <ellipse cx="1300" cy="770" rx="150" ry="9" fill="#5b3fd6" opacity="0.28" filter="url(#fx-soft)"/>
-              <ellipse cx="1045" cy="812" rx="235" ry="11" fill="#4c2fc9" opacity="0.35" filter="url(#fx-soft)"/>
+              <ellipse cx="1300" cy="770" rx="150" ry="9" fill="#5b3fd6" opacity="0.28" filter="url(#desk-soft)"/>
+              <ellipse cx="1045" cy="812" rx="235" ry="11" fill="#4c2fc9" opacity="0.35" filter="url(#desk-soft)"/>
+            </svg>
 
-              <g transform="translate(981.5 181.9) scale(0.66)">
-                <g class="robot">
-                  <!-- Антени: конуси лишаються на голові (у тілі робота), хитаються лише стрижні з кульками.
-                       Низ стрижня заходить у конус і ховається за ним, тож антена ніколи не «відклеюється» -->
-                  <image class="antenna antenna--l" href="assets/images/hero/layers/antenna-l.webp" x="234" y="0" width="106" height="150"/>
-                  <image class="antenna antenna--r" href="assets/images/hero/layers/antenna-r.webp" x="610" y="95" width="102" height="167"/>
-                  <image href="assets/images/hero/layers/robot-body.webp" width="711" height="888"/>
-                  <g class="glow" filter="url(#fx-glow-sm)">
-                    <ellipse class="glow__ear" cx="650" cy="527" rx="46" ry="88" fill="none" stroke="#818cf8" stroke-width="16"/>
-                  </g>
-                </g>
-              </g>
+            <!-- Робот: координати всередині — у системі вирізки 711×888 -->
+            <div class="robot pos" style="--x:981.5;--y:181.9;--w:469.3;--h:586.1">
+              <!-- Хитаються лише стрижні антен з кульками; низ стрижня ховається в конусі на голові -->
+              <img class="antenna antenna--l rpos" src="assets/images/hero/layers/antenna-l.webp" style="--x:234;--y:0;--w:106;--h:150" width="106" height="150" alt="" decoding="async">
+              <img class="antenna antenna--r rpos" src="assets/images/hero/layers/antenna-r.webp" style="--x:610;--y:95;--w:102;--h:167" width="102" height="167" alt="" decoding="async">
+              <img class="robot__body" src="assets/images/hero/layers/robot-body.webp" width="711" height="888" alt="" fetchpriority="high" decoding="async">
+            </div>
 
-              <g transform="translate(816.5 589.4) scale(0.6834)">
-                <image href="assets/images/hero/layers/laptop.webp" width="645" height="321"/>
-                <!-- Емблема: фільтр лишає з картинки тільки неонові лінії мозку й розмиває їх — сяють самі лінії, без світлого кола -->
-                <image class="logo-glow" href="assets/images/hero/layers/laptop.webp" width="645" height="321" clip-path="url(#logo-clip)" filter="url(#logo-lines)"/>
-              </g>
-            </g>
+            <!-- Ноутбук: сяйво емблеми — заздалегідь відмальована картинка, браузер лише змінює її прозорість -->
+            <div class="laptop pos" style="--x:816.5;--y:589.4;--w:440.8;--h:219.4">
+              <img src="assets/images/hero/layers/laptop.webp" width="645" height="321" alt="" decoding="async">
+              <img class="logo-glow lpos" src="assets/images/hero/layers/logo-glow.webp" style="--x:162;--y:56;--w:172;--h:164" width="172" height="164" alt="" decoding="async">
+            </div>
+          </div>
 
-            <!-- 4. Картки (ближче до глядача) -->
-            <g class="lyr lyr--front">
-              <image class="bob bob--code" href="assets/images/hero/layers/card-code.webp" x="785.1" y="78.4" width="303.9" height="217.3"/>
-              <image class="bob bob--ai" href="assets/images/hero/layers/card-ai.webp" x="1361.9" y="70.6" width="241.9" height="205.2"/>
-              <image class="bob bob--chart" href="assets/images/hero/layers/card-chart.webp" x="1461.1" y="401.7" width="184" height="173.8"/>
-            </g>
+          <!-- Картки (ближче до глядача) -->
+          <div class="lyr lyr--front">
+            <img class="bob bob--code pos" src="assets/images/hero/layers/card-code.webp" style="--x:785.1;--y:78.4;--w:303.9;--h:217.3" width="442" height="316" alt="" decoding="async">
+            <img class="bob bob--ai pos" src="assets/images/hero/layers/card-ai.webp" style="--x:1361.9;--y:70.6;--w:241.9;--h:205.2" width="369" height="313" alt="" decoding="async">
+            <img class="bob bob--chart pos" src="assets/images/hero/layers/card-chart.webp" style="--x:1461.1;--y:401.7;--w:184;--h:173.8" width="286" height="270" alt="" decoding="async">
+          </div>
 
-            <!-- 5. Кубики й частинки (найближчий план) -->
-            <g class="lyr lyr--near">
-              <image class="bob bob--cube1" href="assets/images/hero/layers/cube.webp" x="861.6" y="356.5" width="72" height="77.5"/>
-              <image class="bob bob--cube2" href="assets/images/hero/layers/cube.webp" x="1519.6" y="617.5" width="78.1" height="84.1"/>
-              <g class="particles" fill="#fff">
-                <circle cx="760" cy="700" r="3"/>
-                <circle cx="880" cy="600" r="2.5"/>
-                <circle cx="1000" cy="720" r="3"/>
-                <circle cx="1150" cy="280" r="2.5"/>
-                <circle cx="1290" cy="660" r="3.5"/>
-                <circle cx="1340" cy="300" r="2.5"/>
-                <circle cx="1460" cy="690" r="3"/>
-                <circle cx="1620" cy="600" r="2.5"/>
-                <circle cx="720" cy="360" r="2.5"/>
-                <circle cx="1300" cy="120" r="3"/>
-                <circle cx="1600" cy="330" r="2.5"/>
-                <circle cx="1080" cy="160" r="2"/>
-              </g>
-            </g>
-          </svg>
+          <!-- Кубики й частинки світла (найближчий план) -->
+          <div class="lyr lyr--near">
+            <img class="bob bob--cube1 pos" src="assets/images/hero/layers/cube.webp" style="--x:861.6;--y:356.5;--w:72;--h:77.5" width="131" height="141" alt="" decoding="async">
+            <img class="bob bob--cube2 pos" src="assets/images/hero/layers/cube.webp" style="--x:1519.6;--y:617.5;--w:78.1;--h:84.1" width="131" height="141" alt="" decoding="async">
+            <span class="spark-dot" style="--x:760;--y:700;--d:9s;--t:0s"></span>
+            <span class="spark-dot" style="--x:880;--y:600;--d:11s;--t:-2s"></span>
+            <span class="spark-dot" style="--x:1000;--y:720;--d:8s;--t:-5s"></span>
+            <span class="spark-dot" style="--x:1150;--y:280;--d:12s;--t:-7s"></span>
+            <span class="spark-dot" style="--x:1290;--y:660;--d:10s;--t:-1s"></span>
+            <span class="spark-dot" style="--x:1340;--y:300;--d:9.5s;--t:-4s"></span>
+            <span class="spark-dot" style="--x:1460;--y:690;--d:11.5s;--t:-8s"></span>
+            <span class="spark-dot" style="--x:1620;--y:600;--d:8.5s;--t:-3s"></span>
+            <span class="spark-dot" style="--x:720;--y:360;--d:13s;--t:-6s"></span>
+            <span class="spark-dot" style="--x:1300;--y:120;--d:10.5s;--t:-9s"></span>
+            <span class="spark-dot" style="--x:1600;--y:330;--d:12.5s;--t:-10s"></span>
+            <span class="spark-dot" style="--x:1080;--y:160;--d:9s;--t:-6.5s"></span>
+          </div>
         </div>
       </div>
+      <script>
+        /* Сцена показується цілою: чекаємо, поки всі шари завантажаться (запасний варіант — 4 с) */
+        (function () {
+          var scene = document.currentScript.previousElementSibling;
+          scene.classList.add('is-loading');
+          var done = false;
+          function show() {
+            if (done) return;
+            done = true;
+            scene.classList.remove('is-loading');
+            scene.classList.add('is-ready');
+          }
+          var imgs = Array.prototype.slice.call(scene.querySelectorAll('img'));
+          Promise.all(imgs.map(function (img) {
+            if (img.complete) return Promise.resolve();
+            return new Promise(function (resolve) {
+              img.addEventListener('load', resolve, { once: true });
+              img.addEventListener('error', resolve, { once: true });
+            });
+          })).then(show);
+          setTimeout(show, 4000);
+        })();
+      </script>
 
       <div class="relative z-10 mx-auto w-full max-w-container">
         <div class="hero-enter flex flex-col items-start gap-6 md:max-w-[640px] lg:w-[min(600px,54%)] lg:max-w-none lg:gap-7 xl:w-[680px]">
