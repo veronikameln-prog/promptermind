@@ -148,6 +148,9 @@
                 <feGaussianBlur stdDeviation="4" result="glow"/>
                 <feMerge><feMergeNode in="glow"/><feMergeNode in="glow"/></feMerge>
               </filter>
+              <mask id="ring-shape" mask-type="alpha" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1672" height="941">
+                <image href="assets/images/hero/layers/ring.webp" x="725" y="228.5" width="915.4" height="424.8"/>
+              </mask>
               <clipPath id="logo-clip"><ellipse cx="248" cy="138" rx="72" ry="68"/></clipPath>
             </defs>
 
@@ -158,7 +161,10 @@
               <g transform="rotate(-3 1180 411)">
                 <g class="ring">
                   <image class="ring__img" href="assets/images/hero/layers/ring.webp" x="725" y="228.5" width="915.4" height="424.8"/>
-                  <ellipse class="ring__spark" cx="1217" cy="454" rx="456" ry="86" transform="rotate(-18.9 1217 454)" pathLength="100" fill="none" stroke="#f7fee7" stroke-width="7" stroke-linecap="round" filter="url(#fx-glow-sm)"/>
+                  <!-- Іскра видима лише в межах самого кільця (маска — прозорість зображення кільця) -->
+                  <g mask="url(#ring-shape)">
+                    <ellipse class="ring__spark" cx="1217" cy="454" rx="456" ry="86" transform="rotate(-18.9 1217 454)" pathLength="100" fill="none" stroke="#f7fee7" stroke-width="7" stroke-linecap="round" filter="url(#fx-glow-sm)"/>
+                  </g>
                 </g>
               </g>
             </g>
@@ -174,9 +180,11 @@
 
               <g transform="translate(981.5 181.9) scale(0.66)">
                 <g class="robot">
+                  <!-- Антени: конуси лишаються на голові (у тілі робота), хитаються лише стрижні з кульками.
+                       Низ стрижня заходить у конус і ховається за ним, тож антена ніколи не «відклеюється» -->
+                  <image class="antenna antenna--l" href="assets/images/hero/layers/antenna-l.webp" x="234" y="0" width="106" height="150"/>
+                  <image class="antenna antenna--r" href="assets/images/hero/layers/antenna-r.webp" x="610" y="95" width="102" height="167"/>
                   <image href="assets/images/hero/layers/robot-body.webp" width="711" height="888"/>
-                  <image class="antenna antenna--l" href="assets/images/hero/layers/antenna-l.webp" x="194" y="0" width="151" height="192"/>
-                  <image class="antenna antenna--r" href="assets/images/hero/layers/antenna-r.webp" x="568" y="92" width="147" height="254"/>
                   <g class="glow" filter="url(#fx-glow-sm)">
                     <ellipse class="glow__ear" cx="650" cy="527" rx="46" ry="88" fill="none" stroke="#818cf8" stroke-width="16"/>
                   </g>

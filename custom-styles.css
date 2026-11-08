@@ -203,12 +203,12 @@ body {
 
   /* Антени-«вушка» хитаються навколо місця кріплення до голови */
   .hero-fx .antenna--l {
-    transform-origin: 22% 99%;
+    transform-origin: 12% 91%; /* точка, де стрижень входить у конус */
     animation: antenna-l 3.6s ease-in-out infinite;
   }
 
   .hero-fx .antenna--r {
-    transform-origin: 26% 99%;
+    transform-origin: 11% 91%;
     animation: antenna-r 4.2s ease-in-out -1.3s infinite;
   }
 
@@ -321,12 +321,12 @@ body {
 
 @keyframes antenna-l {
   0%, 100% { transform: rotate(-5deg); }
-  50% { transform: rotate(6deg); }
+  50% { transform: rotate(5deg); }
 }
 
 @keyframes antenna-r {
   0%, 100% { transform: rotate(5deg); }
-  50% { transform: rotate(-6deg); }
+  50% { transform: rotate(-5deg); }
 }
 
 @keyframes glow-breathe {
