@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="css/tailwind.css">
   <!-- JS плагінів вантажиться з jsDelivr (кінець body, defer) — з'єднання встановлюється заздалегідь -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="custom-styles.css?v=20261109i">
+  <link rel="stylesheet" href="custom-styles.css?v=20261109y">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
   <!-- SVG-спрайт іконок (Tabler Icons, MIT) -->
@@ -962,7 +962,7 @@
           <aside class="flex flex-col overflow-hidden rounded-3xl bg-gradient-to-b from-brand via-brand-light to-accent text-white shadow-featured" id="pricing" aria-labelledby="summary-title" data-reveal="zoom">
             <div class="flex flex-col gap-8 px-6 py-8 md:p-12">
               <div class="flex flex-col items-start gap-4">
-                <p class="rounded-lg bg-white/15 px-3 py-1 font-heading text-xs font-bold uppercase">Крок 1 з 2</p>
+                <p class="rounded-lg bg-white/15 px-3 py-1 font-heading text-xs font-bold uppercase">Крок 1/2</p>
                 <h3 class="font-heading text-[28px] font-extrabold leading-tight md:text-[34px]" id="summary-title">Твій курс</h3>
                 <p class="leading-relaxed text-brand-200">Обери модулі — темп, учнів і промокод додаси далі.</p>
               </div>
@@ -1410,7 +1410,10 @@
 
           <aside class="relative flex flex-col items-start gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-brand to-indigo-600 p-6 text-white shadow-featured md:p-8" aria-labelledby="faq-help-title" data-reveal>
             <span class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" aria-hidden="true"></span>
-            <img class="float relative h-16 w-16 rounded-2xl bg-white/15 object-contain p-1.5" src="assets/images/illustrations/avatar-robot.png" alt="" width="64" height="64" loading="lazy">
+            <!-- 3D-пазли в плитці, де раніше був робот -->
+            <span class="float relative flex h-16 w-16 items-center justify-center rounded-2xl bg-white" aria-hidden="true">
+              <span class="faq-puzzle"></span>
+            </span>
             <h3 class="relative font-heading text-2xl font-extrabold leading-tight" id="faq-help-title">Залишилися питання?</h3>
             <p class="relative leading-relaxed text-violet-100">Напиши нам — наставник відповість і допоможе обрати модуль.</p>
             <div class="relative flex w-full flex-col gap-3 sm:flex-row">
@@ -1506,11 +1509,15 @@
              novalidate вимикає стандартні спливаючі підказки браузера — перевірку робить js/validation.js,
              а атрибути required / minlength / maxlength лишаються як опис правил і запасний варіант.
              Сітка mobile-first: одна колонка, від md — два поля в ряд. -->
-        <div class="relative flex flex-col gap-6 rounded-[32px] border-2 border-brand-200 bg-brand-50 p-5 sm:p-6 md:gap-8 md:p-10" data-reveal>
+        <div class="cf-card relative flex flex-col gap-6 rounded-[32px] border-2 border-brand-200 bg-brand-50 p-5 sm:p-6 md:gap-8 md:p-10" data-reveal>
           <header class="relative flex flex-col items-start gap-3 md:gap-4">
             <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Контакти</p>
             <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="contact-title">Залиш заявку</h2>
             <p class="text-[15px] leading-[1.65] text-gray-600 md:text-lg md:leading-relaxed">Напиши, що тебе цікавить, — наставник відповість на email або зателефонує протягом робочого дня.</p>
+            <ul class="cf-perks" aria-label="Що далі">
+              <li><svg aria-hidden="true"><use href="#icon-bolt"></use></svg>Відповідь протягом робочого дня</li>
+              <li><svg aria-hidden="true"><use href="#icon-check"></use></svg>Пробний урок — безкоштовно</li>
+            </ul>
           </header>
 
           <form class="relative grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2" id="feedbackForm" action="#" method="post" novalidate aria-labelledby="contact-title" data-feedback-form>
@@ -1518,7 +1525,8 @@
             <div class="flex flex-col gap-1.5">
               <label class="font-heading text-sm font-semibold text-gray-900" for="username">Ім'я <span class="text-red-600" aria-hidden="true">*</span></label>
               <div class="relative">
-                <input class="w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white py-2.5 pl-4 pr-11 text-base text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="username" name="username" type="text" autocomplete="given-name" required minlength="2" maxlength="50" placeholder="Ірина" aria-describedby="usernameHint usernameError" aria-invalid="false">
+                <input class="cf-input w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white py-2.5 pl-4 pr-11 text-base text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="username" name="username" type="text" autocomplete="given-name" required minlength="2" maxlength="50" placeholder="Ірина" aria-describedby="usernameHint usernameError" aria-invalid="false">
+                <svg class="cf-icon" aria-hidden="true"><use href="#icon-users"></use></svg>
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-green-600" aria-hidden="true" data-icon="success"><use href="#icon-tick"></use></svg>
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-red-600" aria-hidden="true" data-icon="error"><use href="#icon-cross"></use></svg>
               </div>
@@ -1530,7 +1538,8 @@
             <div class="flex flex-col gap-1.5">
               <label class="font-heading text-sm font-semibold text-gray-900" for="email">Email <span class="text-red-600" aria-hidden="true">*</span></label>
               <div class="relative">
-                <input class="w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white py-2.5 pl-4 pr-11 text-base text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required maxlength="100" placeholder="name@example.com" aria-describedby="emailHint emailError" aria-invalid="false">
+                <input class="cf-input w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white py-2.5 pl-4 pr-11 text-base text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required maxlength="100" placeholder="name@example.com" aria-describedby="emailHint emailError" aria-invalid="false">
+                <svg class="cf-icon" aria-hidden="true"><use href="#icon-mail"></use></svg>
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-green-600" aria-hidden="true" data-icon="success"><use href="#icon-tick"></use></svg>
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-red-600" aria-hidden="true" data-icon="error"><use href="#icon-cross"></use></svg>
               </div>
@@ -1542,7 +1551,8 @@
             <div class="flex flex-col gap-1.5">
               <label class="font-heading text-sm font-semibold text-gray-900" for="phone">Телефон <span class="text-red-600" aria-hidden="true">*</span></label>
               <div class="relative">
-                <input class="w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white py-2.5 pl-4 pr-11 text-base text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="+380501234567" aria-describedby="phoneHint phoneError" aria-invalid="false">
+                <input class="cf-input w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white py-2.5 pl-4 pr-11 text-base text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="+380501234567" aria-describedby="phoneHint phoneError" aria-invalid="false">
+                <svg class="cf-icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-green-600" aria-hidden="true" data-icon="success"><use href="#icon-tick"></use></svg>
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-red-600" aria-hidden="true" data-icon="error"><use href="#icon-cross"></use></svg>
               </div>
@@ -1553,7 +1563,7 @@
             <!-- Тема (необов'язкове поле зі значенням за замовчуванням) -->
             <div class="flex flex-col gap-1.5">
               <label class="font-heading text-sm font-semibold text-gray-900" for="topic">Тема звернення</label>
-              <select class="w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white px-3.5 text-base text-gray-900 shadow-sm transition duration-200 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="topic" name="topic" aria-describedby="topicHint">
+              <select class="cf-input cf-select w-full min-h-12 rounded-xl border-2 border-brand-200 bg-white px-3.5 text-base text-gray-900 shadow-sm transition duration-200 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="topic" name="topic" aria-describedby="topicHint">
                 <option value="trial">Пробний урок</option>
                 <option value="module">Допомога з вибором модуля</option>
                 <option value="price">Вартість і промокоди</option>
@@ -1566,7 +1576,7 @@
             <div class="flex flex-col gap-1.5 md:col-span-2">
               <label class="font-heading text-sm font-semibold text-gray-900" for="message">Повідомлення <span class="text-red-600" aria-hidden="true">*</span></label>
               <div class="relative">
-                <textarea class="block w-full min-h-[132px] resize-y rounded-xl border-2 border-brand-200 bg-white py-3 pl-4 pr-11 text-base leading-relaxed text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="message" name="message" rows="4" required minlength="10" maxlength="1000" placeholder="Наприклад: дитині 14 років, цікавлять чат-боти. Коли найближчий пробний урок?" aria-describedby="messageHint messageError" aria-invalid="false"></textarea>
+                <textarea class="cf-input cf-input--area block w-full min-h-[132px] resize-y rounded-xl border-2 border-brand-200 bg-white py-3 pl-4 pr-11 text-base leading-relaxed text-gray-900 shadow-sm transition duration-200 placeholder:text-gray-400 hover:shadow-soft focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15" id="message" name="message" rows="4" required minlength="10" maxlength="1000" placeholder="Наприклад: дитині 14 років, цікавлять чат-боти. Коли найближчий пробний урок?" aria-describedby="messageHint messageError" aria-invalid="false"></textarea>
                 <svg class="pointer-events-none absolute right-3.5 top-3.5 hidden h-5 w-5 text-green-600" aria-hidden="true" data-icon="success"><use href="#icon-tick"></use></svg>
                 <svg class="pointer-events-none absolute right-3.5 top-3.5 hidden h-5 w-5 text-red-600" aria-hidden="true" data-icon="error"><use href="#icon-cross"></use></svg>
               </div>
@@ -1603,7 +1613,7 @@
         <ul class="flex flex-col gap-4" aria-label="Способи зв'язку">
           <li data-reveal>
             <a class="group flex items-center gap-4 rounded-3xl border-2 border-brand-200 bg-brand-50 p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:bg-white hover:shadow-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:p-6" href="https://t.me/promptermind">
-              <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-brand text-white transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-telegram"></use></svg></span>
+              <span class="ct-ico ct-ico--tg" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-telegram"></use></svg></span>
               <span class="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span class="font-heading text-lg font-extrabold">Telegram</span>
                 <span class="text-sm text-gray-600">Найшвидша відповідь</span>
@@ -1614,7 +1624,7 @@
           </li>
           <li data-reveal>
             <a class="group flex items-center gap-4 rounded-3xl border-2 border-brand-200 bg-brand-50 p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:bg-white hover:shadow-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:p-6" href="mailto:hello@promptermind.ua">
-              <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-brand-light text-white transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-mail"></use></svg></span>
+              <span class="ct-ico ct-ico--mail" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-mail"></use></svg></span>
               <span class="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span class="font-heading text-lg font-extrabold">Email</span>
                 <span class="text-sm text-gray-600">Відповідаємо протягом робочого дня</span>
@@ -1625,7 +1635,7 @@
           </li>
           <li data-reveal>
             <a class="group flex items-center gap-4 rounded-3xl border-2 border-brand-200 bg-brand-50 p-5 transition duration-300 hover:-translate-y-1 hover:border-violet-300 hover:bg-white hover:shadow-lift focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent md:p-6" href="tel:+380000000000">
-              <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-accent text-white transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-phone"></use></svg></span>
+              <span class="ct-ico ct-ico--phone" aria-hidden="true"><svg class="h-7 w-7"><use href="#icon-phone"></use></svg></span>
               <span class="flex min-w-0 flex-1 flex-col gap-0.5">
                 <span class="font-heading text-lg font-extrabold">Телефон</span>
                 <span class="text-sm text-gray-600">На зв'язку в робочі години</span>
