@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="css/tailwind.css">
   <!-- JS плагінів вантажиться з jsDelivr (кінець body, defer) — з'єднання встановлюється заздалегідь -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="custom-styles.css?v=20261109y">
+  <link rel="stylesheet" href="custom-styles.css?v=20261110a">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
   <!-- SVG-спрайт іконок (Tabler Icons, MIT) -->
@@ -812,79 +812,6 @@
       </script>
     </section>
 
-    <!-- ========== Порівняння ========== -->
-    <section class="bg-gray-50 px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="comparison" aria-labelledby="comparison-title">
-      <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-16">
-        <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5" data-reveal>
-          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Порівняння</p>
-          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="comparison-title">Чим ми відрізняємось</h2>
-          <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">PrompterMind, шкільний гурток чи відеокурс: що отримає підліток у кожному випадку.</p>
-        </header>
-
-        <div class="overflow-x-auto rounded-[20px] border-2 border-brand-200 bg-white md:rounded-3xl" data-reveal="zoom">
-          <table class="w-full min-w-[331px] table-fixed border-separate border-spacing-0">
-            <caption class="sr-only">Порівняння PrompterMind зі шкільними гуртками та відеокурсами</caption>
-            <thead class="bg-brand-100">
-              <tr>
-                <th class="w-[108px] border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left align-middle font-heading text-xs font-bold min-[360px]:w-[120px] md:w-[200px] md:px-6 md:text-lg md:font-extrabold lg:w-[260px] xl:w-[360px]" scope="col">Порівняння програм</th>
-                <th class="border-b border-r border-brand-200 px-2 py-3.5 text-center align-middle md:p-6 bg-gradient-to-r from-brand to-brand-light text-white" scope="col">
-                  <img class="mx-auto mb-1.5 h-7 w-7 rounded-md object-contain md:mb-2 md:h-8 md:w-8 md:rounded-lg" src="assets/logo/logo.png" alt="" width="32" height="32">
-                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">PrompterMind</span>
-                  <span class="hidden text-brand-200 md:block">Практика, портфоліо, підтримка</span>
-                </th>
-                <th class="border-b border-r border-brand-200 px-2 py-3.5 text-center align-middle md:p-6" scope="col">
-                  <span class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-violet-100 text-brand md:mb-2 md:h-8 md:w-8 md:rounded-lg" aria-hidden="true"><svg class="h-4 w-4 md:h-[18px] md:w-[18px]"><use href="#icon-school"></use></svg></span>
-                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">Шкільні гуртки</span>
-                  <span class="hidden text-gray-500 md:block">Теорія без реальних проєктів</span>
-                </th>
-                <th class="border-b border-brand-200 px-2 py-3.5 text-center align-middle md:p-6" scope="col">
-                  <span class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-violet-100 text-brand md:mb-2 md:h-8 md:w-8 md:rounded-lg" aria-hidden="true"><svg class="h-4 w-4 md:h-[18px] md:w-[18px]"><use href="#icon-video"></use></svg></span>
-                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">Відеокурси</span>
-                  <span class="hidden text-gray-500 md:block">Без зворотного зв'язку</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Мікроспринти по 6 хвилин</th>
-                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
-                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" style="color:#f5b70a" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
-              </tr>
-              <tr>
-                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">70% практики</th>
-                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-              </tr>
-              <tr>
-                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Портфоліо до випуску</th>
-                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-              </tr>
-              <tr>
-                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Контроль для батьків</th>
-                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
-                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
-              </tr>
-              <tr>
-                <th class="border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Ігрова логіка навчання</th>
-                <td class="border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
-                <td class="border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="flex flex-wrap items-center justify-center gap-4" data-reveal>
-          <a class="inline-flex min-h-[48px] items-center justify-center rounded-[14px] border-2 border-cta-ink shadow-[5px_5px_0_#1a2e05] transition-[transform,box-shadow] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#1a2e05] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[2px_2px_0_#1a2e05] bg-cta px-8 font-heading font-bold text-cta-ink focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-accent" href="#contact" data-lead="trial">Спробувати безкоштовно</a>
-          <a class="group inline-flex min-h-[48px] items-center gap-2 px-4 font-heading font-semibold text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-accent" href="#program">Обрати модулі <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
-        </div>
-      </div>
-    </section>
     <!-- ========== Програма + конвертер ========== -->
     <section class="bg-white px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="program" aria-labelledby="program-title">
       <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-16">
@@ -1649,6 +1576,80 @@
             Відповідаємо в робочі години
           </li>
         </ul>
+      </div>
+    </section>
+
+    <!-- ========== Порівняння ========== -->
+    <section class="bg-gray-50 px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="comparison" aria-labelledby="comparison-title">
+      <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-16">
+        <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5" data-reveal>
+          <p class="rounded-full bg-violet-100 px-3.5 py-1.5 font-heading text-xs font-bold uppercase tracking-wide text-brand md:px-4 md:text-[13px]">Порівняння</p>
+          <h2 class="font-heading text-[30px] font-extrabold leading-tight md:text-4xl lg:text-5xl lg:leading-[1.1]" id="comparison-title">Чим ми відрізняємось</h2>
+          <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">PrompterMind, шкільний гурток чи відеокурс: що отримає підліток у кожному випадку.</p>
+        </header>
+
+        <div class="overflow-x-auto rounded-[20px] border-2 border-brand-200 bg-white md:rounded-3xl" data-reveal="zoom">
+          <table class="w-full min-w-[331px] table-fixed border-separate border-spacing-0">
+            <caption class="sr-only">Порівняння PrompterMind зі шкільними гуртками та відеокурсами</caption>
+            <thead class="bg-brand-100">
+              <tr>
+                <th class="w-[108px] border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left align-middle font-heading text-xs font-bold min-[360px]:w-[120px] md:w-[200px] md:px-6 md:text-lg md:font-extrabold lg:w-[260px] xl:w-[360px]" scope="col">Порівняння програм</th>
+                <th class="border-b border-r border-brand-200 px-2 py-3.5 text-center align-middle md:p-6 bg-gradient-to-r from-brand to-brand-light text-white" scope="col">
+                  <img class="mx-auto mb-1.5 h-7 w-7 rounded-md object-contain md:mb-2 md:h-8 md:w-8 md:rounded-lg" src="assets/logo/logo.png" alt="" width="32" height="32">
+                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">PrompterMind</span>
+                  <span class="hidden text-brand-200 md:block">Практика, портфоліо, підтримка</span>
+                </th>
+                <th class="border-b border-r border-brand-200 px-2 py-3.5 text-center align-middle md:p-6" scope="col">
+                  <span class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-violet-100 text-brand md:mb-2 md:h-8 md:w-8 md:rounded-lg" aria-hidden="true"><svg class="h-4 w-4 md:h-[18px] md:w-[18px]"><use href="#icon-school"></use></svg></span>
+                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">Шкільні гуртки</span>
+                  <span class="hidden text-gray-500 md:block">Теорія без реальних проєктів</span>
+                </th>
+                <th class="border-b border-brand-200 px-2 py-3.5 text-center align-middle md:p-6" scope="col">
+                  <span class="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-md bg-violet-100 text-brand md:mb-2 md:h-8 md:w-8 md:rounded-lg" aria-hidden="true"><svg class="h-4 w-4 md:h-[18px] md:w-[18px]"><use href="#icon-video"></use></svg></span>
+                  <span class="block break-words font-heading text-[11px] font-bold md:mb-2 md:text-base md:font-extrabold">Відеокурси</span>
+                  <span class="hidden text-gray-500 md:block">Без зворотного зв'язку</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Мікроспринти по 6 хвилин</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" style="color:#f5b70a" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
+              </tr>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">70% практики</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+              </tr>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Портфоліо до випуску</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+              </tr>
+              <tr>
+                <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Контроль для батьків</th>
+                <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+              </tr>
+              <tr>
+                <th class="border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Ігрова логіка навчання</th>
+                <td class="border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
+                <td class="border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+                <td class="border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-4" data-reveal>
+          <a class="inline-flex min-h-[48px] items-center justify-center rounded-[14px] border-2 border-cta-ink shadow-[5px_5px_0_#1a2e05] transition-[transform,box-shadow] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#1a2e05] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[2px_2px_0_#1a2e05] bg-cta px-8 font-heading font-bold text-cta-ink focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-accent" href="#contact" data-lead="trial">Спробувати безкоштовно</a>
+          <a class="group inline-flex min-h-[48px] items-center gap-2 px-4 font-heading font-semibold text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-accent" href="#program">Обрати модулі <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+        </div>
       </div>
     </section>
 
