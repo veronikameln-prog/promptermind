@@ -1,0 +1,26 @@
+/* 2. Бігуча стрічка: дві перехресні смуги, що рухаються назустріч ---------- */
+.ticker-band--front {
+  transform: translateY(-50%) rotate(-2.5deg);
+}
+
+.ticker-band--back {
+  transform: translateY(-50%) rotate(2.5deg);
+}
+
+/* 2a. Стрічка відгуків (index.html): краї плавно зникають; без анімації — звичайна горизонтальна прокрутка */
+.marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    padding-inline: 20px;
+  }
+
+  .marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
+}
+

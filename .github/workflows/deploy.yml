@@ -31,9 +31,16 @@ jobs:
 
       - name: Check required files
         run: |
-          for f in index.html intensive.html css/tailwind.css custom-styles.css js/main.js js/validation.js js/widget.js; do
+          for f in index.html intensive.html css/main.css src/js/pages/home.js src/js/pages/intensive.js src/js/store/course-store.js; do
             test -s "$f" || { echo "Відсутній або порожній файл: $f"; exit 1; }
           done
+          # Кожен JS-модуль, на який посилаються import, має існувати (інакше сторінка впаде в браузері)
+          for f in $(find src/js -name '*.js'); do
+            for dep in $(grep -oE "from '\.[^']+'" "$f" | sed -E "s/from '(.*)'/\1/"); do
+              test -f "$(dirname "$f")/$dep" || { echo "$f: не знайдено модуль $dep"; exit 1; }
+            done
+          done
+          ! grep -nE '<script>|style="' index.html intensive.html || { echo "Інлайн-скрипти чи стилі мають бути у src/"; exit 1; }
           ! grep -q "cdn.tailwindcss.com" index.html intensive.html || { echo "Знайдено Tailwind Play CDN"; exit 1; }
 
       - name: Install Vercel CLI

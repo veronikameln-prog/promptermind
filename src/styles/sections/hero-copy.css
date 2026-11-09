@@ -1,0 +1,259 @@
+/* 1b. Hero — текст за макетом (Montserrat, «пігулки», лаймовий мазок) ------- */
+.hero-copy {
+  --hero-ink: #15112e;
+  --hero-muted: #635d85;
+  --hero-violet: #6b2fff;
+  --hero-blue: #3b82f6;
+  font-family: "Montserrat", "Inter", system-ui, sans-serif;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border: 1px solid rgba(107, 47, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #3b1a8f;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero-badge__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hero-violet);
+}
+
+.hero-copy__text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hero-title {
+  isolation: isolate;
+  margin: 0;
+  color: var(--hero-ink);
+  font-size: clamp(28px, 7.6vw, 44px);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+}
+
+.hero-title__violet { color: var(--hero-violet); white-space: nowrap; }
+.hero-title__blue   { color: var(--hero-blue); white-space: nowrap; } /* «IT-професію» не розривається на дефісі */
+
+/* «PrompterMind» — окремим великим рядком, під ним лаймовий мазок пензля */
+.hero-title__brand {
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin-top: 0.06em;
+  font-size: 1.42em;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.hero-title__brush {
+  position: absolute;
+  z-index: -1;
+  left: -2%;
+  bottom: -0.2em;
+  width: 104%;
+  height: 0.34em;
+  overflow: visible;
+}
+
+.hero-lead {
+  max-width: 600px;
+  margin: 0;
+  color: var(--hero-muted);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.hero-btn:hover {
+  transform: translateY(-2px);
+}
+
+.hero-btn:active {
+  transform: translateY(0);
+}
+
+.hero-btn:focus-visible {
+  outline: 3px solid var(--hero-blue);
+  outline-offset: 4px;
+}
+
+.hero-btn__icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.hero-btn__icon--play {
+  width: 18px;
+  height: 18px;
+}
+
+.hero-btn--primary {
+  background: #a3e635;
+  color: #1a2e05;
+  box-shadow: 0 12px 26px -8px rgba(101, 163, 13, 0.55);
+}
+
+.hero-btn--primary:hover {
+  background: #b5ef4a;
+  box-shadow: 0 16px 30px -8px rgba(101, 163, 13, 0.6);
+}
+
+.hero-btn--primary .hero-btn__icon {
+  stroke-width: 2.2;
+  transition: transform 0.3s ease;
+}
+
+.hero-btn--primary:hover .hero-btn__icon {
+  transform: translate(2px, -2px) rotate(6deg);
+}
+
+.hero-btn--ghost {
+  border: 1.5px solid var(--hero-ink);
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--hero-ink);
+  font-weight: 600;
+}
+
+.hero-btn--ghost:hover {
+  background: #fff;
+}
+
+/* Цифри: іконка + значення + підпис, між пунктами — вертикальні розділювачі */
+.hero-stats {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-stat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.hero-stat + .hero-stat {
+  border-left: 1px solid rgba(107, 47, 255, 0.22);
+}
+
+.hero-stat__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--hero-violet);
+}
+
+.hero-stat__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-stat__value {
+  color: var(--hero-violet);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-stat__label {
+  color: var(--hero-muted);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .hero-badge { font-size: 14px; padding: 9px 20px; }
+  .hero-title { font-size: 48px; }
+  .hero-lead { font-size: 18px; }
+
+  .hero-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: auto;
+  }
+
+  .hero-btn { min-height: 62px; padding: 16px 36px; font-size: 16px; }
+
+  .hero-stats { width: auto; }
+
+  .hero-stat {
+    flex: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 0 28px;
+    text-align: left;
+  }
+
+  .hero-stat:first-child { padding-left: 0; }
+  .hero-stat__icon { width: 36px; height: 36px; }
+  .hero-stat__value { font-size: 24px; }
+  .hero-stat__label { font-size: 13px; }
+}
+
+/* Рядки заголовка як на макеті — лише на десктопі; на менших екранах текст переноситься сам */
+.hero-br { display: none; }
+
+@media (min-width: 1024px) {
+  .hero-br { display: inline; }
+
+  /* Колонка тексту ширша за стару (Tailwind lg/xl:w-*), щоб рядок «гаджетами на затребувану» вміщувався */
+  .hero-copy { width: min(820px, 50vw); }
+
+  .hero-title {
+    font-size: clamp(34px, 2.6vw, 52px); /* найдовший рядок не заходить під картку «</>» */
+    line-height: 1.16;
+  }
+
+  .hero-lead {
+    max-width: 640px;
+    color: #57527a;
+    font-size: clamp(16px, 1.08vw, 20px);
+    line-height: 1.55;
+  }
+}
+

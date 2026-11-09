@@ -1,0 +1,6 @@
+/* Без «гумового» відскоку за межами сторінки (overscroll) — на тачпадах, iOS і Android */
+html,
+body {
+  overscroll-behavior: none;
+}
+

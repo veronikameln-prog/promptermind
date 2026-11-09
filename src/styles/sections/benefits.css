@@ -1,0 +1,397 @@
+/* 1c. Переваги (bento): світлі скляні картки в палітрі сайту ---------------- */
+.bn {
+  --bn-ink: #15112e;
+  --bn-muted: #635d85;
+  --bn-violet: #6b2fff;
+  --bn-blue: #3b82f6;
+  --bn-lime: #a3e635;
+  position: relative;
+  overflow: hidden;
+  padding: 28px 20px 64px; /* зверху менше: одразу над блоком — бігучі стрічки зі своїм відступом */
+  background: linear-gradient(180deg, #ffffff 0%, #f4efff 45%, #ece4ff 100%);
+  color: var(--bn-ink);
+  font-family: "Montserrat", "Inter", system-ui, sans-serif;
+}
+
+.bn__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.bn__glow--a { width: 460px; height: 460px; left: -160px; top: 25%; background: rgba(107, 47, 255, 0.16); }
+.bn__glow--b { width: 520px; height: 520px; right: -180px; bottom: -140px; background: rgba(59, 130, 246, 0.16); }
+
+.bn__inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.bn__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.bn__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border: 1px solid rgba(107, 47, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #3b1a8f;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bn__eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bn-violet); }
+
+.bn__title {
+  margin: 0;
+  font-size: clamp(30px, 6.5vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.bn__title-accent {
+  background: linear-gradient(90deg, var(--bn-violet), var(--bn-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bn__lead {
+  margin: 0;
+  color: var(--bn-muted);
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.bn__grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  grid-template-areas: "sprint" "practice" "bot" "portfolio";
+}
+
+.bn-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 26px;
+  border: 1px solid rgba(107, 47, 255, 0.16);
+  border-radius: 28px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.6));
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 #fff, 0 24px 50px -28px rgba(76, 29, 149, 0.35);
+}
+
+.bn-card--sprint    { grid-area: sprint; }
+.bn-card--practice  { grid-area: practice; align-items: center; text-align: center; justify-content: center; }
+.bn-card--bot       { grid-area: bot; }
+.bn-card--portfolio { grid-area: portfolio; }
+
+.bn-card__copy { display: flex; flex-direction: column; gap: 10px; }
+
+.bn-card__big {
+  margin: 0;
+  background: linear-gradient(90deg, var(--bn-violet) 0%, var(--bn-blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: clamp(52px, 6vw, 80px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.bn-card__title { margin: 0; font-size: clamp(19px, 1.7vw, 24px); font-weight: 700; line-height: 1.25; }
+.bn-card__text  { margin: 0; max-width: 420px; color: var(--bn-muted); font-size: 15px; font-weight: 500; line-height: 1.6; }
+
+/* Телефон із таймером уроку (екран — у фірмовому фіолетовому) */
+.bn-phone {
+  align-self: center;
+  width: 168px;
+  height: 290px;
+  padding: 9px;
+  border: 1px solid rgba(107, 47, 255, 0.2);
+  border-radius: 34px;
+  background: linear-gradient(160deg, #ffffff, #e9e1ff);
+  rotate: 6deg;
+  box-shadow: 0 30px 60px -24px rgba(76, 29, 149, 0.45);
+}
+
+.bn-phone__screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 18px 12px;
+  border-radius: 26px;
+  background: radial-gradient(circle at 50% 25%, #8b5cff, #6b2fff 55%, #4c1fd6);
+  color: #fff;
+}
+
+.bn-phone__label { margin: 0; color: rgba(255, 255, 255, 0.85); font-size: 11px; font-weight: 600; }
+
+.bn-timer { position: relative; width: 112px; height: 112px; }
+.bn-timer svg { width: 100%; height: 100%; rotate: -90deg; }
+.bn-timer circle { fill: none; stroke-width: 9; }
+.bn-timer__track { stroke: rgba(255, 255, 255, 0.22); }
+.bn-timer__bar {
+  stroke: var(--bn-lime);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--bn-left, 1) * 100);
+  transition: stroke-dashoffset 0.2s linear;
+}
+
+.bn-timer__time {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.bn-phone__chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--bn-lime);
+  color: #1a2e05;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* Кільце 70% */
+.bn-ring { position: relative; width: 160px; height: 160px; margin-bottom: 4px; }
+.bn-ring svg { width: 100%; height: 100%; rotate: -90deg; }
+.bn-ring circle { fill: none; stroke-width: 12; }
+.bn-ring__track { stroke: rgba(107, 47, 255, 0.12); }
+.bn-ring__bar {
+  stroke: url(#bn-ring-grad);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 30;
+}
+
+.bn-ring__value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bn-violet);
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* Міні-месенджер: стрічка повідомлень (нові знизу, старі від'їжджають угору) + поле введення */
+.bn-chat { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+
+.bn-chat__log {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 200px;
+  padding: 2px 2px 4px; /* рамки бульбашок не обрізаються краєм стрічки (overflow: hidden) */
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 28px);
+  mask-image: linear-gradient(180deg, transparent 0, #000 28px);
+  transition: opacity 0.4s ease;
+}
+
+.bn-chat__log.is-clearing { opacity: 0; }
+
+.bn-chat__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 6px 6px 6px 16px;
+  border: 1px solid rgba(107, 47, 255, 0.18);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.bn-chat__field {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--bn-ink);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  direction: ltr;
+}
+
+.bn-chat__field:empty::before { content: "Напиши повідомлення…"; color: rgba(99, 93, 133, 0.6); }
+
+.bn-chat__send {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bn-violet);
+  color: #fff;
+}
+
+.bn-chat__send svg { width: 16px; height: 16px; }
+
+.bn-chat__msg {
+  max-width: 88%;
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.bn-chat__msg--me {
+  align-self: flex-end;
+  transform-origin: 100% 100%;
+  border-bottom-right-radius: 6px;
+  background: var(--bn-violet);
+  color: #fff;
+}
+
+.bn-chat__msg--bot {
+  align-self: flex-start;
+  transform-origin: 0 100%;
+  border: 1px solid rgba(132, 204, 22, 0.55);
+  border-bottom-left-radius: 6px;
+  background: #ecfccb;
+  color: #1a2e05;
+}
+
+.bn-chat__typing { display: inline-flex; flex-shrink: 0; gap: 5px; align-self: flex-start; transform-origin: 0 100%; margin: 0; padding: 14px 16px; border-radius: 18px; background: rgba(107, 47, 255, 0.08); }
+.bn-chat__typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--bn-violet); }
+
+/* Віяло проєктів */
+.bn-fan { position: relative; min-height: 210px; }
+
+.bn-fan > * {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(62%, 300px);
+  max-width: none;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 3px solid #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 36px -14px rgba(76, 29, 149, 0.45);
+  translate: -50% -50%;
+}
+
+.bn-fan > *:nth-child(1) { rotate: -14deg; transform: translate(-34%, 6%); }
+.bn-fan > *:nth-child(2) { rotate: -5deg;  transform: translate(-11%, -2%); }
+.bn-fan > *:nth-child(3) { rotate: 5deg;   transform: translate(11%, -2%); }
+.bn-fan > *:nth-child(4) { rotate: 14deg;  transform: translate(34%, 6%); }
+
+@media (min-width: 768px) {
+  .bn { padding: 36px 32px 88px; }
+  .bn__grid {
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "sprint sprint" "practice bot" "portfolio portfolio";
+  }
+  .bn-card { padding: 32px; }
+  .bn-card--sprint,
+  .bn-card--portfolio { flex-direction: row; align-items: center; justify-content: space-between; }
+  .bn-fan { flex: 1 1 55%; min-height: 250px; }
+  .bn-fan > * { width: min(70%, 320px); }
+}
+
+@media (min-width: 1024px) {
+  .bn { padding: 44px 64px 110px; }
+  .bn__grid {
+    grid-template-columns: 1.15fr 1fr 1fr;
+    grid-template-areas: "sprint sprint practice" "bot portfolio portfolio";
+  }
+  .bn-card { min-height: 330px; }
+}
+
+/* Анімації — лише якщо користувач не просив зменшити рух */
+@media (prefers-reduced-motion: no-preference) {
+  .bn-card.is-in { animation: bn-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .bn-card--practice.is-in { animation-delay: 0.1s; }
+  .bn-card--bot.is-in { animation-delay: 0.2s; }
+  .bn-card--portfolio.is-in { animation-delay: 0.3s; }
+
+  .bn-phone { animation: bn-float 6s ease-in-out infinite; }
+
+  /* Кільце заповнюється від 0 до 70% */
+  .bn-ring__bar { stroke-dashoffset: 100; transition: stroke-dashoffset 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s; }
+  .is-in .bn-ring__bar { stroke-dashoffset: 30; }
+
+  /* Месенджер: нові бульбашки «вискакують» від свого кута, бот «друкує», кнопка блимає при надсиланні */
+  .bn-chat__msg.is-new,
+  .bn-chat__typing.is-new { animation: bn-pop 0.38s cubic-bezier(0.2, 0.9, 0.3, 1.25) both; }
+  .bn-chat__msg { flex-shrink: 0; }
+  .bn-chat__typing span { animation: bn-dot 0.9s ease-in-out infinite; }
+  .bn-chat__typing span:nth-child(2) { animation-delay: 0.15s; }
+  .bn-chat__typing span:nth-child(3) { animation-delay: 0.3s; }
+  .bn-chat__field.is-typing::after { content: ""; display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; background: var(--bn-violet); animation: bn-caret 0.8s steps(1) infinite; }
+  .bn-chat__send.is-pulse { animation: bn-send 0.35s ease; }
+
+  /* Віяло: мініатюри спершу складені стосом, потім розкриваються */
+  .bn-fan > * { transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), rotate 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .bn-card--portfolio:not(.is-in) .bn-fan > * { transform: none; rotate: 0deg; }
+  .bn-fan > *:nth-child(2) { transition-delay: 0.08s; }
+  .bn-fan > *:nth-child(3) { transition-delay: 0.16s; }
+  .bn-fan > *:nth-child(4) { transition-delay: 0.24s; }
+}
+
+@keyframes bn-in {
+  from { opacity: 0; transform: translateY(28px); }
+}
+
+@keyframes bn-float {
+  50% { translate: 0 -10px; }
+}
+
+@keyframes bn-pop {
+  from { opacity: 0; transform: translateY(14px) scale(0.85); }
+}
+
+@keyframes bn-caret {
+  50% { opacity: 0; }
+}
+
+@keyframes bn-send {
+  40% { transform: scale(0.82); }
+  75% { transform: scale(1.12); }
+}
+
+@keyframes bn-dot {
+  50% { translate: 0 -4px; opacity: 0.5; }
+}
+

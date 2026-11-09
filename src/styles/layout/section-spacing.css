@@ -1,0 +1,11 @@
+/* Відступи між блоками компактніші: замість 112 px зверху й знизу (lg:py-28) — 80 px на десктопі,
+   64 px на планшеті, 48 px на телефоні; програма й планувальник ідуть «в парі» з меншим проміжком */
+main > section:is(#projects, #program, #planner, #testimonials, #faq, #contact, #comparison) { padding-top: 48px; padding-bottom: 48px; }
+@media (min-width: 768px) { main > section:is(#projects, #program, #planner, #testimonials, #faq, #contact, #comparison) { padding-top: 64px; padding-bottom: 64px; } }
+@media (min-width: 1024px) { main > section:is(#projects, #program, #planner, #testimonials, #faq, #contact, #comparison) { padding-top: 80px; padding-bottom: 80px; } }
+main > section#program { padding-bottom: 40px; }
+main > section#planner { padding-top: 48px; }
+@media (min-width: 1024px) { main > section#program { padding-bottom: 48px; } main > section#planner { padding-top: 56px; } }
+/* Переваги (bento): менший нижній відступ перед «Проєктами» */
+@media (min-width: 768px) { .bn { padding-bottom: 64px; } }
+@media (min-width: 1024px) { .bn { padding-bottom: 72px; } }

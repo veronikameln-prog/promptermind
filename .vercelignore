@@ -1,3 +1,4 @@
 node_modules
-src
+# Вихідні стилі потрібні лише для збирання css/main.css (src/js — це код сайту, його деплоїмо)
+src/styles
 .github

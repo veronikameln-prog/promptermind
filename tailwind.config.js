@@ -1,8 +1,8 @@
-/** Tailwind CSS (CLI) — ЛР №12. Замість Play CDN, що генерував стилі в браузері користувача,
- *  CSS збирається заздалегідь: npm run build:css → css/tailwind.css (лише використані класи, мініфіковано).
+/** Tailwind CSS (CLI). Замість Play CDN, що генерував стилі в браузері користувача,
+ *  CSS збирається заздалегідь: npm run build:css: src/styles/main.css → css/main.css (лише використані класи, мініфіковано).
  *  Дизайн-токени — ті самі, що були в tailwind.config у <head> (ЛР №4–№6). */
 module.exports = {
-  content: ['./index.html', './intensive.html', './js/**/*.js'],
+  content: ['./index.html', './intensive.html', './src/js/**/*.js'],
   theme: {
     extend: {
       colors: {

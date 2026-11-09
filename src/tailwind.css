@@ -1,8 +1,0 @@
-/* ЛР №12: стилі Swiper і Fancybox вбудовано в один зібраний файл (замість окремих CSS з CDN),
-   щоб браузер не перераховував стилі всієї сторінки, коли вони довантажуються пізніше. JS плагінів — з CDN (ЛР №10).
-   Порядок як і раніше: спершу Tailwind, потім стилі плагінів. */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-@import 'swiper/swiper-bundle.min.css';
-@import '@fancyapps/ui/dist/fancybox/fancybox.css';

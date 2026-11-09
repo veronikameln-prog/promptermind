@@ -1,0 +1,8 @@
+/* Шапка на планшеті: меню з 5 пунктів + «Ще» вміщується в один рядок, кнопка «Пробний урок» не переноситься */
+header a[data-lead="trial"] { white-space: nowrap; }
+@media (min-width: 768px) and (max-width: 1023px) {
+  header nav[aria-label="Головна навігація"] > ul { gap: 12px; }
+  header nav[aria-label="Головна навігація"] > ul > li > a, header [data-dropdown-toggle] { font-size: 14px; }
+}
+/* Смужка прогресу прокрутки під шапкою: частку (0…1) ставить src/js/components/scroll-header.js */
+[data-progress] { transform: scaleX(var(--progress, 0)); }

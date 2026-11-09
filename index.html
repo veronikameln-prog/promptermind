@@ -21,13 +21,10 @@
   <!-- Шрифти не блокують рендеринг: спершу системний шрифт, потім Inter/Roboto (display=swap) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Roboto:wght@400;500&display=swap"></noscript>
-
-  <!-- Tailwind CSS: зібраний CLI-файл замість Play CDN (ЛР №12, швидкодія). Збирання: npm run build:css -->
-  <!-- Стилі Swiper і Fancybox (ЛР №10) вбудовано в цей файл: один запит без пізніх перерахунків стилів (ЛР №12) -->
-  <link rel="stylesheet" href="css/tailwind.css">
+  <!-- Стилі: один зібраний файл — Tailwind + Swiper/Fancybox + власні стилі (src/styles/). Збирання: npm run build:css -->
+  <link rel="stylesheet" href="css/main.css">
   <!-- JS плагінів вантажиться з jsDelivr (кінець body, defer) — з'єднання встановлюється заздалегідь -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="custom-styles.css?v=20261110e">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
   <!-- SVG-спрайт іконок (Tabler Icons, MIT) -->
@@ -138,13 +135,13 @@
       <!-- Hero-сцена з окремих шарів (кільце, стіл, робот, антени, ноутбук, картки, кубики) поверх CSS-фону.
            Шари — звичайні <img>, анімації — лише transform/opacity: браузер передає їх відеокарті, тож рух плавний
            навіть на телефонах і в Safari. Координати шарів — у системі 1672×941 (оригінальна ілюстрація),
-           переводяться у відсотки через CSS-змінні --x/--y/--w/--h. Сцена з'являється цілою, коли всі шари завантажені (js/main.js). -->
+           переводяться у відсотки через CSS-змінні --x/--y/--w/--h. Сцена з'являється цілою, коли всі шари завантажені (src/js/components/hero-scene.js). -->
       <div class="hero-scene" aria-hidden="true">
         <div class="hero-art" data-hero-art>
           <!-- Кільце: ледь погойдується, по ньому біжить відблиск — світла смужка по центральній лінії кільця
                (еліпс підігнано по пікселях ring.webp 1030×478, похибка ~1 px; координати SVG = пікселі картинки) -->
           <div class="lyr lyr--ring">
-            <div class="hero-ring pos" style="--x:725;--y:228.5;--w:915.4;--h:424.8">
+            <div class="hero-ring pos">
               <div class="ring__tilt">
                 <img src="assets/images/hero/layers/ring.webp" width="1030" height="478" alt="" decoding="sync">
                 <!-- Освітлена копія кільця: плавно проявляється — кільце «пульсує» світлом (лише opacity, без фільтрів у реальному часі) -->
@@ -153,7 +150,7 @@
                 <svg class="ring__spark" viewBox="0 0 1030 478" preserveAspectRatio="none" focusable="false">
                   <defs>
                     <filter id="ring-blur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4.5"/></filter>
-                    <mask id="ring-shape" mask-type="alpha" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1030" height="478">
+                    <mask id="ring-shape" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1030" height="478">
                       <image href="assets/images/hero/layers/ring.webp" width="1030" height="478"/>
                     </mask>
                   </defs>
@@ -192,79 +189,50 @@
             </svg>
 
             <!-- Робот: координати всередині — у системі вирізки 711×888 -->
-            <div class="robot pos" style="--x:981.5;--y:181.9;--w:469.3;--h:586.1">
+            <div class="robot pos">
               <!-- Хитаються лише стрижні антен з кульками; низ стрижня ховається в конусі на голові -->
-              <img class="antenna antenna--l rpos" src="assets/images/hero/layers/antenna-l.webp" style="--x:234;--y:0;--w:106;--h:150" width="106" height="150" alt="" decoding="sync">
-              <img class="antenna antenna--r rpos" src="assets/images/hero/layers/antenna-r.webp" style="--x:610;--y:95;--w:102;--h:167" width="102" height="167" alt="" decoding="sync">
+              <img class="antenna antenna--l rpos" src="assets/images/hero/layers/antenna-l.webp" width="106" height="150" alt="" decoding="sync">
+              <img class="antenna antenna--r rpos" src="assets/images/hero/layers/antenna-r.webp" width="102" height="167" alt="" decoding="sync">
               <img class="robot__body" src="assets/images/hero/layers/robot-body.webp" width="711" height="888" alt="" fetchpriority="high" decoding="sync">
             </div>
 
             <!-- Ноутбук: сяйво емблеми — заздалегідь відмальована картинка, браузер лише змінює її прозорість -->
-            <div class="laptop pos" style="--x:816.5;--y:589.4;--w:440.8;--h:219.4">
+            <div class="laptop pos">
               <img src="assets/images/hero/layers/laptop.webp" width="645" height="321" alt="" decoding="sync">
-              <img class="logo-glow lpos" src="assets/images/hero/layers/logo-glow.webp" style="--x:162;--y:56;--w:172;--h:164" width="172" height="164" alt="" decoding="sync">
+              <img class="logo-glow lpos" src="assets/images/hero/layers/logo-glow.webp" width="172" height="164" alt="" decoding="sync">
             </div>
           </div>
 
           <!-- Картки (ближче до глядача) -->
           <div class="lyr lyr--front">
-            <img class="bob bob--code pos" src="assets/images/hero/layers/card-code.webp" style="--x:785.1;--y:78.4;--w:303.9;--h:217.3" width="442" height="316" alt="" decoding="sync">
-            <img class="bob bob--ai pos" src="assets/images/hero/layers/card-ai.webp" style="--x:1361.9;--y:70.6;--w:241.9;--h:205.2" width="369" height="313" alt="" decoding="sync">
-            <img class="bob bob--chart pos" src="assets/images/hero/layers/card-chart.webp" style="--x:1461.1;--y:401.7;--w:184;--h:173.8" width="286" height="270" alt="" decoding="sync">
+            <img class="bob bob--code pos" src="assets/images/hero/layers/card-code.webp" width="442" height="316" alt="" decoding="sync">
+            <img class="bob bob--ai pos" src="assets/images/hero/layers/card-ai.webp" width="369" height="313" alt="" decoding="sync">
+            <img class="bob bob--chart pos" src="assets/images/hero/layers/card-chart.webp" width="286" height="270" alt="" decoding="sync">
           </div>
 
           <!-- Кубики й частинки світла (найближчий план) -->
           <div class="lyr lyr--near">
-            <img class="bob bob--cube1 pos" src="assets/images/hero/layers/cube.webp" style="--x:861.6;--y:356.5;--w:72;--h:77.5" width="131" height="141" alt="" decoding="sync">
-            <img class="bob bob--cube2 pos" src="assets/images/hero/layers/cube.webp" style="--x:1519.6;--y:617.5;--w:78.1;--h:84.1" width="131" height="141" alt="" decoding="sync">
-            <span class="spark-dot" style="--x:760;--y:700;--d:9s;--t:0s"></span>
-            <span class="spark-dot" style="--x:880;--y:600;--d:11s;--t:-2s"></span>
-            <span class="spark-dot" style="--x:1000;--y:720;--d:8s;--t:-5s"></span>
-            <span class="spark-dot" style="--x:1150;--y:280;--d:12s;--t:-7s"></span>
-            <span class="spark-dot" style="--x:1290;--y:660;--d:10s;--t:-1s"></span>
-            <span class="spark-dot" style="--x:1340;--y:300;--d:9.5s;--t:-4s"></span>
-            <span class="spark-dot" style="--x:1460;--y:690;--d:11.5s;--t:-8s"></span>
-            <span class="spark-dot" style="--x:1620;--y:600;--d:8.5s;--t:-3s"></span>
-            <span class="spark-dot" style="--x:720;--y:360;--d:13s;--t:-6s"></span>
-            <span class="spark-dot" style="--x:1300;--y:120;--d:10.5s;--t:-9s"></span>
-            <span class="spark-dot" style="--x:1600;--y:330;--d:12.5s;--t:-10s"></span>
-            <span class="spark-dot" style="--x:1080;--y:160;--d:9s;--t:-6.5s"></span>
+            <img class="bob bob--cube1 pos" src="assets/images/hero/layers/cube.webp" width="131" height="141" alt="" decoding="sync">
+            <img class="bob bob--cube2 pos" src="assets/images/hero/layers/cube.webp" width="131" height="141" alt="" decoding="sync">
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
+            <span class="spark-dot"></span>
           </div>
         </div>
       </div>
-      <script>
-        /* Сцена показується цілою: чекаємо, поки всі шари завантажаться І декодуються
-           (Safari інакше малює великі картинки по одній уже після завантаження). Запасний варіант — 4 с */
-        (function () {
-          var scene = document.currentScript.previousElementSibling;
-          scene.classList.add('is-loading');
-          var done = false;
-          function show() {
-            if (done) return;
-            done = true;
-            scene.classList.remove('is-loading');
-            scene.classList.add('is-ready');
-          }
-          var imgs = Array.prototype.slice.call(scene.querySelectorAll('img'));
-          function ready(img) {
-            var loaded = img.complete ? Promise.resolve() : new Promise(function (resolve) {
-              img.addEventListener('load', resolve, { once: true });
-              img.addEventListener('error', resolve, { once: true });
-            });
-            return loaded.then(function () {
-              return img.decode ? img.decode().catch(function () {}) : null;
-            });
-          }
-          Promise.all(imgs.map(ready)).then(function () {
-            requestAnimationFrame(function () { requestAnimationFrame(show); });
-          });
-          setTimeout(show, 4000);
-        })();
-      </script>
 
       <div class="relative z-10 mx-auto w-full max-w-container">
         <!-- Текст hero за макетом: Montserrat, бейдж-«пігулка», «PrompterMind» окремим рядком з лаймовим мазком,
-             кнопки-«пігулки» з іконками, цифри з іконками. Стилі — розділ «1b» у custom-styles.css -->
+             кнопки-«пігулки» з іконками, цифри з іконками. Стилі — src/styles/sections/hero-copy.css -->
         <div class="hero-enter hero-copy flex flex-col items-start gap-6 md:max-w-[640px] lg:w-[min(600px,54%)] lg:max-w-none lg:gap-7 xl:w-[680px]">
           <p class="hero-badge">
             <span class="hero-badge__dot" aria-hidden="true"></span>
@@ -377,7 +345,7 @@
 
     <!-- ========== Переваги: bento-сітка зі скляних карток на темно-фіолетовому фоні ==========
          Картки не клікабельні, тому без «кнопкових» ефектів при наведенні; натомість кожна оживає,
-         коли з'являється на екрані (клас is-in додає скрипт нижче). Стилі — розділ «Переваги (bento)» у custom-styles.css -->
+         коли з'являється на екрані (клас is-in додає src/js/components/benefits.js). Стилі — src/styles/sections/benefits.css -->
     <section class="bn" id="benefits" aria-labelledby="benefits-title">
       <div class="bn__glow bn__glow--a" aria-hidden="true"></div>
       <div class="bn__glow bn__glow--b" aria-hidden="true"></div>
@@ -437,6 +405,10 @@
                 <span class="bn-chat__field" data-bn-chat-field></span>
                 <span class="bn-chat__send" data-bn-chat-send><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z" fill="currentColor"/></svg></span>
               </div>
+              <!-- Шаблони повідомлень для анімації чату (src/js/components/benefits-chat.js) -->
+              <template data-bn-chat-tpl="me"><p class="bn-chat__msg bn-chat__msg--me is-new"></p></template>
+              <template data-bn-chat-tpl="bot"><p class="bn-chat__msg bn-chat__msg--bot is-new"></p></template>
+              <template data-bn-chat-tpl="typing"><p class="bn-chat__typing is-new"><span></span><span></span><span></span></p></template>
             </div>
           </article>
 
@@ -447,7 +419,7 @@
               <h3 class="bn-card__title">Портфоліо до випуску</h3>
               <p class="bn-card__text">Реальні роботи, які не соромно показати друзям, батькам і майбутнім роботодавцям.</p>
             </div>
-            <!-- Віяло з мініатюр проєктів — ті самі живі макети, що й у блоці «Проєкти» (стилі .pj-stage / .mk-* у custom-styles.css) -->
+            <!-- Віяло з мініатюр проєктів — ті самі живі макети, що й у блоці «Проєкти» (стилі .pj-stage / .mk-* у src/styles/sections/projects-mockups.css) -->
             <div class="bn-fan" aria-hidden="true">
               <div class="bn-fan__tile pj-stage pj-stage--blue">
                 <div class="mk-win mk-tg">
@@ -459,7 +431,7 @@
               <div class="bn-fan__tile pj-stage pj-stage--pink">
                 <div class="mk-win mk-brand">
                   <div class="mk-logo"><span class="mk-logo__mark">К</span><span class="mk-logo__name">КотоКод<small>клуб юних програмістів</small></span></div>
-                  <div class="mk-swatches"><i style="--c:#ff5c8a"></i><i style="--c:#ffb020"></i><i style="--c:#6b2fff"></i><i style="--c:#15112e"></i></div>
+                  <div class="mk-swatches"><i></i><i></i><i></i><i></i></div>
                 </div>
               </div>
               <div class="bn-fan__tile pj-stage pj-stage--night">
@@ -473,128 +445,19 @@
                 <div class="mk-win mk-site">
                   <div class="mk-urlbar"><i></i><i></i><i></i><span>olya.promi.site</span></div>
                   <div class="mk-site__hero"><span class="mk-ava">О</span><span class="mk-site__who"><b>Оля Коваль</b><small>ШІ-творчиня</small></span></div>
-                  <div class="mk-site__grid"><i style="--c:#8b5cf6"></i><i style="--c:#ff5c8a"></i><i style="--c:#3b82f6"></i><i style="--c:#84cc16"></i><i style="--c:#312e81"></i><i style="--c:#f59e0b"></i></div>
+                  <div class="mk-site__grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
                 </div>
               </div>
             </div>
           </article>
         </div>
       </div>
-      <script>
-        /* Картки оживають при появі на екрані: кільце заповнюється, цифри рахуються, таймер іде, віяло розкривається */
-        (function () {
-          var cards = document.querySelectorAll('[data-bn]');
-          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          function countUp(el) {
-            var to = +el.getAttribute('data-bn-count'), start = null;
-            if (reduce) { el.textContent = to; return; }
-            function step(t) {
-              if (!start) start = t;
-              var p = Math.min((t - start) / 1200, 1);
-              el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
-              if (p < 1) requestAnimationFrame(step);
-            }
-            requestAnimationFrame(step);
-          }
-          function runTimer(el) {
-            if (reduce) return;
-            var total = 360, left = total;
-            setInterval(function () {
-              left = left > 0 ? left - 6 : total;
-              el.textContent = '0' + Math.floor(left / 60) + ':' + ('0' + (left % 60)).slice(-2);
-              el.parentNode.style.setProperty('--bn-left', left / total);
-            }, 200);
-          }
-          var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-              if (!entry.isIntersecting) return;
-              var card = entry.target;
-              card.classList.add('is-in');
-              card.querySelectorAll('[data-bn-count]').forEach(countUp);
-              var timer = card.querySelector('[data-bn-timer]');
-              if (timer) runTimer(timer);
-              io.unobserve(card);
-            });
-          }, { threshold: 0.35 });
-          cards.forEach(function (c) { io.observe(c); });
-
-          /* Міні-месенджер: коло починається з уже надісланого питання → бот «друкує…» → відповідь;
-             далі друге питання друкується в полі → «надсилається» → відповідь бота.
-             Потім чат очищається й усе повторюється. Працює лише поки картку видно. */
-          var chat = document.querySelector('[data-bn-chat]');
-          if (!chat || reduce) return;
-          var log = chat.querySelector('[data-bn-chat-log]');
-          var field = chat.querySelector('[data-bn-chat-field]');
-          var send = chat.querySelector('[data-bn-chat-send]');
-          var dialog = [
-            { me: 'Налаштуй помічника, що пояснює фізику простими словами', bot: 'Готово! Твій ШІ-помічник уже на зв’язку 🚀' },
-            { me: 'А можна, щоб він ще давав задачі?', bot: 'Додав режим тренування: 5 задач щодня 💪' }
-          ];
-          var visible = false, running = false, wake = null;
-          function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-          function whenVisible() { return visible ? Promise.resolve() : new Promise(function (r) { wake = r; }); }
-          function bubble(cls, text) {
-            var p = document.createElement('p');
-            p.className = 'bn-chat__msg bn-chat__msg--' + cls + ' is-new';
-            p.textContent = text;
-            log.appendChild(p);
-            return p;
-          }
-          async function typeInto(text) {
-            field.classList.add('is-typing');
-            for (var i = 1; i <= text.length; i++) {
-              field.textContent = text.slice(0, i);
-              await wait(38 + Math.random() * 45);
-            }
-            field.classList.remove('is-typing');
-          }
-          async function loop() {
-            running = true;
-            for (;;) {
-              await whenVisible();
-              log.innerHTML = '';
-              for (var k = 0; k < dialog.length; k++) {
-                if (k === 0) {
-                  // Коло починається з уже надісланого першого повідомлення — одразу відповідає бот
-                  bubble('me', dialog[k].me);
-                  await wait(700);
-                } else {
-                  await wait(500);
-                  await typeInto(dialog[k].me);
-                  await wait(250);
-                  send.classList.remove('is-pulse'); void send.offsetWidth; send.classList.add('is-pulse');
-                  field.textContent = '';
-                  bubble('me', dialog[k].me);
-                  await wait(900);
-                }
-                var typing = document.createElement('p');
-                typing.className = 'bn-chat__typing is-new';
-                typing.innerHTML = '<span></span><span></span><span></span>';
-                log.appendChild(typing);
-                await wait(1500);
-                typing.remove();
-                bubble('bot', dialog[k].bot);
-                await wait(1600);
-              }
-              await wait(3000);
-              log.classList.add('is-clearing');
-              await wait(450);
-              log.classList.remove('is-clearing');
-            }
-          }
-          new IntersectionObserver(function (entries) {
-            visible = entries[0].isIntersecting;
-            if (visible && wake) { wake(); wake = null; }
-            if (visible && !running) loop();
-          }, { threshold: 0.3 }).observe(chat);
-        })();
-      </script>
     </section>
 
     <!-- ========== Що ти створиш: проєкти згруповано за модулями (вкладки) + фінальний проєкт курсу ==========
          3 модулі × 2 проєкти = 6, плюс фінальний сайт-портфоліо, куди учень збирає всі роботи.
          Кнопка на картці позначає модуль у калькуляторі («Модулі та вартість») і прокручує до нього.
-         Без JS вкладки сховані й видно всі картки. Стилі — розділ «Проєкти за модулями» у custom-styles.css -->
+         Без JS вкладки сховані й видно всі картки. Логіка — src/js/components/project-tabs.js, стилі — src/styles/sections/projects.css -->
     <section class="bg-brand-100 px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="projects" aria-labelledby="projects-title" data-pj>
       <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-12">
         <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5" data-reveal>
@@ -617,7 +480,7 @@
             <span class="pj-tab__title">Створення ботів</span>
             <span class="pj-tab__meta">6 тижнів · 18 уроків · 2 290 ₴</span>
           </button>
-          <button class="pj-tab" type="button" role="tab" id="pj-tab-pro" aria-selected="false" aria-controls="pj-panel" data-pj-tab="pro" tabindex="-1">
+          <button class="pj-tab" type="button" role="tab" id="pj-tab-pro" aria-selected="false" aria-controls="pj-panel" data-pj-tab="prompting" tabindex="-1">
             <span class="pj-tab__num"><span class="sr-only">Модуль </span>3</span>
             <span class="pj-tab__title">Просунутий промптинг</span>
             <span class="pj-tab__meta">8 тижнів · 24 уроки · 2 990 ₴</span>
@@ -650,7 +513,7 @@
             <div class="pj-card__media pj-stage pj-stage--pink" role="img" aria-label="Бренд-дошка: логотип «КотоКод», палітра з чотирьох кольорів, шрифт та іконки">
               <div class="mk-win mk-brand">
                 <div class="mk-logo"><span class="mk-logo__mark">К</span><span class="mk-logo__name">КотоКод<small>клуб юних програмістів</small></span></div>
-                <div class="mk-swatches"><i style="--c:#ff5c8a"></i><i style="--c:#ffb020"></i><i style="--c:#6b2fff"></i><i style="--c:#15112e"></i></div>
+                <div class="mk-swatches"><i></i><i></i><i></i><i></i></div>
                 <div class="mk-brand__row"><span class="mk-font">Aa</span><span class="mk-icons"><i></i><i></i><i></i></span></div>
               </div>
               <span class="mk-sticker mk-sticker--tr">logo.svg</span>
@@ -701,7 +564,7 @@
           </article>
 
           <!-- Модуль 3 · Просунутий промптинг -->
-          <article class="pj-card" data-pj-module="pro">
+          <article class="pj-card" data-pj-module="prompting">
             <div class="pj-card__media pj-stage pj-stage--night" role="img" aria-label="Екран текстової квест-гри: глава 2, загадка на дверях вежі і два варіанти дії">
               <div class="mk-win mk-quest">
                 <div class="mk-quest__top"><span>Глава 2 · Вежа</span><span class="mk-hp"><i></i></span></div>
@@ -719,7 +582,7 @@
             </div>
           </article>
 
-          <article class="pj-card" data-pj-module="pro">
+          <article class="pj-card" data-pj-module="prompting">
             <div class="pj-card__media pj-stage pj-stage--sunset" role="img" aria-label="Відеоредактор: ілюстрація з горами й сонцем оживає, внизу шкала відтворення ролика">
               <div class="mk-win mk-anim">
                 <div class="mk-anim__frame"><span class="mk-sun"></span><span class="mk-cloud"></span><span class="mk-hill mk-hill--back"></span><span class="mk-hill"></span></div>
@@ -736,7 +599,7 @@
           </article>
 
           <!-- Одна кнопка для пари проєктів: текст і модуль оновлює скрипт вкладок -->
-          <a class="pj-pick" href="#planner" data-pick-module="Старт у ШІ" data-pj-pick><span>Обрати модуль «<span data-pj-pick-name>Старт у ШІ</span>»</span><span class="pj-pick__meta" data-pj-pick-meta>4 тижні · 1 490 ₴</span><svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
+          <a class="pj-pick" href="#planner" data-pick-module="start" data-pj-pick><span>Обрати модуль «<span data-pj-pick-name>Старт у ШІ</span>»</span><span class="pj-pick__meta" data-pj-pick-meta>4 тижні · 1 490 ₴</span><svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
         </div>
 
         <!-- Фінальний проєкт курсу: збирає роботи з усіх модулів -->
@@ -745,7 +608,7 @@
             <div class="mk-win mk-site">
               <div class="mk-urlbar"><i></i><i></i><i></i><span>olya.promi.site</span></div>
               <div class="mk-site__hero"><span class="mk-ava">О</span><span class="mk-site__who"><b>Оля Коваль</b><small>ШІ-творчиня · 15 років</small></span></div>
-              <div class="mk-site__grid"><i style="--c:#8b5cf6"></i><i style="--c:#ff5c8a"></i><i style="--c:#3b82f6"></i><i style="--c:#84cc16"></i><i style="--c:#312e81"></i><i style="--c:#f59e0b"></i></div>
+              <div class="mk-site__grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
               <p class="mk-site__review"><span>★★★★★</span> Найкращий бот у групі</p>
             </div>
           </div>
@@ -759,63 +622,6 @@
         </article>
         </div>
       </div>
-      <script>
-        /* Вкладки модулів: показуємо 2 проєкти обраного модуля; стрілки ←/→ перемикають вкладки.
-           Кнопки «Обрати модуль» натискають відповідну кнопку в калькуляторі (якщо модуль ще не обрано) і ведуть до нього. */
-        (function () {
-          var section = document.querySelector('[data-pj]');
-          if (!section) return;
-          var tabs = Array.prototype.slice.call(section.querySelectorAll('[data-pj-tab]'));
-          var cards = section.querySelectorAll('[data-pj-module]');
-          var panel = section.querySelector('#pj-panel');
-          section.classList.add('is-tabs');
-
-          function show(tab, focus) {
-            var key = tab.getAttribute('data-pj-tab');
-            tabs.forEach(function (t) {
-              var on = t === tab;
-              t.setAttribute('aria-selected', String(on));
-              t.tabIndex = on ? 0 : -1;
-            });
-            panel.setAttribute('aria-labelledby', tab.id);
-            tab.parentNode.style.setProperty('--pj-i', tabs.indexOf(tab)); // підкладка перемикача їде під активний розділ
-            cards.forEach(function (c) { c.hidden = c.getAttribute('data-pj-module') !== key; });
-            // одна кнопка під парою карток — для модуля активної вкладки
-            var pick = section.querySelector('[data-pj-pick]');
-            var name = tab.querySelector('.pj-tab__title').textContent;
-            if (pick) {
-              pick.setAttribute('data-pick-module', name);
-              pick.querySelector('[data-pj-pick-name]').textContent = name;
-              var meta = tab.querySelector('.pj-tab__meta').textContent.split(' · '); // «4 тижні · 12 уроків · 1 490 ₴»
-              pick.querySelector('[data-pj-pick-meta]').textContent = meta[0] + ' · ' + meta[meta.length - 1];
-            }
-            panel.classList.remove('is-switching'); void panel.offsetWidth; panel.classList.add('is-switching');
-            if (focus) tab.focus();
-          }
-
-          tabs.forEach(function (tab, i) {
-            tab.addEventListener('click', function () { show(tab); });
-            tab.addEventListener('keydown', function (e) {
-              var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-              if (!d) return;
-              e.preventDefault();
-              show(tabs[(i + d + tabs.length) % tabs.length], true);
-            });
-          });
-          show(tabs[0]);
-
-          section.addEventListener('click', function (e) {
-            var btn = e.target.closest('[data-pick-module]');
-            if (!btn) return;
-            var want = btn.getAttribute('data-pick-module');
-            document.querySelectorAll('[data-module]').forEach(function (m) {
-              if (want !== 'all' && m.getAttribute('data-title') !== want) return;
-              var toggle = m.querySelector('[data-module-toggle]');
-              if (toggle && toggle.getAttribute('aria-pressed') !== 'true') toggle.click();
-            });
-          });
-        })();
-      </script>
     </section>
 
     <!-- ========== Програма + конвертер ========== -->
@@ -829,7 +635,7 @@
 
         <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
           <div class="flex flex-col gap-6">
-            <article class="group overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="true" data-key="start" data-lessons="12" data-title="Старт у ШІ" data-price="1490" data-weeks="4" data-reveal>
+            <article class="group overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="true" data-key="start" data-reveal>
               <div class="flex flex-col items-start gap-6 p-6 md:p-8">
                 <!-- Заголовок ліворуч, робот праворуч навпроти нього -->
                 <div class="flex w-full items-center justify-between gap-4">
@@ -853,7 +659,7 @@
             </article>
 
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-key="bots" data-lessons="18" data-title="Створення ботів" data-price="2290" data-weeks="6" data-reveal>
+              <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-key="bots" data-reveal>
                 <div class="flex flex-col items-start gap-5 p-6 md:p-7">
                   <div class="flex w-full flex-col items-start gap-2">
                     <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/puzzle-200.webp" alt="" width="56" height="56" loading="lazy">
@@ -871,7 +677,7 @@
                 </button>
                 </div>
               </article>
-              <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-key="prompting" data-lessons="24" data-title="Просунутий промптинг" data-price="2990" data-weeks="8" data-reveal>
+              <article class="group rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="false" data-key="prompting" data-reveal>
                 <div class="flex flex-col items-start gap-5 p-6 md:p-7">
                   <div class="flex w-full flex-col items-start gap-2">
                     <img class="float mb-2 h-14 w-14 rounded-2xl object-contain transition-[scale,rotate] duration-300 group-hover:[rotate:-6deg] group-hover:[scale:1.1]" src="assets/images/illustrations/folder-200.webp" alt="" width="56" height="56" loading="lazy">
@@ -912,6 +718,11 @@
                 </dl>
 
                 <p class="sr-only" aria-live="polite" data-calc-announce></p>
+
+                <!-- Рядок списку «Твій курс»: JS клонує шаблон і підставляє назву, деталі й ціну (src/js/components/module-picker.js) -->
+                <template data-calc-row-template>
+                  <li class="flex items-center justify-between gap-4 px-4 py-2.5 font-heading text-[15px] font-semibold"><span class="flex flex-col"><span data-row-title></span><span class="calc-list__meta" data-row-meta></span></span><span class="whitespace-nowrap" data-row-price></span></li>
+                </template>
               </div>
 
               <div class="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
@@ -919,15 +730,15 @@
                 <a class="group inline-flex min-h-[48px] items-center justify-center gap-2 px-4 font-heading text-[15px] font-semibold text-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-white" href="#faq">Питання про оплату <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
               </div>
             </div>
-            <!-- Небо із зірочками: заповнює вільну висоту блоку (стилі .pricing-sky у custom-styles.css) -->
+            <!-- Небо із зірочками: заповнює вільну висоту блоку (стилі .pricing-sky у src/styles/sections/pricing.css) -->
             <div class="pricing-sky" aria-hidden="true">
-              <svg class="star" style="left:12%;top:22%" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
-              <svg class="star star--sm" style="left:44%;top:58%;animation-delay:-1.2s" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
-              <svg class="star" style="left:78%;top:30%;animation-delay:-2.4s" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
-              <svg class="star star--sm" style="left:90%;top:72%;animation-delay:-0.6s" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
-              <svg class="dot" style="left:28%;top:70%" viewBox="0 0 6 6"><circle fill="currentColor" cx="3" cy="3" r="3"/></svg>
-              <svg class="dot" style="left:62%;top:18%" viewBox="0 0 6 6"><circle fill="currentColor" cx="3" cy="3" r="3"/></svg>
-              <svg class="dot" style="left:6%;top:80%" viewBox="0 0 6 6"><circle fill="currentColor" cx="3" cy="3" r="3"/></svg>
+              <svg class="star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+              <svg class="star star--sm" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+              <svg class="star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+              <svg class="star star--sm" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+              <svg class="dot" viewBox="0 0 6 6"><circle fill="currentColor" cx="3" cy="3" r="3"/></svg>
+              <svg class="dot" viewBox="0 0 6 6"><circle fill="currentColor" cx="3" cy="3" r="3"/></svg>
+              <svg class="dot" viewBox="0 0 6 6"><circle fill="currentColor" cx="3" cy="3" r="3"/></svg>
             </div>
             <!-- Галявина з роботами (власна SVG-ілюстрація в кольорах блоку замість повторюваної теки) -->
             <img class="mt-auto w-full" src="assets/images/illustrations/robots-meadow.svg" alt="" width="640" height="240" loading="lazy">
@@ -938,7 +749,7 @@
 
     <!-- ========== ЛР №11. Інтерактивний віджет «Планувальник навчання» ==========
          Параметри: модуль (select), уроків на тиждень і кількість учнів (number + кнопки −/+), наставник і сертифікат (checkbox).
-         Результат: тривалість у тижнях і вартість. Логіка — js/widget.js; без JS видно лише форму. -->
+         Результат: тривалість у тижнях і вартість. Логіка — src/js/components/planner.js + стан у src/js/store/course-store.js; без JS видно лише форму. -->
     <section class="bg-gray-50 px-5 py-14 md:px-8 md:py-20 lg:px-16 lg:py-28" id="planner" aria-labelledby="planner-title">
       <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-14">
         <header class="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center md:gap-5">
@@ -949,7 +760,7 @@
 
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-8" data-planner>
           <!-- Параметри: три кроки. Модулі — чекбокси name="module", синхронізовані з картками блоку «Модулі та вартість»
-               (вибір в одному місці відразу видно в іншому). Логіка — js/widget.js, стилі — розділ «Планувальник» у custom-styles.css -->
+               (вибір в одному місці відразу видно в іншому). Синхронізація — через спільний стор (src/js/store/course-store.js), стилі — src/styles/sections/planner.css -->
           <form class="pl-form" id="planner-form" novalidate aria-label="Параметри плану навчання">
             <fieldset class="pl-step" id="study-module">
               <legend class="pl-step__title"><span class="pl-step__num">1</span>Обери модулі <span class="pl-step__note">можна кілька</span></legend>
@@ -986,7 +797,7 @@
                     <button class="pl-stepper__btn" type="button" aria-label="Більше уроків на тиждень" data-step="1" data-target="lessons-per-week">+</button>
                   </div>
                   <p class="pl-counter__hint" id="lessons-hint">Від 1 до 7</p>
-                  <p class="hidden pl-counter__error" id="error-lessons" aria-live="polite"></p>
+                  <p class="pl-counter__error" id="error-lessons" aria-live="polite" hidden></p>
                 </div>
 
                 <div class="pl-counter">
@@ -997,7 +808,7 @@
                     <button class="pl-stepper__btn" type="button" aria-label="Більше учнів" data-step="1" data-target="students-count">+</button>
                   </div>
                   <p class="pl-counter__hint" id="students-hint">Від 1 до 5 · <span class="pl-counter__perk">від 2 учнів −10 %</span></p>
-                  <p class="hidden pl-counter__error" id="error-students" aria-live="polite"></p>
+                  <p class="pl-counter__error" id="error-students" aria-live="polite" hidden></p>
                 </div>
               </div>
             </fieldset>
@@ -1033,15 +844,15 @@
                 <div class="flex justify-between gap-4"><dt class="text-violet-100">Модулі</dt><dd class="text-right font-semibold" id="summary-module">—</dd></div>
                 <div class="flex justify-between gap-4"><dt class="text-violet-100">Опції на учня</dt><dd class="font-semibold tabular-nums" id="summary-options">—</dd></div>
                 <div class="flex justify-between gap-4"><dt class="text-violet-100">Учнів</dt><dd class="font-semibold tabular-nums" id="summary-students">—</dd></div>
-                <div class="hidden justify-between gap-4" id="discount-row"><dt class="text-violet-100">Знижка 10 %</dt><dd class="font-semibold tabular-nums text-cta" id="summary-discount">—</dd></div>
-                <div class="hidden justify-between gap-4" id="promo-row"><dt class="text-violet-100">Промокод <span class="ml-1 rounded-md bg-white/20 px-1.5 py-0.5 font-heading text-[11px] font-bold text-white" id="summary-promo-code"></span></dt><dd class="font-semibold tabular-nums text-cta" id="summary-promo">—</dd></div>
+                <div class="flex justify-between gap-4 [&[hidden]]:hidden" id="discount-row" hidden><dt class="text-violet-100">Знижка 10 %</dt><dd class="font-semibold tabular-nums text-cta" id="summary-discount">—</dd></div>
+                <div class="flex justify-between gap-4 [&[hidden]]:hidden" id="promo-row" hidden><dt class="text-violet-100">Промокод <span class="ml-1 rounded-md bg-white/20 px-1.5 py-0.5 font-heading text-[11px] font-bold text-white" id="summary-promo-code"></span></dt><dd class="font-semibold tabular-nums text-cta" id="summary-promo">—</dd></div>
               </dl>
               <div class="flex items-end justify-between gap-4 border-t border-white/20 pt-4">
                 <span class="font-heading font-bold">До сплати</span>
                 <span class="text-right font-heading text-3xl font-extrabold tabular-nums"><s class="mr-2 text-base font-semibold text-violet-200 [&[hidden]]:hidden" id="total-old" hidden></s><span class="break-all" id="total-price">—</span></span>
               </div>
             </div>
-            <p class="hidden rounded-xl bg-white/15 px-4 py-3 text-sm" id="planner-error" role="status"></p>
+            <p class="rounded-xl bg-white/15 px-4 py-3 text-sm" id="planner-error" role="status" hidden></p>
 
             <form class="group/promo flex flex-col gap-2" id="promo-form" novalidate>
               <label class="inline-flex items-center gap-1.5 font-heading text-[13px] font-bold uppercase tracking-wide text-violet-100" for="promo-code">
@@ -1067,7 +878,7 @@
 
     <!-- ========== Відгуки: безперервна стрічка ==========
          Список продубльовано (копія — aria-hidden + inert), CSS-анімація зсуває його на -50% по колу.
-         Пауза при наведенні/фокусі; при prefers-reduced-motion — звичайна горизонтальна прокрутка (custom-styles.css). -->
+         Пауза при наведенні/фокусі; при prefers-reduced-motion — звичайна горизонтальна прокрутка (src/styles/components/ticker.css). -->
     <section class="overflow-hidden bg-brand-100 py-14 md:py-20 lg:py-28" id="testimonials" aria-labelledby="testimonials-title">
       <div class="flex flex-col gap-10 md:gap-14">
         <header class="mx-auto flex w-full max-w-container flex-col items-start gap-3 px-5 md:gap-4 md:px-8 lg:px-16 xl:px-0" data-reveal>
@@ -1439,7 +1250,7 @@
       <div class="mx-auto grid max-w-container grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-8">
         <!-- ========== ЛР №9. Форма зворотного зв'язку ==========
              Семантика: <form> + <label for> для кожного поля, підказки й помилки підключені через aria-describedby.
-             novalidate вимикає стандартні спливаючі підказки браузера — перевірку робить js/validation.js,
+             novalidate вимикає стандартні спливаючі підказки браузера — перевірку робить src/js/components/feedback-form.js,
              а атрибути required / minlength / maxlength лишаються як опис правил і запасний варіант.
              Сітка mobile-first: одна колонка, від md — два поля в ряд. -->
         <div class="cf-card relative flex flex-col gap-6 rounded-[32px] border-2 border-brand-200 bg-brand-50 p-5 sm:p-6 md:gap-8 md:p-10" data-reveal>
@@ -1464,7 +1275,7 @@
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-red-600" aria-hidden="true" data-icon="error"><use href="#icon-cross"></use></svg>
               </div>
               <p class="text-[13px] text-gray-600" id="usernameHint">Щонайменше 2 літери</p>
-              <p class="hidden text-sm font-medium text-red-600" id="usernameError" aria-live="polite"></p>
+              <p class="text-sm font-medium text-red-600" id="usernameError" aria-live="polite" hidden></p>
             </div>
 
             <!-- Email -->
@@ -1477,7 +1288,7 @@
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-red-600" aria-hidden="true" data-icon="error"><use href="#icon-cross"></use></svg>
               </div>
               <p class="text-[13px] text-gray-600" id="emailHint">Сюди надішлемо відповідь</p>
-              <p class="hidden text-sm font-medium text-red-600" id="emailError" aria-live="polite"></p>
+              <p class="text-sm font-medium text-red-600" id="emailError" aria-live="polite" hidden></p>
             </div>
 
             <!-- Телефон -->
@@ -1490,7 +1301,7 @@
                 <svg class="pointer-events-none absolute right-3.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-red-600" aria-hidden="true" data-icon="error"><use href="#icon-cross"></use></svg>
               </div>
               <p class="text-[13px] text-gray-600" id="phoneHint" data-default="Формат +380XXXXXXXXX">Формат +380XXXXXXXXX</p>
-              <p class="hidden text-sm font-medium text-red-600" id="phoneError" aria-live="polite"></p>
+              <p class="text-sm font-medium text-red-600" id="phoneError" aria-live="polite" hidden></p>
             </div>
 
             <!-- Тема (необов'язкове поле зі значенням за замовчуванням) -->
@@ -1515,9 +1326,9 @@
               </div>
               <div class="flex items-start justify-between gap-3">
                 <p class="text-[13px] text-gray-600" id="messageHint">Щонайменше 10 символів</p>
-                <p class="shrink-0 text-[13px] tabular-nums text-gray-600" aria-hidden="true" data-counter>0 / 1000</p>
+                <p class="shrink-0 text-[13px] tabular-nums text-gray-600" aria-hidden="true" data-char-counter>0 / 1000</p>
               </div>
-              <p class="hidden text-sm font-medium text-red-600" id="messageError" aria-live="polite"></p>
+              <p class="text-sm font-medium text-red-600" id="messageError" aria-live="polite" hidden></p>
             </div>
 
             <!-- Згода -->
@@ -1526,7 +1337,7 @@
                 <input class="mt-0.5 h-6 w-6 shrink-0 cursor-pointer rounded-md accent-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" id="agreement" name="agreement" type="checkbox" required aria-describedby="agreementError" aria-invalid="false">
                 <label class="cursor-pointer text-[15px] leading-snug text-gray-700" for="agreement">Погоджуюсь з <a class="font-semibold text-brand underline underline-offset-2 hover:text-brand-light focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="#top">політикою конфіденційності</a> та обробкою моїх даних для зв'язку <span class="text-red-600" aria-hidden="true">*</span></label>
               </div>
-              <p class="hidden pl-9 text-sm font-medium text-red-600" id="agreementError" aria-live="polite"></p>
+              <p class="pl-9 text-sm font-medium text-red-600" id="agreementError" aria-live="polite" hidden></p>
             </div>
 
             <!-- Надсилання -->
@@ -1622,13 +1433,13 @@
                 <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Мікроспринти по 6 хвилин</th>
                 <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
                 <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-red-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Ні"><use href="#icon-cross"></use></svg></td>
-                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" style="color:#f5b70a" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="cmp-partial mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
               </tr>
               <tr>
                 <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">70% практики</th>
                 <td class="border-b border-r border-brand-200 bg-brand-100 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] text-green-500 md:h-[22px] md:w-[22px]" role="img" aria-label="Так"><use href="#icon-check"></use></svg></td>
-                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" style="color:#f5b70a" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
-                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" style="color:#f5b70a" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
+                <td class="border-b border-r border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="cmp-partial mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
+                <td class="border-b border-brand-200 px-2 py-3.5 text-center md:px-6 md:py-4"><svg class="cmp-partial mx-auto h-[18px] w-[18px] md:h-[22px] md:w-[22px]" role="img" aria-label="Частково"><use href="#icon-partial"></use></svg></td>
               </tr>
               <tr>
                 <th class="border-b border-r border-brand-200 py-3.5 pl-3.5 pr-2 text-left font-body text-xs font-medium leading-snug text-gray-700 md:px-6 md:py-4 md:font-heading md:text-[15px]" scope="row">Портфоліо до випуску</th>
@@ -1748,6 +1559,10 @@
       </div>
 
       <div class="flex flex-col gap-2 rounded-2xl bg-brand-100 p-4 font-heading text-sm [&[hidden]]:hidden" data-lead-summary hidden></div>
+      <!-- Рядок підсумку заявки «назва — значення» (src/js/components/lead-modal.js) -->
+      <template data-lead-row-template>
+        <p class="flex items-baseline justify-between gap-4"><span class="text-gray-600" data-row-label></span><span class="text-right font-bold" data-row-value></span></p>
+      </template>
 
       <div class="flex flex-col gap-4 [&[hidden]]:hidden" data-lead-fields>
         <div class="flex flex-col gap-1.5">
@@ -1773,7 +1588,7 @@
           <label class="font-heading text-sm font-semibold" for="lead-contact">Telegram або телефон</label>
           <input class="min-h-12 rounded-xl border-2 border-brand-200 px-4 text-[15px] transition-colors focus:border-brand focus:outline-none aria-[invalid=true]:border-red-500" id="lead-contact" name="contact" type="text" autocomplete="tel" required placeholder="@nickname або +380…" aria-describedby="lead-error">
         </div>
-        <div class="flex flex-col gap-1.5">
+        <div class="flex flex-col gap-1.5 [&[hidden]]:hidden" data-lead-module-field>
           <label class="font-heading text-sm font-semibold" for="lead-module">Що цікавить</label>
           <select class="min-h-12 rounded-xl border-2 border-brand-200 bg-white px-3 text-[15px] focus:border-brand focus:outline-none" id="lead-module" name="module">
             <option>Ще не знаю, допоможіть обрати</option>
@@ -1816,12 +1631,11 @@
     </div>
   </dialog>
 
-  <!-- ЛР №10: скрипти плагінів через CDN — у кінці body; defer зберігає порядок: спершу бібліотеки, потім main.js з ініціалізацією -->
+  <!-- Скрипти плагінів через CDN — у кінці body з defer. Модуль сторінки (type="module" теж відкладений)
+       виконується після них, тож Swiper / Fancybox / Typed уже доступні. Уся логіка — у src/js/ -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
-  <script src="js/validation.js" defer></script>
-  <script src="js/main.js?v=20261110f" defer></script>
-  <script src="js/widget.js?v=20261109" defer></script>
+  <script type="module" src="src/js/pages/home.js"></script>
 </body>
 </html>

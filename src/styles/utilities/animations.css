@@ -1,0 +1,231 @@
+/* 3. Анімації (лише якщо користувач не просив зменшити рух) ----------------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* Бігучі стрічки рухає src/js/components/ticker.js (не CSS-анімація): так браузер малює текст одразу під нахилом стрічки,
+     і літери лишаються чіткими. CSS-анімація віддає рух відеокарті, яка повертає вже готову
+     картинку тексту, — і на нахилених стрічках він розмивається. */
+
+  /* Відгуки їдуть самі; список продубльовано, тому зсув на -50% замикає коло без стрибка */
+  .marquee-track {
+    animation: ticker-scroll 70s linear infinite;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .hero-enter > * {
+    animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero-enter > :nth-child(2) { animation-delay: 0.12s; }
+  .hero-enter > :nth-child(3) { animation-delay: 0.24s; }
+  .hero-enter > :nth-child(4) { animation-delay: 0.36s; }
+
+  /* Сцена з'являється цілою, коли всі шари завантажені (клас is-ready додає src/js/components/hero-scene.js) */
+  .hero-scene.is-ready .hero-art {
+    animation: hero-zoom 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  /* Hero-сцена: лише transform/opacity (рахує відеокарта); періоди різні, щоб рух не був синхронним */
+
+  /* Робот ледь погойдується й «дихає» (опора — низ фігури) */
+  .robot {
+    transform-origin: 50% 100%;
+    animation: robot-sway 7s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Антени-«вушка»: хитаються стрижні навколо точки входу в конус */
+  .antenna--l {
+    transform-origin: 12% 91%;
+    animation: antenna-l 3.6s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .antenna--r {
+    transform-origin: 11% 91%;
+    animation: antenna-r 4.2s ease-in-out -1.3s infinite;
+    will-change: transform;
+  }
+
+  /* Емблема на ноутбуці сяє */
+  .logo-glow {
+    animation: logo-glow 3.8s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  /* Кільце ледь погойдується, по ньому біжить відблиск */
+  .ring__tilt {
+    animation: ring-tilt 9s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .ring__glow {
+    animation: ring-glow 4s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  .ring__spark {
+    animation: ring-spark 5s ease-in-out infinite;
+  }
+
+  .ring__streak {
+    animation: ring-run 5s linear infinite;
+  }
+
+  /* Картки й кубики плавають */
+  .bob { will-change: transform; }
+  .bob--code  { animation: bob-a 6.5s ease-in-out infinite; }
+  .bob--ai    { animation: bob-b 7.5s ease-in-out -2.5s infinite; }
+  .bob--chart { animation: bob-a 7s ease-in-out -4.5s infinite; }
+  .bob--cube1 { animation: bob-cube 5.5s ease-in-out -1s infinite; }
+  .bob--cube2 { animation: bob-cube 6.2s ease-in-out -3.5s infinite reverse; }
+
+  /* Частинки світла піднімаються й тануть */
+  .spark-dot {
+    animation: rise var(--d, 10s) ease-in-out var(--t, 0s) infinite;
+    will-change: transform, opacity;
+  }
+
+  /* Поява під час прокрутки — класи додає src/js/components/reveal.js */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 0.8s ease var(--reveal-delay, 0s),
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s);
+  }
+
+  .reveal--zoom {
+    transform: translateY(24px) scale(0.94);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .float {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .float--delay-1 { animation-delay: -1.6s; }
+  .float--delay-2 { animation-delay: -3.2s; }
+
+  .bump {
+    animation: bump 0.35s ease;
+  }
+
+  .cta-circle--one {
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+
+  .cta-circle--two {
+    animation: drift 11s ease-in-out infinite alternate-reverse;
+  }
+}
+
+@keyframes ticker-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes robot-sway {
+  0%, 100% { transform: rotate(0deg) scale(1, 1); }
+  25% { transform: rotate(-1deg) scale(1, 1.008); }
+  50% { transform: rotate(0deg) scale(1, 1); }
+  75% { transform: rotate(1deg) scale(1, 1.008); }
+}
+
+@keyframes antenna-l {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes antenna-r {
+  0%, 100% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
+}
+
+@keyframes logo-glow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes ring-tilt {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+@keyframes ring-glow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes ring-run {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes ring-spark {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Зсуви у відсотках від розміру елемента — рух пропорційний на будь-якому екрані */
+@keyframes bob-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(1%, -6%) rotate(1.2deg); }
+}
+
+@keyframes bob-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-1.5%, -5.5%) rotate(-2deg); }
+}
+
+@keyframes bob-cube {
+  0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+  50% { transform: translate(0, -20%) rotate(8deg); }
+}
+
+@keyframes rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  25% { opacity: 0.9; }
+  75% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-1800%) scale(1); }
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes bump {
+  40% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translate(40px, 30px) scale(1.08);
+  }
+}
+

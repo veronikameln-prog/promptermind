@@ -1,0 +1,10 @@
+/* 0. Змінні медіаблоків (ЛР №7) --------------------------------------------
+   Спільні для iframe відео, карти, календаря і віджета погоди на intensive.html.
+   У розмітці підключені через Tailwind: rounded-[--media-radius], shadow-[--media-shadow],
+   max-w-[--media-max] — одне місце для зміни всіх медіа (принцип DRY). */
+:root {
+  --media-radius: 24px;
+  --media-shadow: 0 4px 24px rgba(107, 47, 255, 0.08);
+  --media-max: 960px;
+}
+

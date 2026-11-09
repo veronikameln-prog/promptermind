@@ -1,0 +1,53 @@
+/* ==========================================================================
+   PrompterMind — точка входу стилів
+   Збирання: npm run build:css → css/main.css (Tailwind CLI, мініфіковано).
+   Один файл замість трьох запитів: Tailwind + стилі плагінів (Swiper, Fancybox) + власні стилі.
+
+   Власні стилі — лише те, що Tailwind-утилітами не описати компактно
+   або що є фірмовим «характером» бренду. Розмітка, відступи, кольори,
+   типографіка й сітки — у класах Tailwind у HTML.
+
+   ВАЖЛИВО: порядок імпортів = порядок каскаду. Пізніші файли перекривають ранні,
+   тож новий файл додавай у відповідне місце, а не в кінець навмання.
+   Шляхи url() у partials пишуться відносно зібраного css/main.css (тобто ../assets/…).
+   ========================================================================== */
+
+/* 1. Фреймворк і плагіни */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'swiper/swiper-bundle.min.css';
+@import '@fancyapps/ui/dist/fancybox/fancybox.css';
+
+/* 2. Основа: дизайн-токени та глобальні правила */
+@import './base/tokens.css';
+@import './base/global.css';
+
+/* 3. Секції головної сторінки (у порядку на сторінці) */
+@import './sections/hero-scene.css';
+@import './sections/hero-copy.css';
+@import './sections/benefits.css';
+@import './sections/projects.css';
+@import './sections/projects-mockups.css';
+@import './sections/pricing.css';
+@import './sections/planner.css';
+
+/* 4. Спільні компоненти */
+@import './components/ticker.css';
+
+/* 5. Анімації та продуктивність */
+@import './utilities/animations.css';
+@import './utilities/performance.css';
+
+/* 6. Нижні секції */
+@import './sections/comparison.css';
+@import './sections/faq.css';
+@import './sections/contact.css';
+
+/* 7. Каркас сторінки: відступи секцій, шапка, футер */
+@import './layout/section-spacing.css';
+@import './layout/header.css';
+@import './layout/footer.css';
+
+/* 8. Окремі сторінки */
+@import './pages/intensive.css';

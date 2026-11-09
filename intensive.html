@@ -12,9 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS: зібраний CLI-файл замість Play CDN (ЛР №12, швидкодія). Збирання: npm run build:css -->
-  <link rel="stylesheet" href="css/tailwind.css">
-  <link rel="stylesheet" href="custom-styles.css?v=20261110e">
+  <!-- Стилі: один зібраний файл — Tailwind + власні стилі (src/styles/). Збирання: npm run build:css -->
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="is-intensive bg-white font-body text-gray-900 antialiased">
   <!-- SVG-спрайт іконок (Tabler Icons, MIT) -->
@@ -120,7 +119,7 @@
           </div>
         </div>
 
-        <!-- Ліва колонка: великий таймер зворотного відліку до початку інтенсиву (js/main.js) -->
+        <!-- Ліва колонка: великий таймер зворотного відліку до початку інтенсиву (src/js/components/countdown.js) -->
         <div class="relative min-w-0 overflow-hidden rounded-3xl bg-gradient-to-br from-brand to-indigo-600 p-4 sm:rounded-[32px] text-white shadow-featured sm:p-6 md:p-8 lg:order-1 lg:p-10" data-countdown="2026-11-22T10:00:00+02:00">
           <span class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/10" aria-hidden="true"></span>
           <span class="absolute -bottom-20 -left-10 h-40 w-40 rounded-full bg-white/5" aria-hidden="true"></span>
@@ -269,7 +268,7 @@
         <!-- ===== МЕДІАІНТЕГРАЦІЯ 2: відео YouTube =====
              Код з YouTube «Поділитися → Вбудувати», домен youtube-nocookie.com (без cookies до запуску).
              Фіксовані width="560" height="315" прибрано: aspect-video (16:9) + w-full роблять плеєр гумовим,
-             max-w і радіус — зі змінних :root у custom-styles.css. title і loading="lazy" — доступність і швидкодія. -->
+             max-w і радіус — зі змінних :root у src/styles/base/tokens.css. title і loading="lazy" — доступність і швидкодія. -->
         <figure class="flex w-full min-w-0 max-w-[--media-max] flex-col gap-3" data-reveal>
           <iframe class="aspect-video w-full rounded-[--media-radius] bg-gray-900 shadow-[--media-shadow]"
             src="https://www.youtube-nocookie.com/embed/RfJL5RQWJCo"
@@ -285,7 +284,7 @@
 
     <!-- ========== Відгуки (Про нас) ========== -->
     <section class="bg-brand-100 px-5 py-12 md:px-8 md:py-20 lg:px-16 lg:py-28" id="testimonials" aria-labelledby="testimonials-title">
-      <!-- Карусель відгуків: горизонтальна прокрутка зі scroll-snap, кнопки та автопрокрутка — js/main.js.
+      <!-- Карусель відгуків: горизонтальна прокрутка зі scroll-snap, кнопки та автопрокрутка — src/js/components/reviews-carousel.js.
            Автопрокрутка вимикається при prefers-reduced-motion і зупиняється при наведенні/фокусі. -->
       <div class="mx-auto flex max-w-container flex-col gap-10 md:gap-14" role="region" aria-roledescription="карусель" aria-labelledby="testimonials-title" data-carousel>
         <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
@@ -416,10 +415,10 @@
           </figure>
 
           <!-- ===== МЕДІАІНТЕГРАЦІЯ 4: динамічний інформер погоди =====
-               Дані з відкритого API Open-Meteo (без ключа) — fetch у js/main.js.
+               Дані з відкритого API Open-Meteo (без ключа) — запит — src/js/services/weather-api.js.
                <aside> — бо це додатковий, побічний до основного змісту блок.
                aria-live="polite" — скрінрідер озвучить дані, коли вони завантажаться. -->
-          <aside class="flex flex-col gap-3 rounded-[--media-radius] border-2 border-brand-200 bg-gradient-to-br from-brand-100 to-violet-100 p-4 sm:gap-4 sm:p-6 shadow-[--media-shadow] sm:flex-row sm:items-center sm:justify-between" aria-labelledby="weather-title" data-weather data-reveal>
+          <aside class="flex flex-col gap-3 rounded-[--media-radius] border-2 border-brand-200 bg-gradient-to-br from-brand-100 to-violet-100 p-4 sm:gap-4 sm:p-6 shadow-[--media-shadow] sm:flex-row sm:items-center sm:justify-between" aria-labelledby="weather-title" data-weather="2026-11-22" data-reveal>
             <div class="flex items-center gap-5" aria-live="polite">
               <p class="font-heading text-4xl font-extrabold text-brand sm:text-5xl" data-weather-temp>—</p>
               <div class="flex flex-col gap-0.5">
@@ -428,7 +427,7 @@
                 <p class="text-sm text-gray-600" data-weather-note></p>
               </div>
             </div>
-            <p class="shrink-0 text-xs text-gray-600">Дані: <a class="underline underline-offset-2 hover:text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo<span class="sr-only"> (відкриється в новій вкладці)</span></a></p>
+            <p class="shrink-0 text-xs text-gray-600">Дані: <a class="underline underline-offset-2 hover:text-brand focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent" href="https://open-meteo.com/" target="_blank" rel="noopener" data-weather-source><span data-weather-source-name>Open-Meteo</span><span class="sr-only"> (відкриється в новій вкладці)</span></a></p>
           </aside>
         </div>
       </div>
@@ -518,6 +517,7 @@
     <p class="pointer-events-none relative mx-auto -mb-[0.22em] mt-4 max-w-container select-none text-center font-heading text-[12.5vw] font-extrabold leading-none tracking-tight text-transparent bg-gradient-to-b from-gray-800 to-gray-950 bg-clip-text lg:text-[180px]" aria-hidden="true">PrompterMind</p>
   </footer>
 
-  <script src="js/main.js?v=20261110f" defer></script>
+  <!-- Уся логіка — у src/js/ (ES-модулі); точка входу сторінки: -->
+  <script type="module" src="src/js/pages/intensive.js"></script>
 </body>
 </html>

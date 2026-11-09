@@ -1,0 +1,204 @@
+/* 1. Hero ----------------------------------------------------------------- */
+
+.hero-bg {
+  background: #faf7ff;
+}
+
+/* Сцена: ілюстрація заповнює блок як object-fit: cover, але разом із SVG-шарами.
+   Розмір рахується в одиницях контейнера (cq*), тож ефекти не «з'їжджають» з картинки.
+   --fx / --fy — яку частину кадру тримати у видимій зоні (0 — лівий/верхній край, 1 — правий/нижній). */
+.hero-scene {
+  --fx: 1;
+  --fy: 0;
+  position: absolute;
+  inset: 0 0 auto;
+  height: 320px;
+  overflow: hidden;
+  container-type: size;
+  pointer-events: none;
+  background: url("../assets/images/hero/layers/bg.webp") center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, #000 190px, transparent 310px);
+  mask-image: linear-gradient(180deg, #000 190px, transparent 310px);
+}
+
+.hero-art {
+  --aw: max(100cqw, 100cqh * 16 / 9);
+  --ah: max(100cqh, 100cqw * 9 / 16);
+  position: absolute;
+  width: var(--aw);
+  height: var(--ah);
+  left: calc((100cqw - var(--aw)) * var(--fx));
+  top: calc((100cqh - var(--ah)) * var(--fy));
+  scale: 1.03; /* запас по краях, щоб під час паралаксу не відкривався край фону */
+}
+
+/* Поки шари вантажаться — сцену не видно (без «появи шматками»).
+   Клас is-ready ставить src/js/components/hero-scene.js, коли всі картинки декодовано.
+   Запобіжник (і варіант без JS): через 4 с сцена з'являється сама. */
+.hero-scene:not(.is-ready) .hero-art {
+  opacity: 0;
+  animation: hero-scene-fallback 0s 4s forwards;
+}
+
+@keyframes hero-scene-fallback {
+  to { opacity: 1; }
+}
+
+/* Позиції шарів: координати з ілюстрації 1672×941 → відсотки сцени.
+   .rpos — усередині робота (вирізка 711×888), .lpos — усередині ноутбука (645×321). */
+.pos,
+.rpos,
+.lpos {
+  position: absolute;
+  display: block;
+  max-width: none;
+}
+
+.pos  { left: calc(var(--x) / 1672 * 100%); top: calc(var(--y) / 941 * 100%); width: calc(var(--w) / 1672 * 100%); height: calc(var(--h) / 941 * 100%); }
+.rpos { left: calc(var(--x) / 711 * 100%);  top: calc(var(--y) / 888 * 100%); width: calc(var(--w) / 711 * 100%);  height: calc(var(--h) / 888 * 100%); }
+.lpos { left: calc(var(--x) / 645 * 100%);  top: calc(var(--y) / 321 * 100%); width: calc(var(--w) / 645 * 100%);  height: calc(var(--h) / 321 * 100%); }
+
+.hero-art img {
+  max-width: none;
+}
+
+.hero-ring img,
+.robot__body,
+.laptop > img:first-child {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Кільце: статичний нахил -3° (як на ілюстрації) + анімований контейнер усередині.
+   Клас саме hero-ring: «ring» у Tailwind — утиліта, що малює синю обвідку навколо елемента */
+.hero-ring {
+  rotate: -3deg;
+  transform-origin: 49.7% 43%;
+}
+
+.ring__tilt {
+  position: absolute;
+  inset: 0;
+}
+
+/* Пульсація кільця: освітлена копія (фільтр статичний, рахується раз), анімується лише прозорість */
+.ring__glow {
+  filter: brightness(1.2) saturate(1.25);
+  opacity: 0;
+}
+
+/* Відблиск: розмита світла смужка (14% довжини кільця), накладається на кільце в режимі screen */
+.ring__spark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.ring__streak {
+  stroke-dasharray: 14 86;
+}
+
+.desk {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible; /* стіл тягнеться за правий край сцени */
+}
+
+.spark-dot {
+  position: absolute;
+  left: calc(var(--x) / 1672 * 100%);
+  top: calc(var(--y) / 941 * 100%);
+  width: 0.36%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8);
+  opacity: 0;
+}
+
+/* Без анімації (prefers-reduced-motion) підсвітки сховані — лишається чиста ілюстрація */
+.logo-glow {
+  opacity: 0;
+}
+
+/* Паралакс: кожен план зсувається на свою частку від --px/--py (задає src/js/components/hero-parallax.js).
+   Кожен план — окремий шар для відеокарти (will-change), тож зсув не перемальовує сторінку. */
+.lyr {
+  position: absolute;
+  inset: 0;
+  translate: calc(var(--px, 0px) * var(--depth)) calc(var(--py, 0px) * var(--depth));
+  transition: translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: translate;
+}
+
+.lyr--ring  { --depth: 0.6; }
+.lyr--main  { --depth: 0.8; }
+.lyr--front { --depth: 1.25; }
+.lyr--near  { --depth: 1.6; }
+
+/* Планшет: сцена над текстом, низ розчиняється у фоні */
+@media (min-width: 768px) {
+  .hero-scene {
+    height: 480px;
+    -webkit-mask-image: linear-gradient(180deg, #000 280px, transparent 470px);
+    mask-image: linear-gradient(180deg, #000 280px, transparent 470px);
+  }
+}
+
+/* Десктоп: сцена на весь блок, без маски; текст ліворуч, робот праворуч.
+   Сцена вписується по висоті (не розтягується на всю ширину), притиснута до правого нижнього кута —
+   на широких моніторах робот не стає велетенським, а вільне місце заповнює фон. */
+@media (min-width: 1024px) {
+  .hero-scene {
+    --fx: 0.75; /* сцена не впритул до правого краю, а ближче до центру вільного місця біля тексту */
+    --fy: 1;
+    inset: 0;
+    height: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-art {
+    --ah: min(100cqh, 100cqw * 9 / 16);
+    --aw: calc(var(--ah) * 16 / 9);
+  }
+}
+
+
+/* Координати шарів сцени (раніше — інлайн style="" у розмітці).
+   .pos — у системі всієї ілюстрації 1672×941, .rpos — вирізки робота 711×888, .lpos — ноутбука 645×321. */
+.hero-art .hero-ring  { --x: 725;    --y: 228.5; --w: 915.4; --h: 424.8; }
+.hero-art .robot      { --x: 981.5;  --y: 181.9; --w: 469.3; --h: 586.1; }
+.hero-art .antenna--l { --x: 234;    --y: 0;     --w: 106;   --h: 150; }
+.hero-art .antenna--r { --x: 610;    --y: 95;    --w: 102;   --h: 167; }
+.hero-art .laptop     { --x: 816.5;  --y: 589.4; --w: 440.8; --h: 219.4; }
+.hero-art .logo-glow  { --x: 162;    --y: 56;    --w: 172;   --h: 164; }
+.hero-art .bob--code  { --x: 785.1;  --y: 78.4;  --w: 303.9; --h: 217.3; }
+.hero-art .bob--ai    { --x: 1361.9; --y: 70.6;  --w: 241.9; --h: 205.2; }
+.hero-art .bob--chart { --x: 1461.1; --y: 401.7; --w: 184;   --h: 173.8; }
+.hero-art .bob--cube1 { --x: 861.6;  --y: 356.5; --w: 72;    --h: 77.5; }
+.hero-art .bob--cube2 { --x: 1519.6; --y: 617.5; --w: 78.1;  --h: 84.1; }
+
+#ring-shape { mask-type: alpha; }
+
+/* Частинки світла: позиція (--x/--y), тривалість (--d) і зсув фази (--t) — у кожної своя */
+.spark-dot:nth-of-type(1)  { --x: 760;  --y: 700; --d: 9s;    --t: 0s; }
+.spark-dot:nth-of-type(2)  { --x: 880;  --y: 600; --d: 11s;   --t: -2s; }
+.spark-dot:nth-of-type(3)  { --x: 1000; --y: 720; --d: 8s;    --t: -5s; }
+.spark-dot:nth-of-type(4)  { --x: 1150; --y: 280; --d: 12s;   --t: -7s; }
+.spark-dot:nth-of-type(5)  { --x: 1290; --y: 660; --d: 10s;   --t: -1s; }
+.spark-dot:nth-of-type(6)  { --x: 1340; --y: 300; --d: 9.5s;  --t: -4s; }
+.spark-dot:nth-of-type(7)  { --x: 1460; --y: 690; --d: 11.5s; --t: -8s; }
+.spark-dot:nth-of-type(8)  { --x: 1620; --y: 600; --d: 8.5s;  --t: -3s; }
+.spark-dot:nth-of-type(9)  { --x: 720;  --y: 360; --d: 13s;   --t: -6s; }
+.spark-dot:nth-of-type(10) { --x: 1300; --y: 120; --d: 10.5s; --t: -9s; }
+.spark-dot:nth-of-type(11) { --x: 1600; --y: 330; --d: 12.5s; --t: -10s; }
+.spark-dot:nth-of-type(12) { --x: 1080; --y: 160; --d: 9s;    --t: -6.5s; }

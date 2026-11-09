@@ -3,21 +3,61 @@
 Лендинг онлайн-курсу зі штучного інтелекту для підлітків 13–17 років та окрема сторінка безкоштовного ШІ-інтенсиву у Львові (22 листопада 2026).
 
 ## Технології
-- HTML5 (семантична розмітка)
-- Tailwind CSS (Play CDN) + власні стилі `custom-styles.css`
-- JavaScript: бургер-меню, калькулятор вартості з промокодами, таймер, карусель відгуків, інформер погоди (Open-Meteo / MET Norway)
-- Вбудовані сервіси: YouTube, Google Maps, Google Calendar, Google Forms
+- HTML5 (семантична розмітка, без інлайн-скриптів і інлайн-стилів)
+- Tailwind CSS (CLI) + власні стилі в `src/styles/`, зібрані в один файл `css/main.css`
+- JavaScript — нативні ES-модулі без фреймворків; стан курсу — власний мінімальний стейт-менеджер (store)
+- Плагіни з CDN: Swiper, Fancybox, Typed.js
+- Вбудовані сервіси: YouTube, Google Maps, Google Calendar, Open-Meteo / MET Norway
 
-## Сторінки
-- `index.html` — головний лендинг курсу
-- `intensive.html` — лендинг ШІ-інтенсиву
+## Структура
+```
+index.html, intensive.html   розмітка сторінок
+assets/                      зображення, відео, логотип
+css/main.css                 ЗІБРАНИЙ CSS (не редагувати вручну — npm run build:css)
+src/
+  styles/                    вихідні стилі
+    main.css                 точка входу: порядок @import = порядок каскаду
+    base/                    токени, глобальні правила
+    layout/                  шапка, футер, відступи секцій
+    components/              спільні компоненти (бігуча стрічка)
+    sections/                стилі окремих секцій головної
+    utilities/               анімації, продуктивність
+    pages/                   стилі окремих сторінок (інтенсив)
+  js/
+    core/                    інфраструктура: store, DOM-помічники, запуск компонентів
+    utils/                   форматування (гривні, відмінювання)
+    domain/                  ЧИСТА логіка без DOM: каталог і ціни, розрахунок плану, правила валідації
+    services/                робота з мережею (API погоди)
+    store/                   стан «кошика» курсу (модулі, темп, учні, опції, промокод)
+    components/              UI-компоненти: читають DOM, викликають дії стору, перемальовують
+    pages/                   точки входу сторінок (home.js, intensive.js) — лише список компонентів
+```
+
+### Потік даних
+```
+клік / введення ─► component ─► action (store/course-store.js) ─► новий стан
+                                                                   │
+            component.render(state) ◄── subscribe ◄────────────────┘
+                     │
+                     └─► selectPlan(state) → domain/pricing.js (чисті функції)
+```
+Калькулятор модулів, планувальник і вікно заявки не знають одне про одного — вони спілкуються лише через спільний стор.
 
 ## Запуск локально
-1. Клонувати репозиторій: `git clone https://github.com/veronikameln-prog/promptermind.git`
-2. Відкрити `index.html` у браузері або через Live Server у VS Code.
+ES-модулі не працюють при відкритті файлу напряму (`file://`), потрібен локальний сервер:
+1. `git clone https://github.com/veronikameln-prog/promptermind.git`
+2. Відкрити папку у VS Code і запустити **Live Server** на `index.html`
+   (або `npx serve .` у терміналі).
 
-## Демо
-- Netlify: https://promtermind-intensive.netlify.app
+### Стилі
+```
+npm install
+npm run build:css   # одноразове збирання src/styles → css/main.css
+npm run watch:css   # перезбирання при змінах
+```
+
+## Деплой
+GitHub Actions (`.github/workflows/deploy.yml`) при push у `main` збирає CSS, перевіряє, що всі імпорти JS-модулів існують і в HTML немає інлайн-скриптів/стилів, і деплоїть на Vercel.
 
 ## Автор
 Вероніка Мельничук, група ПП-26, НУ «Львівська політехніка»

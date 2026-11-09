@@ -1,0 +1,117 @@
+/* 1h. «Залиш заявку»: біла картка, поля з іконками й м'якою заливкою ---------------------
+   Стани полів беруться з data-state, який ставить src/js/components/feedback-form.js (normal / error / success),
+   тож логіка ЛР №9 не змінюється — лише вигляд. */
+#contact .cf-card {
+  border: 1px solid #ebe5ff;
+  background:
+    radial-gradient(circle at 100% 0, rgba(107, 47, 255, 0.08), transparent 38%),
+    #fff;
+  box-shadow: 0 30px 60px -36px rgba(76, 29, 149, 0.35), 0 2px 6px rgba(76, 29, 149, 0.04);
+}
+
+.cf-perks { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 0; padding: 0; list-style: none; }
+.cf-perks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 999px;
+  background: #f4f0ff;
+  color: #4b3f86;
+  font-size: 13px;
+  font-weight: 600;
+}
+.cf-perks svg { width: 18px; height: 18px; padding: 3px; border-radius: 50%; background: #6b2fff; color: #fff; }
+.cf-perks li + li svg { background: #65a30d; }
+
+#feedbackForm label { color: #2b2548; font-size: 13.5px; font-weight: 700; }
+#feedbackForm [id$="Hint"], #feedbackForm [data-char-counter] { color: #8a84a8; font-size: 12.5px; }
+
+#feedbackForm .cf-input {
+  min-height: 52px;
+  border: 1.5px solid #ebe5ff;
+  border-radius: 14px;
+  background-color: #f7f5fe;
+  box-shadow: none;
+  color: #15112e;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+#feedbackForm input.cf-input { padding-left: 44px; }
+#feedbackForm .cf-input::placeholder { color: #a9a3c4; }
+#feedbackForm .cf-input:hover { border-color: #d6c9ff; }
+#feedbackForm .cf-input:focus {
+  border-color: #6b2fff;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(107, 47, 255, 0.12);
+}
+#feedbackForm .cf-input[data-state="error"] { border-color: #ef4444; background-color: #fff6f6; }
+#feedbackForm .cf-input[data-state="error"]:focus { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.14); }
+#feedbackForm .cf-input[data-state="success"] { border-color: #84cc16; background-color: #fff; }
+#feedbackForm .cf-input[data-state="success"]:focus { box-shadow: 0 0 0 4px rgba(132, 204, 22, 0.16); }
+
+.cf-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  width: 18px;
+  height: 18px;
+  color: #a99ccf;
+  pointer-events: none;
+  translate: 0 -50%;
+  transition: color 0.2s ease;
+}
+#feedbackForm .relative:focus-within .cf-icon { color: #6b2fff; }
+
+/* Випадний список: власна стрілка замість системної */
+#feedbackForm .cf-select {
+  padding-right: 44px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b2fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+#feedbackForm .cf-input--area { min-height: 140px; padding-top: 14px; }
+
+/* Згода: картка-рядок */
+#feedbackForm #agreement { accent-color: #6b2fff; }
+/* Контакти: іконки каналів — світлі кружечки з кольоровим значком і пунктирним кільцем;
+   при наведенні кружечок заливається кольором каналу, а значок стає білим */
+.ct-ico {
+  --c: #6b2fff;
+  --soft: #f1ecff;
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--soft);
+  color: var(--c);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.ct-ico::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 2px dashed color-mix(in srgb, var(--c) 60%, transparent);
+  border-radius: 50%;
+  transition: transform 0.6s ease;
+}
+.ct-ico--tg { --c: #0ea5e9; --soft: #e0f2fe; }
+.ct-ico--mail { --c: #7c3aed; --soft: #ede9fe; }
+.ct-ico--phone { --c: #65a30d; --soft: #ecfccb; }
+.group:hover .ct-ico { background: var(--c); color: #fff; transform: scale(1.05); }
+.group:hover .ct-ico::before { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .ct-ico, .ct-ico::before { transition: none; }
+  .group:hover .ct-ico, .group:hover .ct-ico::before { transform: none; }
+}
+
+/* Іконка стану праворуч у полі: галочка для валідного значення, хрестик — для помилки */
+#feedbackForm .cf-input[data-state="success"] ~ [data-icon="success"],
+#feedbackForm .cf-input[data-state="error"] ~ [data-icon="error"] { display: block; }
