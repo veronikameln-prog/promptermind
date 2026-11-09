@@ -11,11 +11,6 @@
   <!-- ЛР №12: шари hero-сцени першого екрана завантажуються першочергово -->
   <link rel="preload" as="image" href="assets/images/hero/layers/bg.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="assets/images/hero/layers/robot-body.webp" imagesrcset="assets/images/hero/layers/robot-body-m.webp 427w, assets/images/hero/layers/robot-body.webp 711w" imagesizes="(max-width: 639px) 212px, 711px" type="image/webp" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/images/hero/layers/ring.webp" imagesrcset="assets/images/hero/layers/ring-m.webp 618w, assets/images/hero/layers/ring.webp 1030w" imagesizes="(max-width: 639px) 307px, 1030px" type="image/webp">
-  <link rel="preload" as="image" href="assets/images/hero/layers/laptop.webp" imagesrcset="assets/images/hero/layers/laptop-m.webp 387w, assets/images/hero/layers/laptop.webp 645w" imagesizes="(max-width: 639px) 193px, 645px" type="image/webp">
-  <link rel="preload" as="image" href="assets/images/hero/layers/card-code.webp" imagesrcset="assets/images/hero/layers/card-code-m.webp 265w, assets/images/hero/layers/card-code.webp 442w" imagesizes="(max-width: 639px) 132px, 442px" type="image/webp">
-  <link rel="preload" as="image" href="assets/images/hero/layers/card-ai.webp" imagesrcset="assets/images/hero/layers/card-ai-m.webp 221w, assets/images/hero/layers/card-ai.webp 369w" imagesizes="(max-width: 639px) 110px, 369px" type="image/webp">
-  <link rel="preload" as="image" href="assets/images/hero/layers/card-chart.webp" imagesrcset="assets/images/hero/layers/card-chart-m.webp 172w, assets/images/hero/layers/card-chart.webp 286w" imagesizes="(max-width: 639px) 86px, 286px" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Шрифти не блокують рендеринг: спершу системний шрифт, потім Inter/Roboto (display=swap) -->
@@ -142,9 +137,9 @@
           <div class="lyr lyr--ring">
             <div class="hero-ring pos">
               <div class="ring__tilt">
-                <img src="assets/images/hero/layers/ring.webp" srcset="assets/images/hero/layers/ring-m.webp 618w, assets/images/hero/layers/ring.webp 1030w" sizes="(max-width: 639px) 307px, 1030px" width="1030" height="478" alt="" decoding="sync">
+                <img src="assets/images/hero/layers/ring.webp" srcset="assets/images/hero/layers/ring-m.webp 618w, assets/images/hero/layers/ring.webp 1030w" sizes="(max-width: 639px) 307px, 1030px" width="1030" height="478" alt="" decoding="async">
                 <!-- Освітлена копія кільця: плавно проявляється — кільце «пульсує» світлом (лише opacity, без фільтрів у реальному часі) -->
-                <img class="ring__glow" src="assets/images/hero/layers/ring.webp" srcset="assets/images/hero/layers/ring-m.webp 618w, assets/images/hero/layers/ring.webp 1030w" sizes="(max-width: 639px) 307px, 1030px" width="1030" height="478" alt="" decoding="sync">
+                <img class="ring__glow" src="assets/images/hero/layers/ring.webp" srcset="assets/images/hero/layers/ring-m.webp 618w, assets/images/hero/layers/ring.webp 1030w" sizes="(max-width: 639px) 307px, 1030px" width="1030" height="478" alt="" decoding="async">
                 <!-- Відблиск: розмита світла смужка, видима лише в межах кільця (маска — прозорість картинки кільця) -->
                 <svg class="ring__spark" viewBox="0 0 1030 478" preserveAspectRatio="none" focusable="false">
                   <defs>
@@ -190,29 +185,29 @@
             <!-- Робот: координати всередині — у системі вирізки 711×888 -->
             <div class="robot pos">
               <!-- Хитаються лише стрижні антен з кульками; низ стрижня ховається в конусі на голові -->
-              <img class="antenna antenna--l rpos" src="assets/images/hero/layers/antenna-l.webp" width="106" height="150" alt="" decoding="sync">
-              <img class="antenna antenna--r rpos" src="assets/images/hero/layers/antenna-r.webp" width="102" height="167" alt="" decoding="sync">
-              <img class="robot__body" src="assets/images/hero/layers/robot-body.webp" srcset="assets/images/hero/layers/robot-body-m.webp 427w, assets/images/hero/layers/robot-body.webp 711w" sizes="(max-width: 639px) 212px, 711px" width="711" height="888" alt="" fetchpriority="high" decoding="sync">
+              <img class="antenna antenna--l rpos" src="assets/images/hero/layers/antenna-l.webp" width="106" height="150" alt="" decoding="async">
+              <img class="antenna antenna--r rpos" src="assets/images/hero/layers/antenna-r.webp" width="102" height="167" alt="" decoding="async">
+              <img class="robot__body" src="assets/images/hero/layers/robot-body.webp" srcset="assets/images/hero/layers/robot-body-m.webp 427w, assets/images/hero/layers/robot-body.webp 711w" sizes="(max-width: 639px) 212px, 711px" width="711" height="888" alt="" fetchpriority="high" decoding="async">
             </div>
 
             <!-- Ноутбук: сяйво емблеми — заздалегідь відмальована картинка, браузер лише змінює її прозорість -->
             <div class="laptop pos">
-              <img src="assets/images/hero/layers/laptop.webp" srcset="assets/images/hero/layers/laptop-m.webp 387w, assets/images/hero/layers/laptop.webp 645w" sizes="(max-width: 639px) 193px, 645px" width="645" height="321" alt="" decoding="sync">
-              <img class="logo-glow lpos" src="assets/images/hero/layers/logo-glow.webp" width="172" height="164" alt="" decoding="sync">
+              <img src="assets/images/hero/layers/laptop.webp" srcset="assets/images/hero/layers/laptop-m.webp 387w, assets/images/hero/layers/laptop.webp 645w" sizes="(max-width: 639px) 193px, 645px" width="645" height="321" alt="" decoding="async">
+              <img class="logo-glow lpos" src="assets/images/hero/layers/logo-glow.webp" width="172" height="164" alt="" decoding="async">
             </div>
           </div>
 
           <!-- Картки (ближче до глядача) -->
           <div class="lyr lyr--front">
-            <img class="bob bob--code pos" src="assets/images/hero/layers/card-code.webp" srcset="assets/images/hero/layers/card-code-m.webp 265w, assets/images/hero/layers/card-code.webp 442w" sizes="(max-width: 639px) 132px, 442px" width="442" height="316" alt="" decoding="sync">
-            <img class="bob bob--ai pos" src="assets/images/hero/layers/card-ai.webp" srcset="assets/images/hero/layers/card-ai-m.webp 221w, assets/images/hero/layers/card-ai.webp 369w" sizes="(max-width: 639px) 110px, 369px" width="369" height="313" alt="" decoding="sync">
-            <img class="bob bob--chart pos" src="assets/images/hero/layers/card-chart.webp" srcset="assets/images/hero/layers/card-chart-m.webp 172w, assets/images/hero/layers/card-chart.webp 286w" sizes="(max-width: 639px) 86px, 286px" width="286" height="270" alt="" decoding="sync">
+            <img class="bob bob--code pos" src="assets/images/hero/layers/card-code.webp" srcset="assets/images/hero/layers/card-code-m.webp 265w, assets/images/hero/layers/card-code.webp 442w" sizes="(max-width: 639px) 132px, 442px" width="442" height="316" alt="" decoding="async">
+            <img class="bob bob--ai pos" src="assets/images/hero/layers/card-ai.webp" srcset="assets/images/hero/layers/card-ai-m.webp 221w, assets/images/hero/layers/card-ai.webp 369w" sizes="(max-width: 639px) 110px, 369px" width="369" height="313" alt="" decoding="async">
+            <img class="bob bob--chart pos" src="assets/images/hero/layers/card-chart.webp" srcset="assets/images/hero/layers/card-chart-m.webp 172w, assets/images/hero/layers/card-chart.webp 286w" sizes="(max-width: 639px) 86px, 286px" width="286" height="270" alt="" decoding="async">
           </div>
 
           <!-- Кубики й частинки світла (найближчий план) -->
           <div class="lyr lyr--near">
-            <img class="bob bob--cube1 pos" src="assets/images/hero/layers/cube.webp" width="131" height="141" alt="" decoding="sync">
-            <img class="bob bob--cube2 pos" src="assets/images/hero/layers/cube.webp" width="131" height="141" alt="" decoding="sync">
+            <img class="bob bob--cube1 pos" src="assets/images/hero/layers/cube.webp" width="131" height="141" alt="" decoding="async">
+            <img class="bob bob--cube2 pos" src="assets/images/hero/layers/cube.webp" width="131" height="141" alt="" decoding="async">
             <span class="spark-dot"></span>
             <span class="spark-dot"></span>
             <span class="spark-dot"></span>

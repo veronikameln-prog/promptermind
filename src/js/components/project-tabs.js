@@ -16,7 +16,7 @@ export function initProjectTabs() {
   if (!tabs.length || !panel) return;
   section.classList.add('is-tabs');
 
-  function show(tab, focus) {
+  function show(tab, focus, animate = true) {
     const key = tab.dataset.pjTab;
     tabs.forEach((t) => {
       const active = t === tab;
@@ -35,7 +35,7 @@ export function initProjectTabs() {
       qs('[data-pj-pick-name]', pick).textContent = name;
       qs('[data-pj-pick-meta]', pick).textContent = meta[0] + ' · ' + meta[meta.length - 1];
     }
-    restartAnimation(panel, 'is-switching');
+    if (animate) restartAnimation(panel, 'is-switching'); // під час запуску без анімації: не змушуємо браузер перераховувати розкладку
     if (focus) tab.focus();
   }
 
@@ -48,7 +48,7 @@ export function initProjectTabs() {
       show(tabs[(i + dir + tabs.length) % tabs.length], true);
     });
   });
-  show(tabs[0]);
+  show(tabs[0], false, false);
 
   // Посилання не блокуємо — після вибору сторінка прокручується до планувальника
   section.addEventListener('click', (event) => {
