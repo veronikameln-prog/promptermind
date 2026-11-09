@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="css/tailwind.css">
   <!-- JS плагінів вантажиться з jsDelivr (кінець body, defer) — з'єднання встановлюється заздалегідь -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="custom-styles.css?v=20261109">
+  <link rel="stylesheet" href="custom-styles.css?v=20261109c">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
   <!-- SVG-спрайт іконок (Tabler Icons, MIT) -->
@@ -578,17 +578,17 @@
         <div class="pj-tabs" role="tablist" aria-label="Модулі курсу" data-reveal>
           <span class="pj-tabs__thumb" aria-hidden="true"></span>
           <button class="pj-tab" type="button" role="tab" id="pj-tab-start" aria-selected="true" aria-controls="pj-panel" data-pj-tab="start">
-            <span class="pj-tab__num">Модуль 1</span>
+            <span class="pj-tab__num"><span class="sr-only">Модуль </span>1</span>
             <span class="pj-tab__title">Старт у ШІ</span>
             <span class="pj-tab__meta">4 тижні · 12 уроків · 1 490 ₴</span>
           </button>
           <button class="pj-tab" type="button" role="tab" id="pj-tab-bots" aria-selected="false" aria-controls="pj-panel" data-pj-tab="bots" tabindex="-1">
-            <span class="pj-tab__num">Модуль 2</span>
+            <span class="pj-tab__num"><span class="sr-only">Модуль </span>2</span>
             <span class="pj-tab__title">Створення ботів</span>
             <span class="pj-tab__meta">6 тижнів · 18 уроків · 2 290 ₴</span>
           </button>
           <button class="pj-tab" type="button" role="tab" id="pj-tab-pro" aria-selected="false" aria-controls="pj-panel" data-pj-tab="pro" tabindex="-1">
-            <span class="pj-tab__num">Модуль 3</span>
+            <span class="pj-tab__num"><span class="sr-only">Модуль </span>3</span>
             <span class="pj-tab__title">Просунутий промптинг</span>
             <span class="pj-tab__meta">8 тижнів · 24 уроки · 2 990 ₴</span>
           </button>
@@ -597,90 +597,127 @@
         <div class="pj-grid" id="pj-panel" role="tabpanel" aria-labelledby="pj-tab-start">
           <!-- Модуль 1 · Старт у ШІ -->
           <article class="pj-card" data-pj-module="start">
-            <div class="pj-card__media">
-              <img src="assets/images/projects/ai-assistant-640.webp" srcset="assets/images/projects/ai-assistant-640.webp 640w, assets/images/projects/ai-assistant.webp 1200w" sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 92vw" alt="3D-ноутбук, над ним мозок і вікна чату та коду" width="1200" height="900" loading="lazy">
+            <div class="pj-card__media pj-stage pj-stage--violet" role="img" aria-label="Вікно чату: учень просить пояснити фотосинтез, ШІ-асистент відповідає простими словами">
+              <div class="mk-win mk-chat">
+                <div class="mk-bar"><span class="mk-ava">П</span><b>Асистент Промі</b><i class="mk-online">онлайн</i></div>
+                <p class="mk-msg mk-msg--me">Поясни фотосинтез простими словами</p>
+                <div class="mk-chat__slot">
+                  <p class="mk-typing"><span></span><span></span><span></span></p>
+                  <p class="mk-msg mk-msg--bot mk-chat__answer">Рослина — як кухня на сонячній батареї: бере світло, воду й повітря і готує собі цукор.</p>
+                </div>
+              </div>
+              <span class="mk-sticker mk-sticker--br">Простими словами</span>
             </div>
-            <p class="pj-card__badge">Модуль 1 · проєкт 1 з 2</p>
+            <p class="pj-card__badge">Проєкт 1/2</p>
             <div class="pj-card__body">
               <h3 class="pj-card__title">Особистий ШІ-асистент</h3>
               <p class="pj-card__text">Налаштований чат-помічник, який пояснює складні теми простими словами.</p>
               <p class="pj-card__chip">Уроки 1–6 модуля</p>
-              <a class="pj-card__cta" href="#planner" data-pick-module="Старт у ШІ">Обрати модуль «Старт у ШІ»<svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
             </div>
           </article>
 
           <article class="pj-card" data-pj-module="start">
-            <div class="pj-card__media">
-              <img src="assets/images/projects/logo-brand-640.webp" srcset="assets/images/projects/logo-brand-640.webp 640w, assets/images/projects/logo-brand.webp 1200w" sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 92vw" alt="3D-полотно з логотипом ProMi, палітра кольорів і перо" width="1200" height="900" loading="lazy">
+            <div class="pj-card__media pj-stage pj-stage--pink" role="img" aria-label="Бренд-дошка: логотип «КотоКод», палітра з чотирьох кольорів, шрифт та іконки">
+              <div class="mk-win mk-brand">
+                <div class="mk-logo"><span class="mk-logo__mark">К</span><span class="mk-logo__name">КотоКод<small>клуб юних програмістів</small></span></div>
+                <div class="mk-swatches"><i style="--c:#ff5c8a"></i><i style="--c:#ffb020"></i><i style="--c:#6b2fff"></i><i style="--c:#15112e"></i></div>
+                <div class="mk-brand__row"><span class="mk-font">Aa</span><span class="mk-icons"><i></i><i></i><i></i></span></div>
+              </div>
+              <span class="mk-sticker mk-sticker--tr">logo.svg</span>
             </div>
-            <p class="pj-card__badge">Модуль 1 · проєкт 2 з 2</p>
+            <p class="pj-card__badge">Проєкт 2/2</p>
             <div class="pj-card__body">
               <h3 class="pj-card__title">Логотип і фірмовий стиль</h3>
               <p class="pj-card__text">Власний логотип, палітра та іконки для проєкту — від промпту до готових файлів.</p>
               <p class="pj-card__chip">Уроки 7–12 модуля</p>
-              <a class="pj-card__cta" href="#planner" data-pick-module="Старт у ШІ">Обрати модуль «Старт у ШІ»<svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
             </div>
           </article>
 
           <!-- Модуль 2 · Створення ботів -->
           <article class="pj-card" data-pj-module="bots">
-            <div class="pj-card__media">
-              <img src="assets/images/projects/telegram-bot-640.webp" srcset="assets/images/projects/telegram-bot-640.webp 640w, assets/images/projects/telegram-bot.webp 1200w" sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 92vw" alt="3D-робот із телефоном, у якому відкрито чат Telegram-бота" width="1200" height="900" loading="lazy">
+            <div class="pj-card__media pj-stage pj-stage--blue" role="img" aria-label="Чат із Telegram-ботом: на команду «розклад завтра» бот надсилає уроки на вівторок">
+              <div class="mk-win mk-tg">
+                <div class="mk-bar"><span class="mk-ava mk-ava--blue">Р</span><b>Розклад 8-Б</b><i class="mk-online">бот</i></div>
+                <p class="mk-msg mk-msg--me">/розклад завтра</p>
+                <div class="mk-msg mk-msg--bot mk-list"><b>Вівторок</b><span>8:30 · Алгебра</span><span>9:25 · Історія</span><span>10:20 · Англійська</span></div>
+                <div class="mk-btns"><span>Домашка</span><span>Дзвінки</span></div>
+              </div>
             </div>
-            <p class="pj-card__badge">Модуль 2 · проєкт 1 з 2</p>
+            <p class="pj-card__badge">Проєкт 1/2</p>
             <div class="pj-card__body">
               <h3 class="pj-card__title">ШІ-бот для Telegram</h3>
               <p class="pj-card__text">Бот, який відповідає на питання однокласників про розклад і домашні завдання.</p>
               <p class="pj-card__chip">Уроки 1–9 модуля</p>
-              <a class="pj-card__cta" href="#planner" data-pick-module="Створення ботів">Обрати модуль «Створення ботів»<svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
             </div>
           </article>
 
           <article class="pj-card" data-pj-module="bots">
-            <div class="pj-card__media pj-card__media--contain">
-              <img src="assets/images/illustrations/robot.webp" alt="3D-робот із бульбашкою чату" width="2048" height="2048" loading="lazy">
+            <div class="pj-card__media pj-stage pj-stage--lime" role="img" aria-label="Вікторина: питання про найбільшу планету, правильна відповідь «Юпітер», поруч рейтинг гравців">
+              <div class="mk-win mk-quiz">
+                <div class="mk-quiz__top"><span>Питання 3 з 10</span><span class="mk-timer">0:12</span></div>
+                <p class="mk-quiz__q">Яка планета найбільша в Сонячній системі?</p>
+                <span class="mk-opt">Сатурн</span>
+                <span class="mk-opt mk-opt--ok">Юпітер<i>✓</i></span>
+                <span class="mk-opt">Нептун</span>
+              </div>
+              <div class="mk-score"><b>Рейтинг</b><span>Оля<i>12</i></span><span>Макс<i>10</i></span><span>Ліза<i>9</i></span></div>
             </div>
-            <p class="pj-card__badge">Модуль 2 · проєкт 2 з 2</p>
+            <p class="pj-card__badge">Проєкт 2/2</p>
             <div class="pj-card__body">
               <h3 class="pj-card__title">Бот-вікторина для класу</h3>
               <p class="pj-card__text">Telegram-бот, який влаштовує вікторини з будь-якого предмета й рахує бали учасників.</p>
               <p class="pj-card__chip">Уроки 10–18 модуля</p>
-              <a class="pj-card__cta" href="#planner" data-pick-module="Створення ботів">Обрати модуль «Створення ботів»<svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
             </div>
           </article>
 
           <!-- Модуль 3 · Просунутий промптинг -->
           <article class="pj-card" data-pj-module="pro">
-            <div class="pj-card__media">
-              <img src="assets/images/projects/quest-game-640.webp" srcset="assets/images/projects/quest-game-640.webp 640w, assets/images/projects/quest-game.webp 1200w" sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 92vw" alt="3D-скриня зі скарбом, мапа квесту та геймпад" width="1200" height="900" loading="lazy">
+            <div class="pj-card__media pj-stage pj-stage--night" role="img" aria-label="Екран текстової квест-гри: глава 2, загадка на дверях вежі і два варіанти дії">
+              <div class="mk-win mk-quest">
+                <div class="mk-quest__top"><span>Глава 2 · Вежа</span><span class="mk-hp"><i></i></span></div>
+                <p class="mk-quest__text">Двері вежі зачинені. На них світиться загадка<span class="mk-caret"></span></p>
+                <span class="mk-choice">Розгадати загадку</span>
+                <span class="mk-choice">Шукати інший вхід</span>
+              </div>
+              <span class="mk-sticker mk-sticker--bl mk-sticker--gold">Сюжет від ШІ</span>
             </div>
-            <p class="pj-card__badge">Модуль 3 · проєкт 1 з 2</p>
+            <p class="pj-card__badge">Проєкт 1/2</p>
             <div class="pj-card__body">
               <h3 class="pj-card__title">Квест-гра з нейромережею</h3>
               <p class="pj-card__text">Текстова пригода, де сюжет і загадки генерує ШІ залежно від твоїх рішень.</p>
               <p class="pj-card__chip">Уроки 1–12 модуля</p>
-              <a class="pj-card__cta" href="#planner" data-pick-module="Просунутий промптинг">Обрати модуль «Просунутий промптинг»<svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
             </div>
           </article>
 
           <article class="pj-card" data-pj-module="pro">
-            <div class="pj-card__media">
-              <img src="assets/images/projects/animation-640.webp" srcset="assets/images/projects/animation-640.webp 640w, assets/images/projects/animation.webp 1200w" sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 92vw" alt="3D-ноутбук із кодом і лампочка-ідея" width="1200" height="900" loading="lazy">
+            <div class="pj-card__media pj-stage pj-stage--sunset" role="img" aria-label="Відеоредактор: ілюстрація з горами й сонцем оживає, внизу шкала відтворення ролика">
+              <div class="mk-win mk-anim">
+                <div class="mk-anim__frame"><span class="mk-sun"></span><span class="mk-cloud"></span><span class="mk-hill mk-hill--back"></span><span class="mk-hill"></span></div>
+                <div class="mk-anim__bar"><span class="mk-play"></span><span class="mk-track"><i></i></span><span class="mk-time">0:08</span></div>
+              </div>
+              <span class="mk-sticker mk-sticker--tr">reels.mp4</span>
             </div>
-            <p class="pj-card__badge">Модуль 3 · проєкт 2 з 2</p>
+            <p class="pj-card__badge">Проєкт 2/2</p>
             <div class="pj-card__body">
               <h3 class="pj-card__title">Анімація з однієї картинки</h3>
               <p class="pj-card__text">Короткий ролик для соцмереж: оживляєш власну ілюстрацію за допомогою ШІ.</p>
               <p class="pj-card__chip">Уроки 13–24 модуля</p>
-              <a class="pj-card__cta" href="#planner" data-pick-module="Просунутий промптинг">Обрати модуль «Просунутий промптинг»<svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
             </div>
           </article>
+
+          <!-- Одна кнопка для пари проєктів: текст і модуль оновлює скрипт вкладок -->
+          <a class="pj-pick" href="#planner" data-pick-module="Старт у ШІ" data-pj-pick><span>Обрати модуль «<span data-pj-pick-name>Старт у ШІ</span>»</span><span class="pj-pick__meta" data-pj-pick-meta>4 тижні · 1 490 ₴</span><svg aria-hidden="true"><use href="#icon-arrow"></use></svg></a>
         </div>
 
         <!-- Фінальний проєкт курсу: збирає роботи з усіх модулів -->
         <article class="pj-final" data-reveal>
-          <div class="pj-final__media">
-            <img src="assets/images/projects/portfolio-site-640.webp" srcset="assets/images/projects/portfolio-site-640.webp 640w, assets/images/projects/portfolio-site.webp 1200w" sizes="(min-width: 1024px) 520px, 92vw" alt="3D-вікно сайту-портфоліо з фотоапаратом і нагородою" width="1200" height="900" loading="lazy">
+          <div class="pj-final__media pj-stage pj-stage--violet" role="img" aria-label="Сайт-портфоліо учениці: аватар, ім'я, сітка з шести проєктів і відгук наставника">
+            <div class="mk-win mk-site">
+              <div class="mk-urlbar"><i></i><i></i><i></i><span>olya.promi.site</span></div>
+              <div class="mk-site__hero"><span class="mk-ava">О</span><span class="mk-site__who"><b>Оля Коваль</b><small>ШІ-творчиня · 15 років</small></span></div>
+              <div class="mk-site__grid"><i style="--c:#8b5cf6"></i><i style="--c:#ff5c8a"></i><i style="--c:#3b82f6"></i><i style="--c:#84cc16"></i><i style="--c:#312e81"></i><i style="--c:#f59e0b"></i></div>
+              <p class="mk-site__review"><span>★★★★★</span> Найкращий бот у групі</p>
+            </div>
           </div>
           <div class="pj-final__body">
             <p class="pj-final__badge">Фінальний проєкт курсу</p>
@@ -713,6 +750,15 @@
             panel.setAttribute('aria-labelledby', tab.id);
             tab.parentNode.style.setProperty('--pj-i', tabs.indexOf(tab)); // підкладка перемикача їде під активний розділ
             cards.forEach(function (c) { c.hidden = c.getAttribute('data-pj-module') !== key; });
+            // одна кнопка під парою карток — для модуля активної вкладки
+            var pick = section.querySelector('[data-pj-pick]');
+            var name = tab.querySelector('.pj-tab__title').textContent;
+            if (pick) {
+              pick.setAttribute('data-pick-module', name);
+              pick.querySelector('[data-pj-pick-name]').textContent = name;
+              var meta = tab.querySelector('.pj-tab__meta').textContent.split(' · '); // «4 тижні · 12 уроків · 1 490 ₴»
+              pick.querySelector('[data-pj-pick-meta]').textContent = meta[0] + ' · ' + meta[meta.length - 1];
+            }
             panel.classList.remove('is-switching'); void panel.offsetWidth; panel.classList.add('is-switching');
             if (focus) tab.focus();
           }
