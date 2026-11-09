@@ -1,13 +1,13 @@
 /* Футер сторінки інтенсиву — компактніший: менші проміжки, щільніші списки посилань, нижчий напис бренду */
-.ft-compact > div:first-child { gap: 28px; }
-.ft-compact > div:first-child > div.grid { row-gap: 20px; }
+.ft-compact > div:first-of-type { gap: 28px; }
+.ft-compact > div:first-of-type > div.grid { row-gap: 20px; }
 .ft-compact nav { gap: 8px; }
 .ft-compact nav a { min-height: 34px; }
-.ft-compact > div:first-child > div:last-child { padding-top: 14px; }
+.ft-compact > div:first-of-type > div:last-child { padding-top: 14px; }
 .ft-compact > p[aria-hidden="true"] { margin-top: 4px; font-size: 11vw; }
 @media (min-width: 1024px) {
   .ft-compact { padding-top: 40px; }
-  .ft-compact > div:first-child { gap: 32px; }
+  .ft-compact > div:first-of-type { gap: 32px; }
   .ft-compact nav a { min-height: 30px; }
   .ft-compact > p[aria-hidden="true"] { font-size: 112px; }
 }

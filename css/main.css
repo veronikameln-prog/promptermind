@@ -2282,15 +2282,15 @@ footer > .ft-glow ~ * { position: relative; z-index: 1; }
 @media (hover: none) { .ft-glow { display: none; } }
 
 /* Футер сторінки інтенсиву — компактніший: менші проміжки, щільніші списки посилань, нижчий напис бренду */
-.ft-compact > div:first-child { gap: 28px; }
-.ft-compact > div:first-child > div.grid { row-gap: 20px; }
+.ft-compact > div:first-of-type { gap: 28px; }
+.ft-compact > div:first-of-type > div.grid { row-gap: 20px; }
 .ft-compact nav { gap: 8px; }
 .ft-compact nav a { min-height: 34px; }
-.ft-compact > div:first-child > div:last-child { padding-top: 14px; }
+.ft-compact > div:first-of-type > div:last-child { padding-top: 14px; }
 .ft-compact > p[aria-hidden="true"] { margin-top: 4px; font-size: 11vw; }
 @media (min-width: 1024px) {
   .ft-compact { padding-top: 40px; }
-  .ft-compact > div:first-child { gap: 32px; }
+  .ft-compact > div:first-of-type { gap: 32px; }
   .ft-compact nav a { min-height: 30px; }
   .ft-compact > p[aria-hidden="true"] { font-size: 112px; }
 }
@@ -2302,3 +2302,208 @@ a.int-cta:active { box-shadow: 1px 1px 0 #1a2e05; transform: translate(2px, 2px)
 header a.int-cta { box-shadow: 3px 3px 0 #1a2e05; }
 @media (prefers-reduced-motion: reduce) { a.int-cta, a.int-cta:hover, a.int-cta:active { transform: none; transition: none; } }
 
+
+/* ==========================================================================
+   Мобільна версія (до 639 px; панель «До сплати» — до 1023 px). Десктоп не змінюється.
+   Підключається останнім у src/styles/main.css, тож перекриває правила секцій лише на телефоні.
+   ========================================================================== */
+
+/* Футер головної на телефоні — компактний: посилання навігації у 2 колонки, «Модулі курсу» сховано
+   (усі вони ведуть до «Програми», яка вже є в навігації), контакти щільніше, нижній рядок нижчий */
+@media (max-width: 639px) {
+  .ft-main { padding-top: 36px; }
+  .ft-main > div > div:first-child { gap: 26px; }
+  .ft-main [aria-labelledby="footer-brand"] { gap: 14px; }
+  .ft-main > div > div:first-child > div.grid { row-gap: 22px; }
+  .ft-main nav[aria-labelledby="footer-nav"] { grid-column: 1 / -1; gap: 8px; }
+  .ft-main nav[aria-labelledby="footer-nav"] ul { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
+  .ft-main nav[aria-labelledby="footer-courses"] { display: none; }
+  .ft-main [aria-labelledby="footer-contacts"] { gap: 8px; }
+  .ft-main [aria-labelledby="footer-contacts"] address { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
+  .ft-main [aria-labelledby="footer-contacts"] address a:first-child { grid-column: 1 / -1; }
+  .ft-main nav a, .ft-main address a { min-height: 34px; }
+  .ft-main > div > div:last-child { margin-top: 24px; gap: 4px; padding: 12px 0 16px; }
+  .ft-main > div > div:last-child ul { column-gap: 14px; }
+  .ft-main > div > div:last-child ul a { min-height: 32px; }
+}
+/* Футер інтенсиву на телефоні — компактний: нижчий банер із контактами (кнопки по дві в ряд),
+   щільніші списки посилань, коротший нижній рядок, декоративний напис бренду сховано */
+@media (max-width: 639px) {
+  .ft-compact { padding-top: 24px; }
+  .ft-compact > div:first-of-type { gap: 22px; }
+  .ft-compact [aria-labelledby="footer-contacts"] { gap: 12px; padding: 18px; border-radius: 20px; }
+  .ft-compact [aria-labelledby="footer-contacts"] h2 { font-size: 18px; }
+  .ft-compact [aria-labelledby="footer-contacts"] p { font-size: 14px; }
+  .ft-compact [aria-labelledby="footer-contacts"] address { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ft-compact [aria-labelledby="footer-contacts"] address a { min-height: 40px; padding: 0 10px; font-size: 13px; }
+  .ft-compact [aria-labelledby="footer-contacts"] address a:first-child { grid-column: 1 / -1; }
+  .ft-compact > div:first-of-type > div.grid { row-gap: 18px; }
+  .ft-compact [aria-labelledby="footer-brand"] { gap: 12px; }
+  .ft-compact nav { gap: 6px; }
+  .ft-compact nav a { min-height: 30px; }
+  .ft-compact > div:first-of-type > div:last-child { gap: 2px; padding-top: 12px; padding-bottom: 14px; }
+  .ft-compact > div:first-of-type > div:last-child a { min-height: 34px; }
+  .ft-compact > p[aria-hidden="true"] { display: none; }
+}
+@media (max-width: 639px) {
+  .ft-compact [aria-labelledby="footer-contacts"] address a { white-space: nowrap; gap: 6px; }
+  .ft-compact [aria-labelledby="footer-brand"] ul a { width: 40px; height: 40px; }
+  .ft-compact nav h2 { font-size: 12px; }
+  .ft-compact > div:first-of-type > div:last-child > div { gap: 0 16px; }
+  .ft-compact > div:first-of-type > div:last-child > div a:last-child { min-height: 38px; margin-top: 6px; }
+}
+@media (max-width: 639px) {
+  .ft-compact [aria-labelledby="footer-brand"] { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .ft-compact [aria-labelledby="footer-brand"] > p { display: none; }
+  .ft-compact nav { grid-column: 1 / -1; }
+  .ft-compact nav ul { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
+  .ft-compact > div:first-of-type > div:last-child { font-size: 12px; }
+}
+
+/* ===================== Мобільна версія (лише телефон, до 639 px; десктоп не змінюється) ===================== */
+@media (max-width: 639px) {
+  /* Перший екран: сцена з роботом трохи нижча — кнопка «Запустити пробний урок» вміщується на першому екрані */
+  .hero-scene {
+    height: 280px;
+    -webkit-mask-image: linear-gradient(180deg, #000 165px, transparent 272px);
+    mask-image: linear-gradient(180deg, #000 165px, transparent 272px);
+  }
+  #top { padding-top: 222px; }
+
+  /* Переваги: компактніші картки */
+  .bn-phone { zoom: 0.7; }
+  .bn-card--sprint { gap: 6px; }
+  .bn-card--practice { display: grid; grid-template-columns: auto 1fr; column-gap: 16px; row-gap: 4px; align-items: center; text-align: left; }
+  .bn-card--practice .bn-ring { grid-row: span 2; zoom: 0.62; }
+  .bn-card--practice .bn-card__title, .bn-card--practice .bn-card__text { margin: 0; text-align: left; }
+  .bn-card--practice .bn-card__text { align-self: start; font-size: 14px; }
+  .bn-card--practice .bn-card__title { align-self: end; }
+  .bn-chat { min-height: 0; zoom: 0.9; }
+  .bn-fan { min-height: 170px; }
+
+  /* Модулі: картки гортаються пальцем убік (видно край наступної) */
+  #program > div > .grid > div.flex.flex-col {
+    position: relative; /* приховані підписи (sr-only) у кнопках не виходять за межі каруселі */
+    flex-direction: row;
+    gap: 14px;
+    margin-inline: -20px;
+    padding: 4px 20px 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    scrollbar-width: none;
+  }
+  #program > div > .grid > div.flex.flex-col::-webkit-scrollbar { display: none; }
+  #program > div > .grid > div.flex.flex-col > .grid { display: contents; }
+  #program [data-module] { flex: 0 0 84%; scroll-snap-align: start; }
+  #program [data-module]:hover { transform: none; }
+  p.pg-swipe-hint { display: flex; }
+
+  /* Порівняння: таблиця гортається вбік, перша колонка закріплена */
+  #comparison .overflow-x-auto { width: 100%; max-width: calc(100vw - 40px); min-width: 0; }
+  #comparison table { min-width: 540px; }
+  #comparison table th:first-child { position: sticky; left: 0; z-index: 2; width: 132px; background: #fff; box-shadow: 6px 0 10px -8px rgba(76, 29, 149, 0.25); }
+  #comparison thead th:first-child { background: #fff; }
+
+  /* Контакти під формою: три компактні кнопки в один ряд */
+  #contact ul[aria-label="Способи зв'язку"] { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  #contact ul[aria-label="Способи зв'язку"] > li:last-child { grid-column: 1 / -1; justify-content: center; }
+  #contact ul[aria-label="Способи зв'язку"] a.group { flex-direction: column; gap: 10px; padding: 14px 6px 12px; text-align: center; border-radius: 20px; }
+  #contact ul[aria-label="Способи зв'язку"] a.group > span.flex-1 > span:not(:first-child),
+  #contact ul[aria-label="Способи зв'язку"] a.group > svg { display: none; }
+  #contact ul[aria-label="Способи зв'язку"] a.group > span.flex-1 > span:first-child { font-size: 14px; }
+  #contact ul[aria-label="Способи зв'язку"] .ct-ico { width: 46px; height: 46px; }
+  #contact ul[aria-label="Способи зв'язку"] .ct-ico svg { width: 22px; height: 22px; }
+
+  /* FAQ: картка «Залишилися питання?» — після списку питань */
+  #faq > div > div:first-child { display: contents; }
+  #faq > div > div:first-child > aside { order: 2; }
+}
+.pg-swipe-hint { display: none; }
+.pg-swipe-hint { align-items: center; justify-content: center; gap: 6px; margin: -18px 0 -8px; color: #8a84a8; font-size: 13px; font-weight: 600; }
+.pg-swipe-hint svg { width: 14px; height: 14px; animation: pg-nudge 1.6s ease-in-out infinite; }
+@keyframes pg-nudge { 50% { transform: translateX(4px); } }
+@media (prefers-reduced-motion: reduce) { .pg-swipe-hint svg { animation: none; } }
+/* Планувальник на телефоні: плаваюча панель «До сплати» внизу екрана */
+.pl-dock { display: none; }
+@media (max-width: 1023px) {
+  .pl-dock {
+    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 10px 10px 10px 18px; border-radius: 20px;
+    background: linear-gradient(120deg, #6b2fff, #4f46e5); color: #fff;
+    box-shadow: 0 18px 40px -16px rgba(49, 20, 140, 0.7);
+    opacity: 0; transform: translateY(130%); pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .pl-dock.is-on { opacity: 1; transform: none; pointer-events: auto; }
+  .pl-dock__sum { display: flex; flex-direction: column; line-height: 1.15; }
+  .pl-dock__sum small { color: #ddd6fe; font-size: 12px; font-weight: 600; }
+  .pl-dock__sum b { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .pl-dock__btn { min-height: 44px; padding: 0 16px; border: 2px solid #1a2e05; border-radius: 14px; background: #a3e635; color: #1a2e05; font-size: 14px; font-weight: 800; box-shadow: 3px 3px 0 #1a2e05; }
+}
+@media (prefers-reduced-motion: reduce) { .pl-dock { transition: none; } }
+/* Інтенсив: аватарки відгуків — кольорові кружечки з ініціалами замість робота */
+.int-ava { display: grid; flex: none; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--c1), var(--c2)); color: #fff; font-size: 20px; font-weight: 800; box-shadow: 0 8px 16px -8px rgba(76, 29, 149, 0.45); }
+
+/* Інтенсив на телефоні: розклад дня — компактна часова шкала замість окремих карток */
+@media (max-width: 639px) {
+  #schedule ol { position: relative; gap: 0; }
+  #schedule ol::before { content: ""; position: absolute; top: 22px; bottom: 30px; left: 21px; border-left: 2px dashed #c4b5fd; }
+  #schedule ol > li { position: relative; gap: 14px; padding: 0 0 18px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  #schedule ol > li:hover { box-shadow: none; }
+  #schedule ol > li > span:first-child { width: 44px; height: 44px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px #ede9fe, 0 6px 14px -8px rgba(76, 29, 149, 0.5); font-size: 20px; }
+  #schedule ol > li h3 { font-size: 16px; }
+  #schedule ol > li p { font-size: 13.5px; }
+  #schedule > div > .grid { gap: 20px; }
+}
+@media (max-width: 639px) { .bn-chat__log { height: 160px; } }
+@media (max-width: 639px) { .bn-card--portfolio { overflow: hidden; } }
+/* Футери на телефоні — ще компактніші (головна й інтенсив) */
+@media (max-width: 639px) {
+  /* Головна: логотип і соцмережі в один рядок, без опису й плашки інтенсиву (вона є в меню) */
+  .ft-main { padding-top: 28px; }
+  .ft-main > div > div:first-child { gap: 20px; }
+  .ft-main [aria-labelledby="footer-brand"] { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+  .ft-main [aria-labelledby="footer-brand"] > p, .ft-main [aria-labelledby="footer-brand"] a[href="intensive.html"] { display: none; }
+  .ft-main > div > div:first-child > div.grid { row-gap: 16px; }
+  /* навігація в три колонки, без заголовка */
+  .ft-main nav[aria-labelledby="footer-nav"] h2, .ft-main [aria-labelledby="footer-contacts"] h2 { display: none; }
+  .ft-main nav[aria-labelledby="footer-nav"] ul { grid-template-columns: repeat(3, auto); justify-content: space-between; column-gap: 12px; }
+  .ft-main nav a { min-height: 32px; }
+  /* контакти — три круглі кнопки-іконки (текст лишається для екранних читалок) */
+  .ft-main [aria-labelledby="footer-contacts"] address { display: flex; gap: 10px; }
+  .ft-main [aria-labelledby="footer-contacts"] address a { flex: 1; justify-content: center; min-height: 44px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); font-size: 0; }
+  .ft-main [aria-labelledby="footer-contacts"] address a svg { width: 18px; height: 18px; }
+  .ft-main > div > div:last-child { margin-top: 18px; padding: 10px 0 14px; gap: 0; }
+  .ft-main > div > div:last-child ul { column-gap: 12px; font-size: 11.5px; }
+  .ft-main > div > div:last-child ul a { min-height: 30px; }
+
+  /* Інтенсив: банер лише із заголовком і трьома кнопками-іконками, навігація щільніша, без кнопки «Нагору» */
+  .ft-compact { padding-top: 20px; }
+  .ft-compact > div:first-of-type { gap: 18px; }
+  .ft-compact [aria-labelledby="footer-contacts"] { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; }
+  .ft-compact [aria-labelledby="footer-contacts"] p { display: none; }
+  .ft-compact [aria-labelledby="footer-contacts"] h2 { font-size: 16px; }
+  .ft-compact [aria-labelledby="footer-contacts"] address { display: flex; gap: 8px; }
+  .ft-compact [aria-labelledby="footer-contacts"] address a { width: 40px; min-height: 40px; padding: 0; border-radius: 999px; font-size: 0; }
+  .ft-compact [aria-labelledby="footer-contacts"] address a svg { width: 18px; height: 18px; }
+  .ft-compact > div:first-of-type > div.grid { row-gap: 14px; }
+  .ft-compact nav ul { grid-template-columns: repeat(3, auto); justify-content: space-between; column-gap: 10px; }
+  .ft-compact nav a { min-height: 30px; font-size: 13px; }
+  .ft-compact nav h2 { font-size: 11px; letter-spacing: 0.06em; }
+  .ft-compact > div:first-of-type > div:last-child { padding-top: 8px; padding-bottom: 12px; font-size: 11.5px; }
+  .ft-compact > div:first-of-type > div:last-child > div a:last-child { display: none; }
+  .ft-compact > div:first-of-type > div:last-child a { min-height: 30px; }
+}
+@media (max-width: 639px) {
+  .ft-main [aria-labelledby="footer-contacts"] address, .ft-compact [aria-labelledby="footer-contacts"] address { flex-direction: row; }
+}
+
+/* Аватарки відгуків інтенсиву: кольори з класів-модифікаторів (без інлайн-стилів) */
+.int-ava--1 { --c1: #f472b6; --c2: #fb923c; }
+.int-ava--2 { --c1: #38bdf8; --c2: #6366f1; }
+.int-ava--3 { --c1: #a3e635; --c2: #22c55e; }
+.int-ava--4 { --c1: #a78bfa; --c2: #6b2fff; }
+.int-ava--5 { --c1: #fbbf24; --c2: #f97316; }
+.int-ava--6 { --c1: #2dd4bf; --c2: #3b82f6; }

@@ -11,6 +11,7 @@ import { initBenefits } from '../components/benefits.js';
 import { initProjectTabs } from '../components/project-tabs.js';
 import { initModulePicker } from '../components/module-picker.js';
 import { initPlanner } from '../components/planner.js';
+import { initPlannerDock } from '../components/planner-dock.js';
 import { initLeadModal } from '../components/lead-modal.js';
 import { initFeedbackForm } from '../components/feedback-form.js';
 import { initWorksSlider, initGallery, initHeroTyped } from '../components/plugins.js';
@@ -26,6 +27,7 @@ boot([
   initProjectTabs,
   initModulePicker,
   initPlanner,
+  initPlannerDock,
   initLeadModal,
   initFeedbackForm,
   initWorksSlider,

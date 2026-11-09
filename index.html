@@ -633,6 +633,7 @@
           <p class="text-[15px] leading-[1.65] text-gray-500 md:text-lg md:leading-relaxed">Три модулі від простого до складного. Обери один або кілька — далі в планувальнику налаштуєш темп, кількість учнів і побачиш точну суму.</p>
         </header>
 
+        <p class="pg-swipe-hint" aria-hidden="true">Гортай картки модулів <svg><use href="#icon-arrow"></use></svg></p>
         <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
           <div class="flex flex-col gap-6">
             <article class="group overflow-hidden rounded-3xl border-2 border-brand-200 bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:shadow-lift data-[selected=true]:border-brand data-[selected=true]:shadow-[0_0_0_4px_rgba(107,47,255,0.12),0_4px_24px_rgba(107,47,255,0.08)]" data-module data-selected="true" data-key="start" data-reveal>
@@ -1470,11 +1471,16 @@
       </div>
     </section>
 
+      <!-- Телефон: плаваюча панель із сумою, поки гортаєш форму планувальника (src/js/components/planner-dock.js) -->
+      <div class="pl-dock" data-pl-dock aria-hidden="true">
+        <span class="pl-dock__sum"><small>До сплати</small><b data-pl-dock-total>1 490 ₴</b></span>
+        <button class="pl-dock__btn" type="button" tabindex="-1" data-pl-dock-btn>Залишити заявку</button>
+      </div>
   </main>
 
   <!-- ========== Footer: компактний — бренд ліворуч, 3 колонки посилань праворуч, тонкий нижній рядок ==========
        Посилання на мобільному мають висоту 40 px (зручно пальцем), на десктопі — 32 px, щоб футер не розтягувався. -->
-  <footer class="relative overflow-hidden bg-gray-950 px-5 pt-12 text-gray-400 md:px-8 lg:px-16 lg:pt-14">
+  <footer class="ft-main relative overflow-hidden bg-gray-950 px-5 pt-12 text-gray-400 md:px-8 lg:px-16 lg:pt-14">
     <span class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand to-transparent" aria-hidden="true"></span>
     <span class="ft-glow" aria-hidden="true" data-ft-glow></span>
 
