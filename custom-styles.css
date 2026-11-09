@@ -1134,6 +1134,66 @@ body {
   .pj-grid.is-switching .pj-card:not([hidden]) { animation: none; }
 }
 
+/* 1e. «Модулі та вартість» компактніше (поверх Tailwind-класів розмітки; діє лише в #program) */
+#program > div { max-width: 1340px; } /* ширше за загальний контейнер сайту (1280 px) */
+
+#program > div > .grid {
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
+  gap: 24px;
+}
+
+#program [data-module] > div { gap: 16px; }
+#program [data-module] h3 { font-size: 20px; }
+#program [data-module] img.float { width: 96px; }
+#program [data-module] img[width="56"] { width: 56px; height: 56px; margin-bottom: 4px; }
+
+/* Тривалість і вартість — плашки одна під одною, трохи компактніші */
+#program [data-module] dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+#program [data-module] dl > div { padding: 11px 14px; border-radius: 14px; }
+#program [data-module] dl dt { font-size: 11px; }
+#program [data-module] dl dd { font-size: 15px; }
+
+#program .flex.flex-col.gap-6 { gap: 20px; }
+#program .grid.md\:grid-cols-2 { gap: 20px; }
+
+/* Десктоп: низ лівої колонки (малі картки) вирівняний з низом «Твого курсу»; кнопки «Обрати» — внизу карток */
+@media (min-width: 1024px) {
+  #program > div > .grid { align-items: stretch; }
+  #program > div > .grid > .flex.flex-col { height: 100%; }
+  #program .grid.md\:grid-cols-2 { flex: 1; }
+  /* вільна висота ділиться рівно між блоками картки (а не одним проміжком перед кнопкою) */
+  #program .grid.md\:grid-cols-2 > [data-module] > div { height: 100%; justify-content: space-between; }
+
+  /* трохи більше «повітря» в картках модулів — менше вільної висоти лишається на розподіл */
+  #program [data-module] > div { padding: 26px 28px 24px; gap: 16px; }
+  #program .flex.flex-col.gap-6,
+  #program .grid.md\:grid-cols-2 { gap: 20px; }
+
+  /* «Твій курс» — щільніші проміжки (висоту блоку задає саме ця колонка; ілюстрацію з роботами не чіпаємо) */
+  #pricing > div:first-child { padding: 30px 36px 26px; gap: 18px; }
+  #pricing > div:first-child > .flex.flex-col.items-start { gap: 10px; }
+  #pricing [data-calc] { gap: 14px; }
+  #pricing [data-calc] dl { gap: 8px; padding-top: 12px; }
+  #pricing [data-promo-form] { gap: 6px; }
+}
+
+/* Підсумок «Твій курс»: відступи помірні, ілюстрація з роботами — повністю (не обрізається) */
+#pricing > div:first-child { gap: 24px; }
+#pricing h3 { font-size: 28px; }
+#pricing [data-calc] { gap: 20px; }
+
+@media (min-width: 768px) {
+  #program [data-module] > div { padding: 26px 28px; }
+  #pricing > div:first-child { padding: 36px 40px; }
+  #pricing h3 { font-size: 32px; }
+}
+
 /* 2. Бігуча стрічка: дві перехресні смуги, що рухаються назустріч ---------- */
 .ticker-band--front {
   transform: translateY(-50%) rotate(-2.5deg);
