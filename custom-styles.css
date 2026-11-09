@@ -847,6 +847,293 @@ body {
   50% { translate: 0 -4px; opacity: 0.5; }
 }
 
+/* 1d. Проєкти за модулями: вкладки + 2 картки + фінальний проєкт ------------- */
+.pj-tabs { display: none; }
+
+/* Сегментований перемикач модулів: одна «пігулка», під активним розділом плавно їздить підкладка.
+   Позицію підкладки задає змінна --pj-i (0/1/2) зі скрипту блоку. */
+[data-pj].is-tabs .pj-tabs {
+  --pj-i: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 5px;
+  border: 1px solid #e0d6ff;
+  border-radius: 20px;
+  background: #ece5ff;
+  box-shadow: inset 0 1px 2px rgba(76, 29, 149, 0.06);
+}
+
+.pj-tabs__thumb {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  width: calc((100% - 10px) / 3);
+  border-radius: 15px;
+  background: linear-gradient(120deg, #6b2fff, #3b82f6);
+  box-shadow: 0 8px 20px -8px rgba(107, 47, 255, 0.65);
+  transform: translateX(calc(var(--pj-i) * 100%));
+  transition: transform 0.4s cubic-bezier(0.3, 0.8, 0.25, 1);
+}
+
+.pj-tab {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  min-width: 0;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 15px;
+  background: transparent;
+  color: #4b3f86;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.pj-tab:hover { color: #6b2fff; }
+.pj-tab:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
+.pj-tab[aria-selected="true"] { color: #fff; }
+
+.pj-tab__num { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75; }
+.pj-tab__title { font-size: 13.5px; font-weight: 800; line-height: 1.2; }
+
+/* Тривалість і ціна — лише в активному розділі (і лише від планшета: на телефоні не вміщується) */
+.pj-tab__meta {
+  display: none;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pj-tab[aria-selected="true"] .pj-tab__meta { opacity: 0.85; }
+
+@media (min-width: 768px) {
+  .pj-tab { padding: 12px 14px; }
+  .pj-tab__num { font-size: 11px; }
+  .pj-tab__title { font-size: 16px; }
+  .pj-tab__meta { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-tabs__thumb { transition: none; }
+}
+
+.pj-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+[data-pj].is-tabs .pj-grid { width: 100%; max-width: 880px; margin: 0 auto; }
+.pj-grid.is-switching .pj-card:not([hidden]) { animation: pj-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.pj-grid.is-switching .pj-card:not([hidden]) + .pj-card:not([hidden]) { animation-delay: 0.08s; }
+
+.pj-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e6defd;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(76, 29, 149, 0.04);
+}
+
+.pj-card[hidden] { display: none; }
+
+/* Картинка — просто ілюстрація (не посилання), без ефектів наведення */
+.pj-card__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f1ecff, #ede9fe);
+}
+
+.pj-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pj-card__media--contain { background: linear-gradient(135deg, #ffffff, #f3eeff); }
+.pj-card__media--contain img { object-fit: contain; padding: 3%; }
+
+.pj-card__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(76, 29, 149, 0.12);
+  color: #6b2fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pj-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 18px 20px 14px;
+}
+
+.pj-card__title { margin: 0; color: #15112e; font-size: 19px; font-weight: 800; line-height: 1.25; }
+.pj-card__text  { margin: 0; color: #6b7280; font-size: 14.5px; line-height: 1.55; }
+
+.pj-card__chip {
+  margin: auto 0 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #f1ecff;
+  color: #6b2fff;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.pj-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: #6b2fff;
+  font-size: 15px;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.pj-card__cta svg { width: 16px; height: 16px; transition: transform 0.2s ease; }
+.pj-card__cta:hover { color: #3b82f6; }
+.pj-card__cta:hover svg { transform: translateX(4px); }
+.pj-card__cta:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; border-radius: 6px; }
+
+/* Фінальний проєкт — широка картка під вкладками */
+.pj-final {
+  display: grid;
+  overflow: hidden;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  border: 1px solid #d9cbff;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ffffff 40%, #f4efff);
+}
+
+.pj-final__media { aspect-ratio: 16 / 10; overflow: hidden; }
+.pj-final__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.pj-final__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+.pj-final__badge {
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #ecfccb;
+  color: #3f6212;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pj-final__title { font-size: 26px; }
+.pj-final .pj-card__chip { margin-top: 4px; }
+
+.pj-final__cta {
+  margin-top: 6px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: #6b2fff;
+  color: #fff;
+}
+
+.pj-final__cta:hover { background: #5a1ff0; color: #fff; }
+
+@media (min-width: 768px) {
+  .pj-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .pj-final { grid-template-columns: 45% 1fr; }
+  .pj-final__media { aspect-ratio: auto; min-height: 100%; }
+  .pj-final__body { padding: 26px 30px; }
+}
+
+@media (min-width: 1024px) {
+  /* без JS — усі 6 карток у три колонки */
+  [data-pj]:not(.is-tabs) .pj-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Ряд: вкладки + 2 проєкти модуля + фінальний проєкт */
+.pj-row {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Десктоп: «вкладки над парою карток» ліворуч, фінальна картка — третьою в ряду, відокремлена
+   більшим проміжком і пунктирною лінією. Без JS (усі 6 карток) — звичайна колонка. */
+@media (min-width: 1024px) {
+  [data-pj].is-tabs .pj-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "tabs ." "grid final";
+    column-gap: 56px;
+    row-gap: 24px;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  [data-pj].is-tabs .pj-tabs { grid-area: tabs; max-width: none; }
+  [data-pj].is-tabs .pj-grid { position: relative; grid-area: grid; max-width: none; gap: 16px; }
+  [data-pj].is-tabs .pj-final { grid-area: final; max-width: none; display: flex; flex-direction: column; border-radius: 20px; }
+
+  /* пунктирний розділювач між парою проєктів і фінальним */
+  [data-pj].is-tabs .pj-grid::after {
+    content: "";
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    right: -29px;
+    border-left: 2px dashed #d4c6ff;
+  }
+
+  [data-pj].is-tabs .pj-final__media { aspect-ratio: 16 / 10; min-height: 0; }
+  [data-pj].is-tabs .pj-final__body { flex: 1; justify-content: flex-start; gap: 8px; padding: 18px 20px 14px; }
+  [data-pj].is-tabs .pj-final__badge { position: absolute; top: 16px; left: 16px; }
+  [data-pj].is-tabs .pj-final { position: relative; }
+  [data-pj].is-tabs .pj-final__title { font-size: 19px; }
+  [data-pj].is-tabs .pj-final .pj-card__text { font-size: 14.5px; line-height: 1.55; }
+  [data-pj].is-tabs .pj-final .pj-card__chip { margin-top: auto; }
+  [data-pj].is-tabs .pj-final__cta { min-height: 40px; margin-top: 4px; padding: 0 18px; font-size: 14px; }
+}
+
+@keyframes pj-in {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-grid.is-switching .pj-card:not([hidden]) { animation: none; }
+}
+
 /* 2. Бігуча стрічка: дві перехресні смуги, що рухаються назустріч ---------- */
 .ticker-band--front {
   transform: translateY(-50%) rotate(-2.5deg);
