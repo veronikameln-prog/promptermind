@@ -2208,3 +2208,17 @@ header a[data-lead="trial"] { white-space: nowrap; }
   header nav[aria-label="Головна навігація"] > ul { gap: 12px; }
   header nav[aria-label="Головна навігація"] > ul > li > a, header [data-dropdown-toggle] { font-size: 14px; }
 }
+/* Футер: фіолетове світіння з’являється лише при наведенні й «ходить» за курсором.
+   Координати --gx / --gy ставить js/main.js; на сенсорних екранах світіння немає. */
+.ft-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(520px circle at var(--gx, 50%) var(--gy, 0%), rgba(107, 47, 255, 0.3), rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+  transition: opacity 0.45s ease;
+}
+footer.is-glow .ft-glow { opacity: 1; }
+footer > .ft-glow ~ * { position: relative; z-index: 1; }
+@media (hover: none) { .ft-glow { display: none; } }

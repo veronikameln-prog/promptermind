@@ -820,3 +820,27 @@ document.addEventListener('DOMContentLoaded', function () {
   ticker.addEventListener('mouseenter', function () { paused = true; });
   ticker.addEventListener('mouseleave', function () { paused = false; });
 })();
+
+/* ---------- Футер: світіння за курсором (лише при наведенні, на пристроях з мишкою) ---------- */
+(function () {
+  const glowEl = document.querySelector('[data-ft-glow]');
+  const footer = glowEl && glowEl.closest('footer');
+  const glow = glowEl;
+  if (!glow || !window.matchMedia('(hover: hover)').matches) return;
+  let frame = 0;
+  let x = 0;
+  let y = 0;
+  footer.addEventListener('pointerenter', function () { footer.classList.add('is-glow'); });
+  footer.addEventListener('pointerleave', function () { footer.classList.remove('is-glow'); });
+  footer.addEventListener('pointermove', function (event) {
+    const box = footer.getBoundingClientRect();
+    x = event.clientX - box.left;
+    y = event.clientY - box.top;
+    if (frame) return;
+    frame = requestAnimationFrame(function () {
+      frame = 0;
+      glow.style.setProperty('--gx', x + 'px');
+      glow.style.setProperty('--gy', y + 'px');
+    });
+  });
+})();
