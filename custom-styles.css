@@ -2195,3 +2195,16 @@ main > section#planner { padding-top: 48px; }
   .ft-compact nav a { min-height: 30px; }
   .ft-compact > p[aria-hidden="true"] { font-size: 112px; }
 }
+/* Сторінка інтенсиву в стилі нової головної: салатові кнопки з темною тінню, заголовок першого екрана — Montserrat */
+.is-intensive h1 { font-family: Montserrat, Inter, system-ui, sans-serif; letter-spacing: -0.01em; }
+a.int-cta { border: 2px solid #1a2e05; background-color: #a3e635; background-image: none; color: #1a2e05; box-shadow: 4px 4px 0 #1a2e05; transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease; }
+a.int-cta:hover { background-color: #b5ef4a; box-shadow: 6px 6px 0 #1a2e05; transform: translate(-2px, -2px); }
+a.int-cta:active { box-shadow: 1px 1px 0 #1a2e05; transform: translate(2px, 2px); }
+header a.int-cta { box-shadow: 3px 3px 0 #1a2e05; }
+@media (prefers-reduced-motion: reduce) { a.int-cta, a.int-cta:hover, a.int-cta:active { transform: none; transition: none; } }
+/* Шапка на планшеті: меню з 5 пунктів + «Ще» вміщується в один рядок, кнопка «Пробний урок» не переноситься */
+header a[data-lead="trial"] { white-space: nowrap; }
+@media (min-width: 768px) and (max-width: 1023px) {
+  header nav[aria-label="Головна навігація"] > ul { gap: 12px; }
+  header nav[aria-label="Головна навігація"] > ul > li > a, header [data-dropdown-toggle] { font-size: 14px; }
+}
