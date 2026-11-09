@@ -749,7 +749,7 @@ body {
 /* Віяло проєктів */
 .bn-fan { position: relative; min-height: 210px; }
 
-.bn-fan img {
+.bn-fan > * {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -763,10 +763,10 @@ body {
   translate: -50% -50%;
 }
 
-.bn-fan img:nth-child(1) { rotate: -14deg; transform: translate(-34%, 6%); }
-.bn-fan img:nth-child(2) { rotate: -5deg;  transform: translate(-11%, -2%); }
-.bn-fan img:nth-child(3) { rotate: 5deg;   transform: translate(11%, -2%); }
-.bn-fan img:nth-child(4) { rotate: 14deg;  transform: translate(34%, 6%); }
+.bn-fan > *:nth-child(1) { rotate: -14deg; transform: translate(-34%, 6%); }
+.bn-fan > *:nth-child(2) { rotate: -5deg;  transform: translate(-11%, -2%); }
+.bn-fan > *:nth-child(3) { rotate: 5deg;   transform: translate(11%, -2%); }
+.bn-fan > *:nth-child(4) { rotate: 14deg;  transform: translate(34%, 6%); }
 
 @media (min-width: 768px) {
   .bn { padding: 36px 32px 88px; }
@@ -779,7 +779,7 @@ body {
   .bn-card--sprint,
   .bn-card--portfolio { flex-direction: row; align-items: center; justify-content: space-between; }
   .bn-fan { flex: 1 1 55%; min-height: 250px; }
-  .bn-fan img { width: min(70%, 320px); }
+  .bn-fan > * { width: min(70%, 320px); }
 }
 
 @media (min-width: 1024px) {
@@ -815,11 +815,11 @@ body {
   .bn-chat__send.is-pulse { animation: bn-send 0.35s ease; }
 
   /* Віяло: мініатюри спершу складені стосом, потім розкриваються */
-  .bn-fan img { transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), rotate 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
-  .bn-card--portfolio:not(.is-in) .bn-fan img { transform: none; rotate: 0deg; }
-  .bn-fan img:nth-child(2) { transition-delay: 0.08s; }
-  .bn-fan img:nth-child(3) { transition-delay: 0.16s; }
-  .bn-fan img:nth-child(4) { transition-delay: 0.24s; }
+  .bn-fan > * { transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), rotate 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .bn-card--portfolio:not(.is-in) .bn-fan > * { transform: none; rotate: 0deg; }
+  .bn-fan > *:nth-child(2) { transition-delay: 0.08s; }
+  .bn-fan > *:nth-child(3) { transition-delay: 0.16s; }
+  .bn-fan > *:nth-child(4) { transition-delay: 0.24s; }
 }
 
 @keyframes bn-in {
@@ -2039,3 +2039,10 @@ body {
 .pj-pick:hover .pj-pick__meta { background: rgba(255, 255, 255, 0.2); color: #fff; }
 @media (max-width: 479px) { .pj-pick { flex-wrap: wrap; padding: 8px 18px; } }
 .pj-pick { align-self: start; }
+/* Віяло «6 проєктів»: мініатюри — живі макети (замість картинок) */
+.bn-fan > .bn-fan__tile { position: absolute; display: grid; aspect-ratio: 16 / 10; overflow: hidden; border: 3px solid #fff; border-radius: 16px; }
+.bn-fan__tile > * { font-size: clamp(6px, 3.1cqw, 11px); animation: none; }
+.bn-fan__tile .mk-win { width: 80%; }
+@media (prefers-reduced-motion: no-preference) {
+  .bn-card--portfolio:not(.is-in) .bn-fan > .bn-fan__tile { transform: none; rotate: 0deg; }
+}

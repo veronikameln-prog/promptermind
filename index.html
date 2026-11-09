@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="css/tailwind.css">
   <!-- JS плагінів вантажиться з jsDelivr (кінець body, defer) — з'єднання встановлюється заздалегідь -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="custom-styles.css?v=20261109c">
+  <link rel="stylesheet" href="custom-styles.css?v=20261109i">
 </head>
 <body class="bg-white font-body text-gray-900 antialiased">
   <!-- SVG-спрайт іконок (Tabler Icons, MIT) -->
@@ -441,11 +441,35 @@
               <h3 class="bn-card__title">Портфоліо до випуску</h3>
               <p class="bn-card__text">Реальні роботи, які не соромно показати друзям, батькам і майбутнім роботодавцям.</p>
             </div>
+            <!-- Віяло з мініатюр проєктів — ті самі живі макети, що й у блоці «Проєкти» (стилі .pj-stage / .mk-* у custom-styles.css) -->
             <div class="bn-fan" aria-hidden="true">
-              <img src="assets/images/projects/telegram-bot-640.webp" alt="" width="640" height="400" loading="lazy" decoding="async">
-              <img src="assets/images/projects/ai-assistant-640.webp" alt="" width="640" height="400" loading="lazy" decoding="async">
-              <img src="assets/images/projects/quest-game-640.webp" alt="" width="640" height="400" loading="lazy" decoding="async">
-              <img src="assets/images/projects/portfolio-site-640.webp" alt="" width="640" height="400" loading="lazy" decoding="async">
+              <div class="bn-fan__tile pj-stage pj-stage--blue">
+                <div class="mk-win mk-tg">
+                  <div class="mk-bar"><span class="mk-ava mk-ava--blue">Р</span><b>Розклад 8-Б</b></div>
+                  <p class="mk-msg mk-msg--me">/розклад завтра</p>
+                  <div class="mk-msg mk-msg--bot mk-list"><b>Вівторок</b><span>8:30 · Алгебра</span><span>9:25 · Історія</span></div>
+                </div>
+              </div>
+              <div class="bn-fan__tile pj-stage pj-stage--pink">
+                <div class="mk-win mk-brand">
+                  <div class="mk-logo"><span class="mk-logo__mark">К</span><span class="mk-logo__name">КотоКод<small>клуб юних програмістів</small></span></div>
+                  <div class="mk-swatches"><i style="--c:#ff5c8a"></i><i style="--c:#ffb020"></i><i style="--c:#6b2fff"></i><i style="--c:#15112e"></i></div>
+                </div>
+              </div>
+              <div class="bn-fan__tile pj-stage pj-stage--night">
+                <div class="mk-win mk-quest">
+                  <div class="mk-quest__top"><span>Глава 2 · Вежа</span><span class="mk-hp"><i></i></span></div>
+                  <p class="mk-quest__text">Двері вежі зачинені<span class="mk-caret"></span></p>
+                  <span class="mk-choice">Розгадати загадку</span>
+                </div>
+              </div>
+              <div class="bn-fan__tile pj-stage pj-stage--violet">
+                <div class="mk-win mk-site">
+                  <div class="mk-urlbar"><i></i><i></i><i></i><span>olya.promi.site</span></div>
+                  <div class="mk-site__hero"><span class="mk-ava">О</span><span class="mk-site__who"><b>Оля Коваль</b><small>ШІ-творчиня</small></span></div>
+                  <div class="mk-site__grid"><i style="--c:#8b5cf6"></i><i style="--c:#ff5c8a"></i><i style="--c:#3b82f6"></i><i style="--c:#84cc16"></i><i style="--c:#312e81"></i><i style="--c:#f59e0b"></i></div>
+                </div>
+              </div>
             </div>
           </article>
         </div>
