@@ -1188,10 +1188,257 @@ body {
 #pricing h3 { font-size: 28px; }
 #pricing [data-calc] { gap: 20px; }
 
+/* Менший проміжок між «Модулі та вартість» і «Планувальником» (раніше 112 + 112 px на десктопі) */
+#program { padding-bottom: 48px; }
+#planner { padding-top: 48px; }
+
+@media (min-width: 768px) {
+  #program { padding-bottom: 56px; }
+  #planner { padding-top: 64px; }
+}
+
+@media (min-width: 1024px) {
+  #program { padding-bottom: 64px; }
+  #planner { padding-top: 72px; }
+}
+
 @media (min-width: 768px) {
   #program [data-module] > div { padding: 26px 28px; }
   #pricing > div:first-child { padding: 36px 40px; }
   #pricing h3 { font-size: 32px; }
+}
+
+/* 1f. Планувальник: форма з трьох кроків (модуль-картки, лічильники-«пігулки», опції з перемикачем) */
+.pl-form {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 22px;
+  border: 1px solid #e6defd;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 10px 30px -18px rgba(76, 29, 149, 0.25);
+}
+
+.pl-step { display: flex; flex-direction: column; gap: 12px; min-width: 0; margin: 0; padding: 0; border: 0; }
+
+.pl-step__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 0;
+  color: #15112e;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.pl-step__num {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6b2fff, #3b82f6);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.pl-step__note { color: #8a84a8; font-size: 13px; font-weight: 500; }
+
+/* пунктирна лінія після заголовка кроку — однаково для всіх трьох */
+.pl-step__title::after { content: ""; flex: 1; margin-left: 4px; border-top: 1px dashed #e0d6ff; }
+
+/* Крок 1: модулі-картки */
+.pl-modules { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+.pl-module {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 2px solid #ece5ff;
+  border-radius: 16px;
+  background: #faf8ff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pl-module:hover { border-color: #c4b5fd; }
+.pl-module input { position: absolute; opacity: 0; pointer-events: none; }
+.pl-module__num { color: #8a84a8; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.pl-module__title { color: #15112e; font-size: 15.5px; font-weight: 800; line-height: 1.25; }
+.pl-module__meta { color: #635d85; font-size: 13px; font-weight: 500; }
+
+.pl-module:has(input:checked) {
+  border-color: #6b2fff;
+  background: linear-gradient(135deg, #f5f0ff, #eef3ff);
+  box-shadow: 0 8px 20px -12px rgba(107, 47, 255, 0.6);
+}
+
+.pl-module:has(input:checked) .pl-module__num { color: #6b2fff; }
+
+/* галочка обраного модуля */
+.pl-module::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d9cfff;
+  border-radius: 50%;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.pl-module:has(input:checked)::after {
+  border-color: #6b2fff;
+  background: #6b2fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l9 -10'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+.pl-module:has(input:focus-visible) { outline: 3px solid #3b82f6; outline-offset: 2px; }
+
+/* Крок 2: лічильники */
+.pl-counters { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.pl-counter { display: flex; flex-direction: column; gap: 8px; }
+.pl-counter__label { color: #3b3557; font-size: 14px; font-weight: 700; }
+
+.pl-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  border: 2px solid #ece5ff;
+  border-radius: 999px;
+  background: #faf8ff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pl-stepper:focus-within { border-color: #6b2fff; box-shadow: 0 0 0 4px rgba(107, 47, 255, 0.12); }
+.pl-stepper:has([aria-invalid="true"]) { border-color: #ef4444; background: #fef2f2; }
+
+.pl-stepper__btn {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(76, 29, 149, 0.15);
+  color: #6b2fff;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.pl-stepper__btn:hover:not(:disabled) { background: #6b2fff; color: #fff; }
+.pl-stepper__btn:active:not(:disabled) { transform: scale(0.92); }
+.pl-stepper__btn:disabled { box-shadow: none; background: transparent; color: #cfc6ee; cursor: not-allowed; }
+.pl-stepper__btn:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
+
+.pl-stepper__input {
+  flex: 1;
+  min-width: 0;
+  border: 0 !important;
+  background: transparent !important;
+  color: #15112e;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.pl-stepper__input:focus { outline: none; box-shadow: none !important; }
+.pl-stepper__input::-webkit-outer-spin-button,
+.pl-stepper__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.pl-counter__hint { margin: 0; color: #8a84a8; font-size: 12.5px; }
+.pl-counter__perk { padding: 2px 8px; border-radius: 999px; background: #ecfccb; color: #3f6212; font-weight: 700; white-space: nowrap; }
+.pl-counter__error { margin: 0; color: #dc2626; font-size: 13px; font-weight: 600; }
+
+/* Крок 3: опції з перемикачем */
+.pl-options { display: flex; flex-direction: column; gap: 10px; }
+
+.pl-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 2px solid #ece5ff;
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.pl-option:hover { border-color: #c4b5fd; }
+.pl-option:has(input:checked) { border-color: #6b2fff; background: #f7f3ff; }
+
+.pl-option__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #f1ecff;
+  color: #6b2fff;
+}
+
+.pl-option__icon svg { width: 22px; height: 22px; }
+.pl-option__text { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.pl-option__title { color: #15112e; font-size: 15px; font-weight: 800; }
+.pl-option__desc { color: #6b7280; font-size: 13px; }
+.pl-option__price { color: #6b2fff; font-size: 15px; font-weight: 800; white-space: nowrap; }
+
+/* перемикач-тумблер замість квадратного прапорця */
+.pl-switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 26px;
+  margin: 0;
+  border-radius: 999px;
+  background: #ddd5f7;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background-color 0.2s ease;
+}
+
+.pl-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.pl-switch:checked { background: #6b2fff; }
+.pl-switch:checked::after { transform: translateX(18px); }
+.pl-switch:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
+
+@media (min-width: 640px) {
+  .pl-form { padding: 30px; }
+  .pl-modules { grid-template-columns: repeat(3, 1fr); }
+  .pl-counters { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-switch, .pl-switch::after, .pl-module, .pl-module::after { transition: none; }
 }
 
 /* 2. Бігуча стрічка: дві перехресні смуги, що рухаються назустріч ---------- */
@@ -1466,4 +1713,35 @@ body {
     content-visibility: auto;
     contain-intrinsic-size: auto 1000px;
   }
+}
+
+/* Підсумок «Твій курс»: обрані модулі одним блоком із тонкими роздільниками */
+.calc-list > li + li { border-top: 1px solid rgba(255, 255, 255, 0.16); }
+
+.calc-list__meta { margin-top: 2px; font-size: 12.5px; font-weight: 500; opacity: 0.72; }
+
+/* «Небо» над галявиною з роботами: забирає вільну висоту «Твого курсу» (коли обрано мало модулів)
+   і заповнює її зірочками; якщо місця немає — схлопується до нуля, зірочки ховаються */
+.pricing-sky {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  container-type: size;
+}
+.pricing-sky svg { position: absolute; color: #ddd6fe; }
+/* замало місця — зірочки не показуємо зовсім (щоб не стирчали обрізані шматочки) */
+@container (max-height: 56px) {
+  .pricing-sky svg { display: none; }
+}
+.pricing-sky .star { width: 22px; height: 22px; animation: sky-twinkle 3.6s ease-in-out infinite; }
+.pricing-sky .star--sm { width: 14px; height: 14px; opacity: 0.75; }
+.pricing-sky .dot { width: 6px; height: 6px; opacity: 0.6; }
+@keyframes sky-twinkle {
+  0%, 100% { opacity: 0.95; scale: 1; }
+  50% { opacity: 0.45; scale: 0.8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pricing-sky .star { animation: none; }
 }

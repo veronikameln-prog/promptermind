@@ -348,61 +348,44 @@
 })();
 
 /* ==========================================================================
-   Конвертер тривалості та вартості + промокоди
-   Ціна й тривалість — у data-атрибутах картки модуля:
-   <article data-module data-title="…" data-price="1490" data-weeks="4">
+   Крок 1 оформлення: вибір модулів у блоці «Модулі та вартість»
+   Дані — у data-атрибутах картки модуля:
+   <article data-module data-key="start" data-title="…" data-price="1490" data-lessons="12">
+   Після кожної зміни надсилає подію pm:modules { keys } — її слухає планувальник (js/widget.js),
+   де вибір продовжується: темп, учні, опції, промокод і заявка.
    ========================================================================== */
 (function () {
   const calc = document.querySelector('[data-calc]');
   const cards = Array.from(document.querySelectorAll('[data-module]'));
   if (!calc || !cards.length) return;
 
-  /* Персональні знижки. На статичному сайті коди видно у вихідному коді —
-     у продакшені їх треба перевіряти на сервері. */
-  const PROMO_CODES = {
-    START10: { type: 'percent', value: 10, description: '−10% на будь-які модулі' },
-    FRIEND15: { type: 'percent', value: 15, description: '−15% за запрошенням друга' },
-    DUO20: { type: 'percent', value: 20, minModules: 2, description: '−20% при виборі від 2 модулів' },
-    MINUS500: { type: 'fixed', value: 500, minSubtotal: 2000, description: '−500 ₴ при замовленні від 2 000 ₴' }
-  };
-
   const el = {
     list: calc.querySelector('[data-calc-list]'),
     empty: calc.querySelector('[data-calc-empty]'),
-    duration: calc.querySelector('[data-calc-duration]'),
-    subtotal: calc.querySelector('[data-calc-subtotal]'),
-    discountRow: calc.querySelector('[data-calc-discount-row]'),
-    discount: calc.querySelector('[data-calc-discount]'),
-    code: calc.querySelector('[data-calc-code]'),
-    oldPrice: calc.querySelector('[data-calc-old-price]'),
+    lessons: calc.querySelector('[data-calc-lessons]'),
     total: calc.querySelector('[data-calc-total]'),
     totalWrap: calc.querySelector('[data-calc-total-wrap]'),
     announce: calc.querySelector('[data-calc-announce]'),
-    form: calc.querySelector('[data-promo-form]'),
-    input: calc.querySelector('#promo-code'),
-    apply: calc.querySelector('[data-promo-apply]'),
-    remove: calc.querySelector('[data-promo-remove]'),
-    message: calc.querySelector('[data-promo-message]'),
-    submit: document.querySelector('[data-calc-submit]')
+    next: document.querySelector('[data-calc-next]')
   };
 
   const modules = cards.map(function (card) {
     return {
       card: card,
       toggle: card.querySelector('[data-module-toggle]'),
+      key: card.dataset.key,
       title: card.dataset.title,
       price: Number(card.dataset.price),
+      lessons: Number(card.dataset.lessons),
       weeks: Number(card.dataset.weeks),
       selected: card.dataset.selected === 'true'
     };
   });
 
-  const state = { promo: null };
-
   const money = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 0 });
 
   function formatPrice(value) {
-    return money.format(value) + ' ₴';
+    return money.format(value) + ' ₴';
   }
 
   function plural(n, one, few, many) {
@@ -414,21 +397,7 @@
   }
 
   function formatWeeks(n) {
-    return n + ' ' + plural(n, 'тиждень', 'тижні', 'тижнів');
-  }
-
-  function getDiscount(promo, subtotal, count) {
-    if (!promo) return { amount: 0, reason: '' };
-    if (promo.minModules && count < promo.minModules) {
-      return { amount: 0, reason: 'діє від ' + promo.minModules + ' ' + plural(promo.minModules, 'модуля', 'модулів', 'модулів') + ' — додай ще.' };
-    }
-    if (promo.minSubtotal && subtotal < promo.minSubtotal) {
-      return { amount: 0, reason: 'діє від ' + formatPrice(promo.minSubtotal) + ' — додай модуль.' };
-    }
-    const amount = promo.type === 'percent'
-      ? Math.round(subtotal * promo.value / 100)
-      : Math.min(promo.value, subtotal);
-    return { amount: amount, reason: '' };
+    return n + ' ' + plural(n, 'тиждень', 'тижні', 'тижнів');
   }
 
   function bump(node) {
@@ -437,20 +406,68 @@
     node.classList.add('bump');
   }
 
-  function setPromoMessage(type, text) {
-    if (type) el.form.dataset.state = type;
-    else delete el.form.dataset.state;
-    el.message.textContent = text;
+  /* Налаштування з планувальника (js/widget.js, подія pm:plan): учні, темп, опції, підсумкова сума.
+     Поки їх немає (або в планувальнику помилка) — показуємо ціну модулів за одного учня. */
+  let plan = null;
+
+  function row(title, metaText, priceText) {
+    const li = document.createElement('li');
+    li.className = 'flex items-center justify-between gap-4 px-4 py-2.5 font-heading text-[15px] font-semibold';
+    const info = document.createElement('span');
+    info.className = 'flex flex-col';
+    const name = document.createElement('span');
+    name.textContent = title;
+    info.append(name);
+    if (metaText) {
+      const meta = document.createElement('span');
+      meta.className = 'calc-list__meta';
+      meta.textContent = metaText;
+      info.append(meta);
+    }
+    const price = document.createElement('span');
+    price.className = 'whitespace-nowrap';
+    price.textContent = priceText;
+    li.append(info, price);
+    return li;
+  }
+
+  /* Малює список і суму «Твого курсу» з урахуванням плану */
+  function paint() {
+    const selected = modules.filter(function (m) { return m.selected; });
+    const count = selected.length;
+    const subtotal = selected.reduce(function (sum, m) { return sum + m.price; }, 0);
+    const lessons = selected.reduce(function (sum, m) { return sum + m.lessons; }, 0);
+    const perWeek = plan ? plan.perWeek : 0;
+    const weeksOf = function (n, fallback) { return perWeek ? Math.ceil(n / perWeek) : fallback; };
+    const weeks = weeksOf(lessons, selected.reduce(function (sum, m) { return sum + m.weeks; }, 0));
+    const students = plan ? plan.students : 1;
+
+    el.list.innerHTML = '';
+    selected.forEach(function (m) {
+      el.list.append(row(m.title, m.lessons + ' ' + plural(m.lessons, 'урок', 'уроки', 'уроків') + ' · ' + formatWeeks(weeksOf(m.lessons, m.weeks)), formatPrice(m.price)));
+    });
+    if (plan && count) {
+      plan.extras.forEach(function (x) {
+        el.list.append(row('+ ' + x.title, '', '+' + formatPrice(x.price)));
+      });
+    }
+    el.list.hidden = count === 0;
+    el.empty.hidden = count > 0;
+
+    const previousTotal = el.total.textContent;
+    if (el.lessons) {
+      el.lessons.textContent = (students === 1 ? 'за одного учня' : 'за ' + students + ' ' + plural(students, 'учня', 'учнів', 'учнів')) +
+        (count ? ' · ' + lessons + ' ' + plural(lessons, 'урок', 'уроки', 'уроків') + ' · ' + formatWeeks(weeks) : '');
+    }
+    el.total.textContent = formatPrice(plan && count ? plan.total : subtotal);
+    if (el.total.textContent !== previousTotal) bump(el.totalWrap);
   }
 
   function render() {
     const selected = modules.filter(function (m) { return m.selected; });
     const count = selected.length;
     const subtotal = selected.reduce(function (sum, m) { return sum + m.price; }, 0);
-    const weeks = selected.reduce(function (sum, m) { return sum + m.weeks; }, 0);
-    const promo = state.promo ? PROMO_CODES[state.promo] : null;
-    const discount = getDiscount(promo, subtotal, count);
-    const total = subtotal - discount.amount;
+    const lessons = selected.reduce(function (sum, m) { return sum + m.lessons; }, 0);
 
     modules.forEach(function (m) {
       m.card.dataset.selected = String(m.selected);
@@ -460,94 +477,26 @@
       }
     });
 
-    el.list.innerHTML = '';
-    selected.forEach(function (m) {
-      const li = document.createElement('li');
-      li.className = 'flex items-baseline justify-between gap-4 rounded-xl bg-white/[0.12] px-4 py-3 font-heading text-[15px] font-semibold';
-      const name = document.createElement('span');
-      name.textContent = m.title;
-      const price = document.createElement('span');
-      price.className = 'whitespace-nowrap';
-      price.textContent = formatPrice(m.price);
-      li.append(name, price);
-      el.list.append(li);
-    });
-    el.list.hidden = count === 0;
-    el.empty.hidden = count > 0;
+    paint();
 
-    const previousTotal = el.total.textContent;
-    el.duration.textContent = count ? formatWeeks(weeks) : '—';
-    el.subtotal.textContent = formatPrice(subtotal);
-    el.discountRow.hidden = discount.amount === 0;
-    el.discount.textContent = '−' + formatPrice(discount.amount);
-    el.code.textContent = state.promo || '';
-    el.oldPrice.hidden = discount.amount === 0;
-    el.oldPrice.textContent = formatPrice(subtotal);
-    el.total.textContent = formatPrice(total);
-    if (el.total.textContent !== previousTotal) bump(el.totalWrap);
-
-    if (promo) {
-      const active = discount.amount > 0;
-      setPromoMessage(active ? 'success' : 'error',
-        active ? 'Промокод ' + state.promo + ' застосовано: ' + promo.description + '.' : 'Промокод ' + state.promo + ': ' + discount.reason);
+    if (el.next) {
+      el.next.setAttribute('aria-disabled', String(count === 0));
+      if (count === 0) el.next.setAttribute('tabindex', '-1');
+      else el.next.removeAttribute('tabindex');
     }
 
-    if (el.submit) {
-      el.submit.setAttribute('aria-disabled', String(count === 0));
-      if (count === 0) el.submit.setAttribute('tabindex', '-1');
-      else el.submit.removeAttribute('tabindex');
-    }
-
-    return { count: count, weeks: weeks, total: total };
+    document.dispatchEvent(new CustomEvent('pm:modules', {
+      detail: { keys: selected.map(function (m) { return m.key; }) }
+    }));
+    return { count: count, lessons: lessons, subtotal: subtotal };
   }
 
   function announce(result) {
     el.announce.textContent = result.count
       ? 'Обрано ' + result.count + ' ' + plural(result.count, 'модуль', 'модулі', 'модулів') +
-        '. Тривалість ' + formatWeeks(result.weeks) + '. До сплати ' + formatPrice(result.total) + '.'
+        ', ' + result.lessons + ' ' + plural(result.lessons, 'урок', 'уроки', 'уроків') + ', ' + formatPrice(result.subtotal) + '.'
       : 'Жодного модуля не обрано.';
   }
-
-  function lockPromo(isLocked) {
-    el.input.readOnly = isLocked;
-    el.apply.hidden = isLocked;
-    el.remove.hidden = !isLocked;
-  }
-
-  el.form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const code = el.input.value.trim().toUpperCase();
-
-    if (!code) {
-      setPromoMessage('error', 'Введи промокод.');
-      el.input.focus();
-      return;
-    }
-    if (!Object.prototype.hasOwnProperty.call(PROMO_CODES, code)) {
-      setPromoMessage('error', 'Промокод «' + code + '» не знайдено. Перевір написання.');
-      el.input.select();
-      return;
-    }
-
-    state.promo = code;
-    el.input.value = code;
-    lockPromo(true);
-    render();
-    el.remove.focus();
-  });
-
-  el.remove.addEventListener('click', function () {
-    state.promo = null;
-    el.input.value = '';
-    lockPromo(false);
-    setPromoMessage(null, '');
-    render();
-    el.input.focus();
-  });
-
-  el.input.addEventListener('input', function () {
-    if (!state.promo) setPromoMessage(null, '');
-  });
 
   modules.forEach(function (m) {
     if (!m.toggle) return;
@@ -557,12 +506,26 @@
     });
   });
 
+  // Планувальник перерахував план (учні, темп, опції, сума) — оновлюємо підсумок тут
+  document.addEventListener('pm:plan', function (event) {
+    plan = event.detail || null;
+    paint();
+  });
+
+  // Планувальник просить змінити вибір (чекбокси модулів у кроці 2) — оновлюємо картки тут
+  document.addEventListener('pm:set-module', function (event) {
+    const m = modules.find(function (x) { return x.key === event.detail.key; });
+    if (!m || m.selected === event.detail.selected) return;
+    m.selected = event.detail.selected;
+    announce(render());
+  });
+
   render();
 })();
 
 /* ---------- Модальне вікно заявки ----------
    Кнопки з data-lead відкривають <dialog> замість переходу до #contact.
-   data-lead-module / data-lead-project підставляють вибір у форму, data-lead="order" — модулі й суму з калькулятора.
+   data-lead-module / data-lead-project підставляють вибір у форму, data-lead="order" — весь план навчання з планувальника.
    На статичному сайті заявка нікуди не надсилається — у продакшені тут буде fetch на сервер або Google Form. */
 (function () {
   const modal = document.querySelector('[data-lead-modal]');
@@ -626,11 +589,11 @@
       rows.push(['Проєкт', trigger.dataset.leadProject], ['Модуль', trigger.dataset.leadModule]);
       selectModule(trigger.dataset.leadModule);
     } else if (type === 'order') {
-      const picked = Array.from(document.querySelectorAll('[data-calc-list] li > span:first-child')).map(function (s) { return s.textContent; });
-      rows.push(['Модулі', picked.join(', ')]);
-      rows.push(['Тривалість', document.querySelector('[data-calc-duration]').textContent]);
-      rows.push(['До сплати', document.querySelector('[data-calc-total]').textContent]);
-      selectModule(picked.length === 1 ? picked[0] : '');
+      // Повний план зі «Склади свій план» — його готує js/widget.js у data-lead-summary кнопки
+      let plan = [];
+      try { plan = JSON.parse(trigger.dataset.leadSummary || '[]'); } catch (e) { plan = []; }
+      plan.forEach(function (row) { rows.push(row); });
+      selectModule('');
     } else {
       selectModule('');
     }
