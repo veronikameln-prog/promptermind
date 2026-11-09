@@ -844,3 +844,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 })();
+
+/* ---------- Планувальник на телефоні: плаваюча панель «До сплати» ----------
+   Показується, поки форма планувальника на екрані, а «Твій план» із сумою — ще ні. Сума — з події pm:plan (js/widget.js). */
+(function () {
+  const dock = document.querySelector('[data-pl-dock]');
+  const form = document.getElementById('planner-form');
+  const result = document.querySelector('[aria-labelledby="planner-result-title"]');
+  const submit = document.getElementById('plan-submit');
+  if (!dock || !form || !result || !('IntersectionObserver' in window)) return;
+  const total = dock.querySelector('[data-pl-dock-total]');
+  const btn = dock.querySelector('[data-pl-dock-btn]');
+  let formIn = false;
+  let resultIn = false;
+  let valid = true;
+  function update() {
+    const on = formIn && !resultIn && valid;
+    dock.classList.toggle('is-on', on);
+    dock.setAttribute('aria-hidden', String(!on));
+    btn.tabIndex = on ? 0 : -1;
+  }
+  new IntersectionObserver(function (entries) { formIn = entries[0].isIntersecting; update(); }).observe(form);
+  new IntersectionObserver(function (entries) { resultIn = entries[0].isIntersecting; update(); }, { rootMargin: '0px 0px -80px 0px' }).observe(result);
+  document.addEventListener('pm:plan', function (event) {
+    valid = !!event.detail;
+    if (event.detail) total.textContent = event.detail.total.toLocaleString('uk-UA') + ' ₴';
+    update();
+  });
+  btn.addEventListener('click', function () { if (submit) submit.click(); });
+})();
