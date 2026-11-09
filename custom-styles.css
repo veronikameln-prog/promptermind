@@ -459,7 +459,7 @@ body {
   --bn-lime: #a3e635;
   position: relative;
   overflow: hidden;
-  padding: 64px 20px;
+  padding: 28px 20px 64px; /* зверху менше: одразу над блоком — бігучі стрічки зі своїм відступом */
   background: linear-gradient(180deg, #ffffff 0%, #f4efff 45%, #ece4ff 100%);
   color: var(--bn-ink);
   font-family: "Montserrat", "Inter", system-ui, sans-serif;
@@ -660,8 +660,61 @@ body {
   letter-spacing: -0.03em;
 }
 
-/* Міні-чат */
-.bn-chat { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+/* Міні-месенджер: стрічка повідомлень (нові знизу, старі від'їжджають угору) + поле введення */
+.bn-chat { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+
+.bn-chat__log {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 200px;
+  padding: 2px 2px 4px; /* рамки бульбашок не обрізаються краєм стрічки (overflow: hidden) */
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 28px);
+  mask-image: linear-gradient(180deg, transparent 0, #000 28px);
+  transition: opacity 0.4s ease;
+}
+
+.bn-chat__log.is-clearing { opacity: 0; }
+
+.bn-chat__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 6px 6px 6px 16px;
+  border: 1px solid rgba(107, 47, 255, 0.18);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.bn-chat__field {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--bn-ink);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  direction: ltr;
+}
+
+.bn-chat__field:empty::before { content: "Напиши повідомлення…"; color: rgba(99, 93, 133, 0.6); }
+
+.bn-chat__send {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bn-violet);
+  color: #fff;
+}
+
+.bn-chat__send svg { width: 16px; height: 16px; }
 
 .bn-chat__msg {
   max-width: 88%;
@@ -675,6 +728,7 @@ body {
 
 .bn-chat__msg--me {
   align-self: flex-end;
+  transform-origin: 100% 100%;
   border-bottom-right-radius: 6px;
   background: var(--bn-violet);
   color: #fff;
@@ -682,13 +736,14 @@ body {
 
 .bn-chat__msg--bot {
   align-self: flex-start;
+  transform-origin: 0 100%;
   border: 1px solid rgba(132, 204, 22, 0.55);
   border-bottom-left-radius: 6px;
   background: #ecfccb;
   color: #1a2e05;
 }
 
-.bn-chat__typing { display: none; gap: 5px; align-self: flex-start; margin: 0; padding: 12px 16px; border-radius: 18px; background: rgba(107, 47, 255, 0.08); }
+.bn-chat__typing { display: inline-flex; flex-shrink: 0; gap: 5px; align-self: flex-start; transform-origin: 0 100%; margin: 0; padding: 14px 16px; border-radius: 18px; background: rgba(107, 47, 255, 0.08); }
 .bn-chat__typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--bn-violet); }
 
 /* Віяло проєктів */
@@ -714,7 +769,7 @@ body {
 .bn-fan img:nth-child(4) { rotate: 14deg;  transform: translate(34%, 6%); }
 
 @media (min-width: 768px) {
-  .bn { padding: 88px 32px; }
+  .bn { padding: 36px 32px 88px; }
   .bn__grid {
     gap: 20px;
     grid-template-columns: 1fr 1fr;
@@ -728,7 +783,7 @@ body {
 }
 
 @media (min-width: 1024px) {
-  .bn { padding: 110px 64px; }
+  .bn { padding: 44px 64px 110px; }
   .bn__grid {
     grid-template-columns: 1.15fr 1fr 1fr;
     grid-template-areas: "sprint sprint practice" "bot portfolio portfolio";
@@ -749,14 +804,15 @@ body {
   .bn-ring__bar { stroke-dashoffset: 100; transition: stroke-dashoffset 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s; }
   .is-in .bn-ring__bar { stroke-dashoffset: 30; }
 
-  /* Чат: повідомлення → «друкує…» → відповідь бота */
-  .bn-chat__msg { opacity: 0; translate: 0 10px; }
-  .is-in .bn-chat__msg--me { animation: bn-msg 0.5s ease 0.3s forwards; }
-  .is-in .bn-chat__typing { display: inline-flex; animation: bn-typing-box 1.6s ease 0.9s both; }
-  .is-in .bn-chat__typing span { animation: bn-dot 0.9s ease-in-out infinite; }
-  .is-in .bn-chat__typing span:nth-child(2) { animation-delay: 0.15s; }
-  .is-in .bn-chat__typing span:nth-child(3) { animation-delay: 0.3s; }
-  .is-in .bn-chat__msg--bot { animation: bn-msg 0.5s ease 2.5s forwards; }
+  /* Месенджер: нові бульбашки «вискакують» від свого кута, бот «друкує», кнопка блимає при надсиланні */
+  .bn-chat__msg.is-new,
+  .bn-chat__typing.is-new { animation: bn-pop 0.38s cubic-bezier(0.2, 0.9, 0.3, 1.25) both; }
+  .bn-chat__msg { flex-shrink: 0; }
+  .bn-chat__typing span { animation: bn-dot 0.9s ease-in-out infinite; }
+  .bn-chat__typing span:nth-child(2) { animation-delay: 0.15s; }
+  .bn-chat__typing span:nth-child(3) { animation-delay: 0.3s; }
+  .bn-chat__field.is-typing::after { content: ""; display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; background: var(--bn-violet); animation: bn-caret 0.8s steps(1) infinite; }
+  .bn-chat__send.is-pulse { animation: bn-send 0.35s ease; }
 
   /* Віяло: мініатюри спершу складені стосом, потім розкриваються */
   .bn-fan img { transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), rotate 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
@@ -774,14 +830,17 @@ body {
   50% { translate: 0 -10px; }
 }
 
-@keyframes bn-msg {
-  to { opacity: 1; translate: 0 0; }
+@keyframes bn-pop {
+  from { opacity: 0; transform: translateY(14px) scale(0.85); }
 }
 
-@keyframes bn-typing-box {
-  0% { opacity: 0; }
-  15%, 85% { opacity: 1; }
-  100% { opacity: 0; max-height: 0; padding-block: 0; }
+@keyframes bn-caret {
+  50% { opacity: 0; }
+}
+
+@keyframes bn-send {
+  40% { transform: scale(0.82); }
+  75% { transform: scale(1.12); }
 }
 
 @keyframes bn-dot {
@@ -816,18 +875,9 @@ body {
 
 /* 3. Анімації (лише якщо користувач не просив зменшити рух) ----------------- */
 @media (prefers-reduced-motion: no-preference) {
-  .ticker-track {
-    animation: ticker-scroll 40s linear infinite;
-  }
-
-  .ticker-band--back .ticker-track {
-    animation-duration: 55s;
-    animation-direction: reverse;
-  }
-
-  .ticker:hover .ticker-track {
-    animation-play-state: paused;
-  }
+  /* Бігучі стрічки рухає js/main.js (не CSS-анімація): так браузер малює текст одразу під нахилом стрічки,
+     і літери лишаються чіткими. CSS-анімація віддає рух відеокарті, яка повертає вже готову
+     картинку тексту, — і на нахилених стрічках він розмивається. */
 
   /* Відгуки їдуть самі; список продубльовано, тому зсув на -50% замикає коло без стрибка */
   .marquee-track {

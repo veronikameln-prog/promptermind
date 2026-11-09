@@ -800,3 +800,60 @@ document.addEventListener('DOMContentLoaded', function () {
     art.style.setProperty('--py', '0px');
   });
 })();
+
+/* ---------- Бігучі стрічки: рух без CSS-анімації, щоб текст на нахилених стрічках був чітким ----------
+   CSS-анімація transform передає рух відеокарті, яка повертає вже готову (рівну) картинку тексту — літери розмиваються.
+   Тут зсув задається з JS раз на кадр: браузер щоразу малює текст одразу під нахилом, тож він чіткий.
+   Рух лише поки стрічки видно на екрані; пауза при наведенні; при prefers-reduced-motion — без руху. */
+(function () {
+  const ticker = document.querySelector('.ticker');
+  if (!ticker) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Передня стрічка — 40 с на коло вліво, задня — 55 с на коло вправо (як було в CSS)
+  const tracks = Array.prototype.map.call(ticker.querySelectorAll('.ticker-track'), function (track) {
+    const back = !!track.closest('.ticker-band--back');
+    return { el: track, duration: back ? 55000 : 40000, reverse: back, half: 0 };
+  });
+
+  function measure() {
+    tracks.forEach(function (t) { t.half = t.el.scrollWidth / 2; });
+  }
+
+  let visible = false;
+  let paused = false;
+  let frame = 0;
+  let last = 0;
+  let elapsed = 0;
+
+  function tick(now) {
+    frame = 0;
+    if (!visible) return;
+    if (!paused && last) elapsed += now - last;
+    last = now;
+    tracks.forEach(function (t) {
+      const p = (elapsed / t.duration) % 1;
+      const x = t.reverse ? -(1 - p) * t.half : -p * t.half;
+      t.el.style.translate = x.toFixed(2) + 'px 0';
+    });
+    frame = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (frame) return;
+    last = 0;
+    frame = requestAnimationFrame(tick);
+  }
+
+  measure();
+  window.addEventListener('resize', measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+
+  new IntersectionObserver(function (entries) {
+    visible = entries[0].isIntersecting;
+    if (visible) start();
+  }).observe(ticker);
+
+  ticker.addEventListener('mouseenter', function () { paused = true; });
+  ticker.addEventListener('mouseleave', function () { paused = false; });
+})();
